@@ -1,6 +1,7 @@
 """Telegram-бот для управления ВК страницей психотерапевта misemia."""
 import os
 import json
+import random
 import asyncio
 import logging
 from pathlib import Path
@@ -31,25 +32,42 @@ REPLIED_FILE = Path("/root/telegram-bot/misemia_replied.json")
 STYLE_PROMPT = """Ты копирайтер психотерапевта, ведёшь страницу ВКонтакте vk.com/misemia.
 Пишешь посты в двух форматах — чередуй их:
 
-ФОРМАТ 1 — ПРОВОКАЦИОННЫЙ (пример стиля):
+ФОРМАТ 1 — ПРОВОКАЦИОННЫЙ:
 Начни с острого вопроса или вызова читателю. Покажи, что проблема глубже чем кажется.
 Задай 3-4 вопроса для саморефлексии (Как часто вы...? Готовы ли вы...? Что если...?)
 Финал: "Готовы ли вы изменить...?" — обязательный приём.
-Тон: жёсткий, но с заботой. Эмодзи умеренно: 😔🤯💡🎯💖🌱
+Тон: жёсткий, но с заботой.
 
-ФОРМАТ 2 — ПРАКТИЧЕСКИЙ (пример стиля):
+ФОРМАТ 2 — ПРАКТИЧЕСКИЙ:
 Конкретная тема + проблема в семье/отношениях.
 5-7 советов нумерованным списком. Каждый совет — 2-3 предложения.
 Тон: тёплый, поддерживающий. Финал: вопрос к читателю или призыв.
 
-ВСЕГДА в самом конце: "Можете написать мне в Вацап. +79028355176"
+ЭМОДЗИ — обязательно используй смайлики по всему тексту:
+- Начало ключевых абзацев: 💔 😔 🤯 💡 🌱 🎯 💖 🙏 ✨ 🔑 🧠
+- В советах и списках: ✅ 👂 🧘‍♀️ 💪 🤔 💭 🌍 🌸 🌿 🫂
+- В вопросах к читателю: 🤷‍♀️ 😬 😰 💫 🙄
+- Эмоциональные акценты: 😣 🥺 😤 🌟 🎉 🙌
+Каждый абзац должен содержать 1-2 смайлика. Смайлики ставь ВНУТРИ текста, не только в конце.
+
+ВСЕГДА в самом конце поста: "Можете написать мне. +79028355176 (мессенджер МАКС)"
 
 Пиши на русском, объём 300-600 слов. Только текст поста, без пояснений и комментариев."""
+
+
+def get_photo_url(topic: str) -> str:
+    import urllib.parse
+    prompt = (
+        f"professional psychology therapy family counseling, {topic}, "
+        "calm serene warm atmosphere, soft pastel colors, no text, no watermark"
+    )
+    seed = abs(hash(topic)) % 99999
+    return f"https://image.pollinations.ai/prompt/{urllib.parse.quote(prompt)}?width=1200&height=630&nologo=true&seed={seed}"
 
 COMMENT_PROMPT = """Ты помощник психотерапевта на странице ВКонтакте vk.com/misemia.
 Отвечай на комментарий под постом тепло, профессионально, поддерживающе.
 Объём: 2-4 предложения. Не давай медицинских советов.
-Если вопрос о записи или консультации — направь: +79028355176 (WhatsApp).
+Если вопрос о записи или консультации — направь: +79028355176 (мессенджер МАКС).
 Только текст ответа, без пояснений."""
 
 
@@ -66,9 +84,52 @@ def set_owner(user_id: int) -> None:
     OWNER_FILE.write_text(str(user_id))
 
 
-def save_draft(text: str, topic: str = "") -> None:
+async def download_image(url: str) -> bytes | None:
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=30), allow_redirects=True) as resp:
+                if resp.status == 200:
+                    return await resp.read()
+    except Exception as e:
+        logging.warning(f"Не удалось скачать изображение: {e}")
+    return None
+
+
+async def upload_photo_to_vk(image_bytes: bytes, group_id: int) -> str | None:
+    """Загружает фото в ВК и возвращает строку вложения типа 'photo-12345_67890'."""
+    try:
+        result = await vk_api("photos.getWallUploadServer", {"group_id": group_id})
+        if "error" in result:
+            logging.error(f"getWallUploadServer: {result['error']}")
+            return None
+        upload_url = result["response"]["upload_url"]
+
+        async with aiohttp.ClientSession() as session:
+            data = aiohttp.FormData()
+            data.add_field("photo", image_bytes, filename="photo.jpg", content_type="image/jpeg")
+            async with session.post(upload_url, data=data) as resp:
+                upload_result = await resp.json(content_type=None)
+
+        save_result = await vk_api("photos.saveWallPhoto", {
+            "group_id": group_id,
+            "server": upload_result["server"],
+            "photo": upload_result["photo"],
+            "hash": upload_result["hash"],
+        })
+        if "error" in save_result:
+            logging.error(f"saveWallPhoto: {save_result['error']}")
+            return None
+
+        photo = save_result["response"][0]
+        return f"photo{photo['owner_id']}_{photo['id']}"
+    except Exception as e:
+        logging.error(f"Ошибка загрузки фото в ВК: {e}")
+        return None
+
+
+def save_draft(text: str, topic: str = "", photo_url: str = "") -> None:
     DRAFT_FILE.write_text(
-        json.dumps({"text": text, "topic": topic}, ensure_ascii=False),
+        json.dumps({"text": text, "topic": topic, "photo_url": photo_url}, ensure_ascii=False),
         encoding="utf-8",
     )
 
@@ -137,14 +198,17 @@ async def resolve_group_id() -> int:
     return groups[0]["id"]
 
 
-async def publish_to_vk(text: str) -> str:
+async def publish_to_vk(text: str, attachment: str | None = None) -> str:
     if VK_GROUP_ID is None:
         return "Ошибка: ID группы не определён"
-    result = await vk_api("wall.post", {
+    params = {
         "owner_id": f"-{VK_GROUP_ID}",
         "from_group": 1,
         "message": text,
-    })
+    }
+    if attachment:
+        params["attachments"] = attachment
+    result = await vk_api("wall.post", params)
     if "error" in result:
         return f"Ошибка VK: {result['error'].get('error_msg', 'неизвестная')}"
     post_id = result["response"]["post_id"]
@@ -176,7 +240,12 @@ async def generate_post(topic: str) -> str:
     return await run_claude(prompt)
 
 
-async def send_draft(message, text: str) -> None:
+async def send_draft(message, text: str, photo_url: str = "") -> None:
+    if photo_url:
+        try:
+            await message.reply_photo(photo=photo_url, caption="📸 Фото для поста")
+        except Exception as e:
+            logging.warning(f"Не удалось отправить фото превью: {e}")
     preview = text[:3800] if len(text) > 3800 else text
     await message.reply_text(
         f"📝 *Черновик поста:*\n\n{preview}",
@@ -193,8 +262,9 @@ async def cmd_post(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     topic = " ".join(context.args) if context.args else "актуальная психологическая тема для семьи"
     await context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
     text = await generate_post(topic)
-    save_draft(text, topic)
-    await send_draft(update.message, text)
+    photo_url = get_photo_url(topic)
+    save_draft(text, topic, photo_url)
+    await send_draft(update.message, text, photo_url)
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -207,8 +277,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     topic = update.message.text.strip()
     await context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
     text = await generate_post(topic)
-    save_draft(text, topic)
-    await send_draft(update.message, text)
+    photo_url = get_photo_url(topic)
+    save_draft(text, topic, photo_url)
+    await send_draft(update.message, text, photo_url)
 
 
 async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -220,10 +291,21 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         if not draft:
             await query.edit_message_text("Нет черновика для публикации.")
             return
-        await query.edit_message_text("⏳ Публикую в ВК...")
-        url = await publish_to_vk(draft["text"])
+        await query.edit_message_text("⏳ Загружаю фото и публикую в ВК...")
+
+        attachment = None
+        photo_url = draft.get("photo_url", "")
+        if photo_url and VK_GROUP_ID:
+            image_bytes = await download_image(photo_url)
+            if image_bytes:
+                attachment = await upload_photo_to_vk(image_bytes, VK_GROUP_ID)
+                if not attachment:
+                    logging.warning("Фото не загрузилось в ВК, публикую без фото")
+
+        url = await publish_to_vk(draft["text"], attachment)
         if url.startswith("http"):
-            await query.edit_message_text(f"✅ Опубликовано!\n{url}")
+            photo_note = " с фото 📸" if attachment else ""
+            await query.edit_message_text(f"✅ Опубликовано{photo_note}!\n{url}")
         else:
             await query.edit_message_text(f"❌ {url}")
 
@@ -232,8 +314,9 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         topic = draft.get("topic", "актуальная психологическая тема")
         await query.edit_message_text("🔄 Переписываю пост...")
         text = await generate_post(topic)
-        save_draft(text, topic)
-        await send_draft(query.message, text)
+        photo_url = get_photo_url(topic)
+        save_draft(text, topic, photo_url)
+        await send_draft(query.message, text, photo_url)
 
 
 async def process_comments(group_id: int) -> int:
