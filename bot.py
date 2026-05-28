@@ -9,6 +9,16 @@ from telegram import Update
 from telegram.ext import Application, MessageHandler, CommandHandler, filters, ContextTypes
 from telegram.constants import ChatAction
 
+_whisper_model = None
+_voice_users: set[int] = set()  # users who want voice replies
+
+def _get_whisper():
+    global _whisper_model
+    if _whisper_model is None:
+        from faster_whisper import WhisperModel
+        _whisper_model = WhisperModel("small", device="cpu", compute_type="int8")
+    return _whisper_model
+
 from gold_news import build_news_report, build_gold_analysis, build_morning_brief
 
 load_dotenv()
@@ -69,22 +79,46 @@ def build_prompt(history: list, current_message: str) -> str:
     return "\n".join(lines)
 
 
+async def tts_to_ogg(text: str) -> Path | None:
+    try:
+        import edge_tts
+        tmp = Path(f"/tmp/gavrik_tts_{os.getpid()}")
+        mp3 = tmp.with_suffix(".mp3")
+        ogg = tmp.with_suffix(".ogg")
+        communicate = edge_tts.Communicate(text, "ru-RU-DmitryNeural")
+        await communicate.save(str(mp3))
+        proc = await asyncio.create_subprocess_exec(
+            "ffmpeg", "-y", "-i", str(mp3), "-c:a", "libopus", "-b:a", "64k", str(ogg),
+            stdout=asyncio.subprocess.DEVNULL,
+            stderr=asyncio.subprocess.DEVNULL,
+        )
+        await proc.wait()
+        mp3.unlink(missing_ok=True)
+        return ogg if ogg.exists() else None
+    except Exception as e:
+        logging.warning("TTS error: %s", e)
+        return None
+
+
 async def run_claude(prompt: str) -> str:
     proc = await asyncio.create_subprocess_exec(
-        CLAUDE_BIN, "-p", prompt, "--output-format", "text",
+        CLAUDE_BIN, "-p", "--output-format", "text",
+        stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
     try:
-        stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=120)
+        stdout, stderr = await asyncio.wait_for(
+            proc.communicate(input=prompt.encode("utf-8")), timeout=300
+        )
     except asyncio.TimeoutError:
         proc.kill()
         await proc.communicate()
-        return "Ошибка: превышено время ожидания ответа (120 сек)."
+        return "Ошибка: превышено время ожидания ответа (300 сек)."
 
     if proc.returncode != 0:
         err = stderr.decode(errors="replace").strip()
-        return f"Ошибка: {err}"
+        return f"Ошибка: {err or '(неизвестная ошибка, код ' + str(proc.returncode) + ')'}"
 
     return stdout.decode(errors="replace").strip() or "(пустой ответ)"
 
@@ -165,42 +199,72 @@ async def clear_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     await update.message.reply_text("История очищена. Начнём с чистого листа!")
 
 
+async def _process_message(update: Update, context: ContextTypes.DEFAULT_TYPE, user_text: str) -> None:
+    user_id = update.effective_user.id
+    key = str(user_id)
+    if key not in memory:
+        memory[key] = []
+    history = memory[key]
+    await context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
+    prompt = build_prompt(history, user_text)
+    reply = await run_claude(prompt)
+    history.append({"role": "user", "content": user_text})
+    history.append({"role": "assistant", "content": reply})
+    if len(history) > MAX_HISTORY:
+        memory[key] = history[-MAX_HISTORY:]
+    save_memory(memory)
+    for i in range(0, len(reply), 4096):
+        await update.message.reply_text(reply[i : i + 4096])
+    if user_id in _voice_users:
+        ogg = await tts_to_ogg(reply[:1000])
+        if ogg:
+            try:
+                await update.message.reply_voice(ogg.open("rb"))
+            finally:
+                ogg.unlink(missing_ok=True)
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.effective_user.id
     owner_id = get_owner()
-
     if owner_id is None:
         set_owner(user_id)
-        owner_id = user_id
     elif user_id != owner_id:
         await update.message.reply_text("Извини, я работаю только с моим хозяином.")
         return
+    await _process_message(update, context, update.message.text)
 
-    user_text = update.message.text
-    key = str(user_id)
 
-    if key not in memory:
-        memory[key] = []
+async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id = update.effective_user.id
+    owner_id = get_owner()
+    if owner_id is None:
+        set_owner(user_id)
+    elif user_id != owner_id:
+        return
 
-    history = memory[key]
+    await context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
+    voice_path = Path(f"/tmp/gavrik_voice_{user_id}.ogg")
+    try:
+        voice_file = await update.message.voice.get_file()
+        await voice_file.download_to_drive(voice_path)
+        model = await asyncio.get_event_loop().run_in_executor(None, _get_whisper)
+        segments, _ = await asyncio.get_event_loop().run_in_executor(
+            None, lambda: model.transcribe(str(voice_path), language="ru")
+        )
+        text = " ".join(seg.text for seg in segments).strip()
+    except Exception as e:
+        await update.message.reply_text(f"Не смог распознать голос: {e}")
+        return
+    finally:
+        voice_path.unlink(missing_ok=True)
 
-    await context.bot.send_chat_action(
-        chat_id=update.effective_chat.id, action=ChatAction.TYPING
-    )
+    if not text:
+        await update.message.reply_text("Не расслышал, попробуй ещё раз.")
+        return
 
-    prompt = build_prompt(history, user_text)
-    reply = await run_claude(prompt)
-
-    history.append({"role": "user", "content": user_text})
-    history.append({"role": "assistant", "content": reply})
-
-    if len(history) > MAX_HISTORY:
-        memory[key] = history[-MAX_HISTORY:]
-
-    save_memory(memory)
-
-    for i in range(0, len(reply), 4096):
-        await update.message.reply_text(reply[i : i + 4096])
+    await update.message.reply_text(f"🎤 {text}")
+    await _process_message(update, context, text)
 
 
 async def handle_cyrillic_commands(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -224,6 +288,7 @@ def main() -> None:
     app.add_handler(CommandHandler("news", cmd_news))
     app.add_handler(CommandHandler("gold", cmd_gold))
     app.add_handler(CommandHandler("test_alert", cmd_test_alert))
+    app.add_handler(MessageHandler(filters.VOICE, handle_voice))
     # Handles both cyrillic commands and regular messages
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_cyrillic_commands))
 

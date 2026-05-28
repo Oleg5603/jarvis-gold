@@ -1,0 +1,5 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+"ystemctl restart telegram-bot.service"
