@@ -20,6 +20,13 @@ def _get_whisper():
     return _whisper_model
 
 from gold_news import build_news_report, build_gold_analysis, build_morning_brief
+from trading import (
+    load_trading_data, save_trading_data,
+    build_signal, build_technical_analysis,
+    calc_risk_report, add_trade, close_trade,
+    format_trade_journal, format_statistics,
+    generate_mql4, analyze_backtest, check_news_alerts,
+)
 
 load_dotenv()
 
@@ -276,6 +283,193 @@ async def handle_cyrillic_commands(update: Update, context: ContextTypes.DEFAULT
         await cmd_gold(update, context)
     else:
         await handle_message(update, context)
+
+
+# ── Торговые команды XAUUSD ────────────────────────────────────────────────────
+
+def _owner_check(update: Update) -> bool:
+    owner_id = get_owner()
+    return owner_id is None or update.effective_user.id == owner_id
+
+
+async def cmd_signal(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    await context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
+    text = await build_signal()
+    await update.message.reply_text(text, parse_mode="Markdown")
+
+
+async def cmd_analiz(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    await context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
+    text = await build_technical_analysis()
+    await update.message.reply_text(text, parse_mode="Markdown")
+
+
+async def cmd_risk(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    args = context.args
+    if len(args) < 2:
+        await update.message.reply_text(
+            "Использование: `/risk <лот> <стоп_пунктов>`\nПример: `/risk 0.1 50`",
+            parse_mode="Markdown"
+        )
+        return
+
+    try:
+        lot = float(args[0].replace(",", "."))
+        stop_pts = float(args[1].replace(",", "."))
+    except ValueError:
+        await update.message.reply_text("Неверный формат. Пример: `/risk 0.1 50`", parse_mode="Markdown")
+        return
+
+    data = load_trading_data()
+    balance = data.get("balance")
+    if balance is None:
+        await update.message.reply_text("Какой у тебя баланс счёта в $? Введи число:")
+        context.user_data["awaiting_balance"] = (lot, stop_pts)
+        return
+
+    text = calc_risk_report(lot, stop_pts, balance)
+    await update.message.reply_text(text, parse_mode="Markdown")
+
+
+async def cmd_sdelka(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    args = context.args
+    if len(args) < 4:
+        await update.message.reply_text(
+            "Использование: `/sdelka <buy/sell> <вход> <стоп> <тейк>`\nПример: `/sdelka buy 2350 2330 2390`",
+            parse_mode="Markdown"
+        )
+        return
+    try:
+        direction = args[0].upper()
+        if direction not in ("BUY", "SELL"):
+            raise ValueError
+        entry = float(args[1].replace(",", "."))
+        stop  = float(args[2].replace(",", "."))
+        take  = float(args[3].replace(",", "."))
+    except ValueError:
+        await update.message.reply_text("Неверный формат. Пример: `/sdelka buy 2350 2330 2390`", parse_mode="Markdown")
+        return
+
+    data = load_trading_data()
+    trade = add_trade(data, direction, entry, stop, take)
+    save_trading_data(data)
+    d_emoji = "⬆️" if direction == "BUY" else "⬇️"
+    await update.message.reply_text(
+        f"✅ Сделка #{trade['id']} записана\n"
+        f"{d_emoji} *{direction}* | Вход: ${entry:,.1f} | SL: ${stop:,.1f} | TP: ${take:,.1f}",
+        parse_mode="Markdown"
+    )
+
+
+async def cmd_jurnal(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    data = load_trading_data()
+    text = format_trade_journal(data)
+    await update.message.reply_text(text, parse_mode="Markdown")
+
+
+async def cmd_statistika(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    data = load_trading_data()
+    text = format_statistics(data)
+    await update.message.reply_text(text, parse_mode="Markdown")
+
+
+async def cmd_zakryt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    args = context.args
+    if len(args) < 2:
+        await update.message.reply_text(
+            "Использование: `/zakryt <номер> <пунктов>`\nПример: `/zakryt 1 +45`",
+            parse_mode="Markdown"
+        )
+        return
+    try:
+        trade_num   = int(args[0])
+        result_pts  = float(args[1].replace(",", ".").replace("+", ""))
+    except ValueError:
+        await update.message.reply_text("Неверный формат. Пример: `/zakryt 1 45`", parse_mode="Markdown")
+        return
+
+    data = load_trading_data()
+    trade = close_trade(data, trade_num, result_pts)
+    if trade is None:
+        await update.message.reply_text(f"Сделка #{trade_num} не найдена среди открытых.")
+        return
+    save_trading_data(data)
+    res_emoji = "✅" if result_pts > 0 else "❌"
+    sign = "+" if result_pts > 0 else ""
+    await update.message.reply_text(
+        f"{res_emoji} Сделка #{trade['id']} закрыта: *{sign}{result_pts:.0f} пп*",
+        parse_mode="Markdown"
+    )
+
+
+async def cmd_kod(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    description = " ".join(context.args).strip()
+    if not description:
+        await update.message.reply_text(
+            "Использование: `/kod <описание стратегии>`\nПример: `/kod пересечение MA 8 и 21 на H1`",
+            parse_mode="Markdown"
+        )
+        return
+    code = generate_mql4(description)
+    await update.message.reply_text(code, parse_mode="Markdown")
+
+
+async def cmd_baktest(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    results = " ".join(context.args).strip()
+    if not results:
+        await update.message.reply_text(
+            "Использование: `/baktest <результаты>`\nПример: `/baktest winrate 55%, drawdown 12%, 80 сделок`",
+            parse_mode="Markdown"
+        )
+        return
+    await context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
+    text = await analyze_backtest(results)
+    await update.message.reply_text(text, parse_mode="Markdown")
+
+
+async def news_alert_job(context) -> None:
+    owner_id = get_owner()
+    if owner_id is None:
+        return
+    await check_news_alerts(context.bot, owner_id)
+
+
+async def handle_balance_reply(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Ловит ответ с балансом если бот ждал его."""
+    pending = context.user_data.pop("awaiting_balance", None)
+    if pending is None:
+        await handle_message(update, context)
+        return
+    try:
+        balance = float(update.message.text.replace(",", ".").replace("$", "").strip())
+    except ValueError:
+        await update.message.reply_text("Не понял сумму, введи просто число, например: `5000`", parse_mode="Markdown")
+        context.user_data["awaiting_balance"] = pending
+        return
+    data = load_trading_data()
+    data["balance"] = balance
+    save_trading_data(data)
+    lot, stop_pts = pending
+    text = calc_risk_report(lot, stop_pts, balance)
+    await update.message.reply_text(f"✅ Баланс ${balance:,.0f} сохранён.\n\n{text}", parse_mode="Markdown")
 
 
 def main() -> None:
