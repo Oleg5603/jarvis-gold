@@ -1,22 +1,25 @@
 from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QPushButton, QListWidget, QListWidgetItem,
-    QSpinBox, QFontComboBox, QSlider, QFrame
+    QSpinBox, QFontComboBox, QSlider, QFrame, QTextEdit
 )
-from PyQt6.QtCore import Qt, QTimer, pyqtSlot
+from PyQt6.QtCore import Qt, QTimer, pyqtSlot, pyqtSignal
 from PyQt6.QtGui import QFont
 
 
 class QuestionsWindow(QMainWindow):
+    mic_toggled = pyqtSignal(bool)
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Суфлёр — Вопросы")
-        self.setGeometry(50, 100, 420, 580)
+        self.setGeometry(50, 80, 430, 660)
         self.setWindowFlags(Qt.WindowType.Window | Qt.WindowType.WindowStaysOnTopHint)
 
         self.duration_seconds = 30 * 60
         self.remaining_seconds = self.duration_seconds
         self.timer_running = False
+        self._mic_on = False
 
         self.timer = QTimer()
         self.timer.setInterval(1000)
@@ -28,8 +31,24 @@ class QuestionsWindow(QMainWindow):
         central = QWidget()
         self.setCentralWidget(central)
         layout = QVBoxLayout(central)
-        layout.setSpacing(8)
-        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setSpacing(6)
+        layout.setContentsMargins(12, 10, 12, 10)
+
+        # --- Статус микрофона ---
+        self.status_label = QLabel("🎙 Статус: инициализация...")
+        self.status_label.setStyleSheet(
+            "background:#e9ecef; border-radius:6px; padding:4px 8px; font-size:12px; color:#495057;"
+        )
+        layout.addWidget(self.status_label)
+
+        # --- Кнопка микрофона ---
+        self.btn_mic = QPushButton("🎙 Включить микрофон")
+        self.btn_mic.setCheckable(True)
+        self.btn_mic.setStyleSheet(
+            "background:#6c757d; color:white; border-radius:6px; padding:7px 14px; font-size:13px;"
+        )
+        self.btn_mic.clicked.connect(self._toggle_mic)
+        layout.addWidget(self.btn_mic)
 
         # --- Шрифт + размер ---
         font_row = QHBoxLayout()
@@ -73,6 +92,19 @@ class QuestionsWindow(QMainWindow):
         """)
         layout.addWidget(self.questions_list, stretch=1)
 
+        # --- Лог распознанного ---
+        log_label = QLabel("Распознано:")
+        log_label.setStyleSheet("font-weight: bold; font-size: 11px; color: #6c757d;")
+        layout.addWidget(log_label)
+
+        self.log_box = QTextEdit()
+        self.log_box.setReadOnly(True)
+        self.log_box.setMaximumHeight(55)
+        self.log_box.setStyleSheet(
+            "background:#f1f3f5; border:1px solid #ced4da; border-radius:4px; font-size:11px; color:#495057;"
+        )
+        layout.addWidget(self.log_box)
+
         sep2 = QFrame()
         sep2.setFrameShape(QFrame.Shape.HLine)
         sep2.setFrameShadow(QFrame.Shadow.Sunken)
@@ -84,7 +116,6 @@ class QuestionsWindow(QMainWindow):
         layout.addWidget(timer_label)
 
         timer_row = QHBoxLayout()
-
         self.duration_spin = QSpinBox()
         self.duration_spin.setRange(5, 120)
         self.duration_spin.setValue(30)
@@ -126,6 +157,47 @@ class QuestionsWindow(QMainWindow):
 
         self._apply_font()
 
+    def _toggle_mic(self, checked: bool):
+        self._mic_on = checked
+        if checked:
+            self.btn_mic.setText("🔴 Микрофон включён — нажми чтобы выключить")
+            self.btn_mic.setStyleSheet(
+                "background:#dc3545; color:white; border-radius:6px; padding:7px 14px; font-size:13px;"
+            )
+        else:
+            self.btn_mic.setText("🎙 Включить микрофон")
+            self.btn_mic.setStyleSheet(
+                "background:#6c757d; color:white; border-radius:6px; padding:7px 14px; font-size:13px;"
+            )
+        self.mic_toggled.emit(checked)
+
+    @pyqtSlot(str)
+    def set_mic_status(self, status: str):
+        styles = {
+            "init":        ("⏳ Инициализация микрофона...", "#fff3cd", "#856404"),
+            "ready":       ("✅ Микрофон готов. Нажми «Включить микрофон»", "#d4edda", "#155724"),
+            "listening":   ("🎙 Слушаю...", "#cce5ff", "#004085"),
+            "recognizing": ("🔄 Распознаю...", "#e2e3e5", "#383d41"),
+            "paused":      ("⏸ Микрофон выключен", "#e9ecef", "#495057"),
+        }
+        if status.startswith("error:"):
+            msg = status[6:]
+            self.status_label.setText(f"❌ {msg}")
+            self.status_label.setStyleSheet(
+                "background:#f8d7da; border-radius:6px; padding:4px 8px; font-size:12px; color:#721c24;"
+            )
+            return
+        text, bg, color = styles.get(status, ("...", "#e9ecef", "#495057"))
+        self.status_label.setText(text)
+        self.status_label.setStyleSheet(
+            f"background:{bg}; border-radius:6px; padding:4px 8px; font-size:12px; color:{color};"
+        )
+
+    def log_recognized(self, text: str):
+        self.log_box.append(f"► {text}")
+        sb = self.log_box.verticalScrollBar()
+        sb.setValue(sb.maximum())
+
     @pyqtSlot()
     def _tick(self):
         if self.remaining_seconds > 0:
@@ -143,17 +215,14 @@ class QuestionsWindow(QMainWindow):
         m, s = divmod(self.remaining_seconds, 60)
         self.timer_display.setText(f"{m:02d}:{s:02d}")
         if self.remaining_seconds <= 300:
-            self.timer_display.setStyleSheet(
-                "font-size: 36px; font-weight: bold; color: #dc3545; letter-spacing: 2px;"
-            )
+            color = "#dc3545"
         elif self.remaining_seconds <= 600:
-            self.timer_display.setStyleSheet(
-                "font-size: 36px; font-weight: bold; color: #fd7e14; letter-spacing: 2px;"
-            )
+            color = "#fd7e14"
         else:
-            self.timer_display.setStyleSheet(
-                "font-size: 36px; font-weight: bold; color: #28a745; letter-spacing: 2px;"
-            )
+            color = "#28a745"
+        self.timer_display.setStyleSheet(
+            f"font-size: 36px; font-weight: bold; color: {color}; letter-spacing: 2px;"
+        )
 
     def _start_timer(self):
         if not self.timer_running:
