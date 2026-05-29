@@ -11,8 +11,6 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    permissions:
-      contents: write
 
     steps:
       - name: Checkout
@@ -55,14 +53,3 @@ jobs:
           path: nutritionist/dist/Sufler.zip
           retention-days: 30
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: sufler-v${{ github.run_number }}
-          name: "Суфлёр Нутрициолога v${{ github.run_number }}"
-          body: |
-            Суфлёр нутрициолога — скачай **Sufler.zip**, распакуй в любую папку, запусти **Sufler.exe**.
-            Python не нужен. Нужен интернет для распознавания речи (Google).
-          files: nutritionist/dist/Sufler.zip
-          draft: false
-          prerelease: false
