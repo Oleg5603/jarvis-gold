@@ -33,10 +33,9 @@ jobs:
         run: |
           python -m PyInstaller `
             --noconfirm `
-            --onefile `
+            --onedir `
             --windowed `
             --name "Sufler" `
-            --collect-all PyQt6 `
             --hidden-import PyQt6.sip `
             --hidden-import speech_recognition `
             --hidden-import pyaudio `
@@ -44,11 +43,16 @@ jobs:
             --hidden-import json `
             main.py
 
+      - name: Zip dist folder
+        working-directory: nutritionist
+        run: |
+          Compress-Archive -Path dist\Sufler -DestinationPath dist\Sufler.zip
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Sufler-exe
-          path: nutritionist/dist/Sufler.exe
+          name: Sufler-zip
+          path: nutritionist/dist/Sufler.zip
           retention-days: 30
 
       - name: Create Release
@@ -57,9 +61,8 @@ jobs:
           tag_name: sufler-v${{ github.run_number }}
           name: "Суфлёр Нутрициолога v${{ github.run_number }}"
           body: |
-            Суфлёр нутрициолога — готовый .exe файл.
-            Скачай **Sufler.exe** и запусти — Python не нужен.
-            Нужен интернет для распознавания речи (Google).
-          files: nutritionist/dist/Sufler.exe
+            Суфлёр нутрициолога — скачай **Sufler.zip**, распакуй в любую папку, запусти **Sufler.exe**.
+            Python не нужен. Нужен интернет для распознавания речи (Google).
+          files: nutritionist/dist/Sufler.zip
           draft: false
           prerelease: false
