@@ -27,6 +27,15 @@ from trading import (
     format_trade_journal, format_statistics,
     generate_mql4, analyze_backtest, check_news_alerts,
 )
+from tasks import (
+    load_tasks, save_tasks, add_task, mark_done, delete_task,
+    format_task_list, format_reminder, PRIORITY_MAP, parse_deadline,
+)
+from leads import (
+    load_leads, save_leads, add_lead, get_lead, set_status, add_note,
+    delete_lead, format_lead, format_leads_list, format_leads_stats,
+    STATUS_ALIASES, STATUS_LABELS,
+)
 
 load_dotenv()
 
@@ -275,12 +284,16 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 
 async def handle_cyrillic_commands(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Обрабатывает кириллические команды /новости и /золото."""
+    """Обрабатывает кириллические команды /новости, /золото и многошаговые диалоги."""
     text = (update.message.text or "").strip().lower()
     if text.startswith("/новости"):
         await cmd_news(update, context)
     elif text.startswith("/золото"):
         await cmd_gold(update, context)
+    elif await _handle_task_flow(update, context):
+        return
+    elif context.user_data.get("awaiting_balance"):
+        await handle_balance_reply(update, context)
     else:
         await handle_message(update, context)
 
@@ -472,6 +485,272 @@ async def handle_balance_reply(update: Update, context: ContextTypes.DEFAULT_TYP
     await update.message.reply_text(f"✅ Баланс ${balance:,.0f} сохранён.\n\n{text}", parse_mode="Markdown")
 
 
+# ── Задачи ─────────────────────────────────────────────────────────────────────
+
+async def cmd_zadacha(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    text = " ".join(context.args).strip()
+    if not text:
+        await update.message.reply_text(
+            "Напиши текст задачи:\n`/zadacha Позвонить Ивану`",
+            parse_mode="Markdown"
+        )
+        return
+    context.user_data["adding_task"] = {"step": "priority", "text": text}
+    await update.message.reply_text(
+        f"📝 *{text}*\n\nВыбери приоритет:\n"
+        "1️⃣ — 🔴 Высокий\n2️⃣ — 🟡 Средний\n3️⃣ — 🟢 Низкий",
+        parse_mode="Markdown"
+    )
+
+
+async def cmd_zadachi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    data = load_tasks()
+    await update.message.reply_text(format_task_list(data), parse_mode="Markdown")
+
+
+async def cmd_gotovo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    if not context.args:
+        await update.message.reply_text("Укажи номер задачи: `/gotovo 3`", parse_mode="Markdown")
+        return
+    try:
+        task_id = int(context.args[0])
+    except ValueError:
+        await update.message.reply_text("Неверный номер. Пример: `/gotovo 3`", parse_mode="Markdown")
+        return
+    data = load_tasks()
+    task = mark_done(data, task_id)
+    if task is None:
+        await update.message.reply_text(f"Задача #{task_id} не найдена или уже выполнена.")
+        return
+    save_tasks(data)
+    await update.message.reply_text(f"✅ Задача #{task_id} выполнена!\n_{task['text']}_", parse_mode="Markdown")
+
+
+async def cmd_udalit_zadachu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    if not context.args:
+        await update.message.reply_text("Укажи номер задачи: `/del_zadachu 3`", parse_mode="Markdown")
+        return
+    try:
+        task_id = int(context.args[0])
+    except ValueError:
+        await update.message.reply_text("Неверный номер. Пример: `/del_zadachu 3`", parse_mode="Markdown")
+        return
+    data = load_tasks()
+    if delete_task(data, task_id):
+        save_tasks(data)
+        await update.message.reply_text(f"🗑 Задача #{task_id} удалена.")
+    else:
+        await update.message.reply_text(f"Задача #{task_id} не найдена.")
+
+
+async def _handle_task_flow(update: Update, context: ContextTypes.DEFAULT_TYPE) -> bool:
+    """Обрабатывает многошаговый диалог добавления задачи. Возвращает True если обработал."""
+    state = context.user_data.get("adding_task")
+    if not state:
+        return False
+
+    user_text = (update.message.text or "").strip()
+
+    if state["step"] == "priority":
+        prio = PRIORITY_MAP.get(user_text.lower())
+        if prio is None:
+            await update.message.reply_text(
+                "Выбери: *1* — 🔴 Высокий, *2* — 🟡 Средний, *3* — 🟢 Низкий",
+                parse_mode="Markdown"
+            )
+            return True
+        state["priority"] = prio
+        state["step"] = "deadline"
+        await update.message.reply_text(
+            "Укажи срок (например: `30.05.2026 15:00`) или напиши *нет*",
+            parse_mode="Markdown"
+        )
+        return True
+
+    if state["step"] == "deadline":
+        deadline = parse_deadline(user_text)
+        if user_text.lower() not in ("нет", "no", "-") and deadline is None:
+            await update.message.reply_text(
+                "Не понял дату. Напиши в формате `30.05.2026 15:00` или *нет*",
+                parse_mode="Markdown"
+            )
+            return True
+        data = load_tasks()
+        task = add_task(data, state["text"], state["priority"], deadline)
+        save_tasks(data)
+        context.user_data.pop("adding_task", None)
+        from tasks import PRIORITY_LABELS
+        prio_label = PRIORITY_LABELS.get(state["priority"], "🟡 Средний")
+        dl_str = f"\n📅 Срок: {deadline.strftime('%d.%m.%Y %H:%M')}" if deadline else ""
+        await update.message.reply_text(
+            f"✅ Задача #{task['id']} добавлена!\n\n*{task['text']}*\n{prio_label}{dl_str}",
+            parse_mode="Markdown"
+        )
+        return True
+
+    return False
+
+
+# ── Лидогенерация ──────────────────────────────────────────────────────────────
+
+async def cmd_lid(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    args = context.args
+    if not args:
+        await update.message.reply_text(
+            "Добавить лида:\n`/lid Имя Телефон [Источник]`\n\nПример:\n`/lid Иван +7900123 Instagram`",
+            parse_mode="Markdown"
+        )
+        return
+    if len(args) < 2:
+        await update.message.reply_text(
+            "Нужно минимум имя и контакт.\nПример: `/lid Иван +7900123`",
+            parse_mode="Markdown"
+        )
+        return
+    name = args[0]
+    contact = args[1]
+    source = " ".join(args[2:]) if len(args) > 2 else ""
+    data = load_leads()
+    lead = add_lead(data, name, contact, source)
+    save_leads(data)
+    await update.message.reply_text(
+        f"✅ Лид #{lead['id']} добавлен!\n\n{format_lead(lead)}",
+        parse_mode="Markdown"
+    )
+
+
+async def cmd_lidy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    status_filter = None
+    if context.args:
+        alias = " ".join(context.args).lower()
+        status_filter = STATUS_ALIASES.get(alias)
+    data = load_leads()
+    await update.message.reply_text(format_leads_list(data, status_filter), parse_mode="Markdown")
+
+
+async def cmd_lid_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    if not context.args:
+        await update.message.reply_text("Укажи номер лида: `/lid_info 3`", parse_mode="Markdown")
+        return
+    try:
+        lead_id = int(context.args[0])
+    except ValueError:
+        await update.message.reply_text("Неверный номер. Пример: `/lid_info 3`", parse_mode="Markdown")
+        return
+    data = load_leads()
+    lead = get_lead(data, lead_id)
+    if lead is None:
+        await update.message.reply_text(f"Лид #{lead_id} не найден.")
+        return
+    await update.message.reply_text(format_lead(lead), parse_mode="Markdown")
+
+
+async def cmd_lid_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    if len(context.args) < 2:
+        statuses = "\n".join(f"`{k}` — {v}" for k, v in STATUS_LABELS.items())
+        await update.message.reply_text(
+            f"Использование: `/lid_status <номер> <статус>`\n\nСтатусы:\n{statuses}",
+            parse_mode="Markdown"
+        )
+        return
+    try:
+        lead_id = int(context.args[0])
+    except ValueError:
+        await update.message.reply_text("Неверный номер.", parse_mode="Markdown")
+        return
+    status_key = STATUS_ALIASES.get(context.args[1].lower())
+    if status_key is None:
+        await update.message.reply_text(
+            "Неизвестный статус. Используй: `new`, `work`, `done`, `refuse`",
+            parse_mode="Markdown"
+        )
+        return
+    data = load_leads()
+    lead = set_status(data, lead_id, status_key)
+    if lead is None:
+        await update.message.reply_text(f"Лид #{lead_id} не найден.")
+        return
+    save_leads(data)
+    label = STATUS_LABELS[status_key]
+    await update.message.reply_text(f"✅ Лид #{lead_id} — статус обновлён: *{label}*", parse_mode="Markdown")
+
+
+async def cmd_lid_note(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    if len(context.args) < 2:
+        await update.message.reply_text(
+            "Использование: `/lid_note <номер> <заметка>`\nПример: `/lid_note 3 Перезвонить в пятницу`",
+            parse_mode="Markdown"
+        )
+        return
+    try:
+        lead_id = int(context.args[0])
+    except ValueError:
+        await update.message.reply_text("Неверный номер.", parse_mode="Markdown")
+        return
+    note = " ".join(context.args[1:])
+    data = load_leads()
+    lead = add_note(data, lead_id, note)
+    if lead is None:
+        await update.message.reply_text(f"Лид #{lead_id} не найден.")
+        return
+    save_leads(data)
+    await update.message.reply_text(f"📝 Заметка добавлена к лиду #{lead_id}.", parse_mode="Markdown")
+
+
+async def cmd_lid_del(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    if not context.args:
+        await update.message.reply_text("Укажи номер лида: `/lid_del 3`", parse_mode="Markdown")
+        return
+    try:
+        lead_id = int(context.args[0])
+    except ValueError:
+        await update.message.reply_text("Неверный номер.", parse_mode="Markdown")
+        return
+    data = load_leads()
+    if delete_lead(data, lead_id):
+        save_leads(data)
+        await update.message.reply_text(f"🗑 Лид #{lead_id} удалён.")
+    else:
+        await update.message.reply_text(f"Лид #{lead_id} не найден.")
+
+
+async def cmd_lid_stat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not _owner_check(update):
+        return
+    data = load_leads()
+    await update.message.reply_text(format_leads_stats(data), parse_mode="Markdown")
+
+
+async def task_reminder_job(context) -> None:
+    owner_id = get_owner()
+    if owner_id is None:
+        return
+    data = load_tasks()
+    msg = format_reminder(data)
+    if msg:
+        await context.bot.send_message(chat_id=owner_id, text=msg, parse_mode="Markdown")
+
+
 def main() -> None:
     app = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
@@ -482,15 +761,45 @@ def main() -> None:
     app.add_handler(CommandHandler("news", cmd_news))
     app.add_handler(CommandHandler("gold", cmd_gold))
     app.add_handler(CommandHandler("test_alert", cmd_test_alert))
+    # Торговые команды
+    app.add_handler(CommandHandler("signal", cmd_signal))
+    app.add_handler(CommandHandler("analiz", cmd_analiz))
+    app.add_handler(CommandHandler("risk", cmd_risk))
+    app.add_handler(CommandHandler("sdelka", cmd_sdelka))
+    app.add_handler(CommandHandler("jurnal", cmd_jurnal))
+    app.add_handler(CommandHandler("statistika", cmd_statistika))
+    app.add_handler(CommandHandler("zakryt", cmd_zakryt))
+    app.add_handler(CommandHandler("kod", cmd_kod))
+    app.add_handler(CommandHandler("baktest", cmd_baktest))
+    # Задачи
+    app.add_handler(CommandHandler("zadacha", cmd_zadacha))
+    app.add_handler(CommandHandler("zadachi", cmd_zadachi))
+    app.add_handler(CommandHandler("gotovo", cmd_gotovo))
+    app.add_handler(CommandHandler("del_zadachu", cmd_udalit_zadachu))
+    # Лидогенерация
+    app.add_handler(CommandHandler("lid", cmd_lid))
+    app.add_handler(CommandHandler("lidy", cmd_lidy))
+    app.add_handler(CommandHandler("lid_info", cmd_lid_info))
+    app.add_handler(CommandHandler("lid_status", cmd_lid_status))
+    app.add_handler(CommandHandler("lid_note", cmd_lid_note))
+    app.add_handler(CommandHandler("lid_del", cmd_lid_del))
+    app.add_handler(CommandHandler("lid_stat", cmd_lid_stat))
     app.add_handler(MessageHandler(filters.VOICE, handle_voice))
     # Handles both cyrillic commands and regular messages
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_cyrillic_commands))
 
-    # Утренний алерт каждый день в 08:00 UTC
+    # Утренний алерт каждый день в 09:00 UTC (12:00 МСК)
     app.job_queue.run_daily(
         morning_brief_job,
-        time=dtime(hour=9, minute=0, tzinfo=timezone.utc),  # 12:00 МСК
+        time=dtime(hour=9, minute=0, tzinfo=timezone.utc),
         name="morning_gold_brief",
+    )
+    # Напоминание о задачах каждые 4 часа
+    app.job_queue.run_repeating(
+        task_reminder_job,
+        interval=4 * 3600,
+        first=300,
+        name="task_reminder",
     )
 
     app.run_polling(drop_pending_updates=True)
