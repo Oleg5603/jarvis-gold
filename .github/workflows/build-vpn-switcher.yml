@@ -1,0 +1,53 @@
+name: Build VpnSwitcher.exe
+
+on:
+  push:
+    branches:
+      - nutritionist
+    paths:
+      - 'vpn_switcher/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyQt6 pyinstaller
+
+      - name: Build exe
+        working-directory: vpn_switcher
+        run: |
+          python -m PyInstaller `
+            --noconfirm `
+            --onedir `
+            --windowed `
+            --name "VpnSwitcher" `
+            --hidden-import PyQt6.sip `
+            --hidden-import PyQt6.QtCore `
+            --hidden-import PyQt6.QtWidgets `
+            --hidden-import PyQt6.QtGui `
+            main.py
+
+      - name: Zip dist folder
+        working-directory: vpn_switcher
+        run: |
+          Compress-Archive -Path dist\VpnSwitcher -DestinationPath dist\VpnSwitcher.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VpnSwitcher-zip
+          path: vpn_switcher/dist/VpnSwitcher.zip
+          retention-days: 30
