@@ -22,10 +22,14 @@ if not os.environ.get("ANTHROPIC_API_KEY"):
                 k, _, v = line.partition("=")
                 os.environ.setdefault(k.strip(), v.strip())
 
-_client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+_api_key = os.environ.get("ANTHROPIC_API_KEY")
+_client = anthropic.Anthropic(api_key=_api_key) if _api_key else None
 
 
 async def ask_claude(prompt: str, max_wait: int = 90) -> str:
+    if _client is None:
+        print("[scout] ANTHROPIC_API_KEY не задан — пропуск Claude", flush=True)
+        return ""
     try:
         response = await asyncio.wait_for(
             asyncio.to_thread(
