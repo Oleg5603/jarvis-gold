@@ -5,28 +5,41 @@ Forum Hunter Agent — парсит свежие темы (<7 дней) на ц�
 
 import asyncio
 import json
+import os
 import re
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import aiohttp
+import anthropic
 from bs4 import BeautifulSoup
 
-CLAUDE_BIN = "/usr/bin/claude"
+if not os.environ.get("ANTHROPIC_API_KEY"):
+    env_file = Path(__file__).parent.parent.parent / ".env"
+    if env_file.exists():
+        for line in env_file.read_text().splitlines():
+            if "=" in line and not line.startswith("#"):
+                k, _, v = line.partition("=")
+                os.environ.setdefault(k.strip(), v.strip())
+
+_client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 
 async def ask_claude(prompt: str, max_wait: int = 30) -> str:
-    proc = await asyncio.create_subprocess_exec(
-        CLAUDE_BIN, "-p", "--output-format", "text",
-        stdin=asyncio.subprocess.PIPE,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
     try:
-        stdout, _ = await asyncio.wait_for(proc.communicate(prompt.encode()), timeout=max_wait)
-        return stdout.decode().strip()
-    except asyncio.TimeoutError:
-        proc.kill()
+        response = await asyncio.wait_for(
+            asyncio.to_thread(
+                lambda: _client.messages.create(
+                    model="claude-haiku-4-5-20251001",
+                    max_tokens=256,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+            ),
+            timeout=max_wait,
+        )
+        return response.content[0].text.strip()
+    except Exception as e:
+        print(f"[forum_hunter] claude error: {e}", flush=True)
         return ""
 
 ROOT = Path(__file__).parent.parent.parent

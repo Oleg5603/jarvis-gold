@@ -5,25 +5,40 @@ Validator Agent — верифицирует авторов: проверяет 
 
 import asyncio
 import json
+import os
 import re
+import sys
 from datetime import datetime
 from pathlib import Path
 
-CLAUDE_BIN = "/usr/bin/claude"
+import anthropic
+
+if not os.environ.get("ANTHROPIC_API_KEY"):
+    env_file = Path(__file__).parent.parent.parent / ".env"
+    if env_file.exists():
+        for line in env_file.read_text().splitlines():
+            if "=" in line and not line.startswith("#"):
+                k, _, v = line.partition("=")
+                os.environ.setdefault(k.strip(), v.strip())
+
+_client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 
-async def ask_claude(prompt: str, max_wait: int = 60) -> str:
-    proc = await asyncio.create_subprocess_exec(
-        CLAUDE_BIN, "-p", "--output-format", "text",
-        stdin=asyncio.subprocess.PIPE,
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
+async def ask_claude(prompt: str, max_wait: int = 120) -> str:
     try:
-        stdout, _ = await asyncio.wait_for(proc.communicate(prompt.encode()), timeout=max_wait)
-        return stdout.decode().strip()
-    except asyncio.TimeoutError:
-        proc.kill()
+        response = await asyncio.wait_for(
+            asyncio.to_thread(
+                lambda: _client.messages.create(
+                    model="claude-haiku-4-5-20251001",
+                    max_tokens=2048,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+            ),
+            timeout=max_wait,
+        )
+        return response.content[0].text.strip()
+    except Exception as e:
+        print(f"[validator] claude error: {e}", flush=True)
         return ""
 
 ROOT = Path(__file__).parent.parent.parent
@@ -35,19 +50,20 @@ BOT_MARKERS = [
     "заработок", "инвестиции", "крипта", "млм", "100% гарантия",
 ]
 
-VALIDATE_PROMPT = """Ты аналитик лидов. Оцени качество этого контакта для психотерапевта, работающего с парами.
+BATCH_VALIDATE_PROMPT = """Ты аналитик лидов для психотерапевта, работающего с парами в кризисе (измены, развод, потеря близости).
 
-Источник: {source}
-Автор: {author}
-Цитата: "{quote}"
+Оцени каждый контакт из списка. Для каждого верни JSON-объект с полями:
+- authenticity (0-100): реальный человек, не бот, не реклама
+- problem_match (0-100): проблема подходит семейному психотерапевту
+- readiness (0-100): человек готов обратиться за помощью
+- confidence_score: среднее трёх оценок
+- notes: одна короткая фраза
 
-Оцени по критериям (от 0 до 100 каждый):
-- authenticity: насколько это реальный человек (не бот, не реклама)
-- problem_match: насколько проблема подходит психотерапевту по супружеским отношениям
-- readiness: насколько человек готов к обращению за помощью
+Верни ТОЛЬКО JSON-массив (без пояснений):
+[{{"authenticity":0,"problem_match":0,"readiness":0,"confidence_score":0,"notes":""}}, ...]
 
-Ответь только JSON:
-{{"authenticity": 0-100, "problem_match": 0-100, "readiness": 0-100, "confidence_score": среднее_трёх, "notes": "короткий комментарий"}}"""
+Контакты для оценки:
+{leads_json}"""
 
 
 def is_likely_bot(text: str) -> bool:
@@ -66,19 +82,49 @@ def basic_validate(lead: dict) -> tuple[bool, str]:
     return True, "OK"
 
 
-async def ai_validate(lead: dict) -> dict:
-    prompt = VALIDATE_PROMPT.format(
-        source=lead.get("source", ""),
-        author=lead.get("author", ""),
-        quote=lead.get("quote", "")[:250],
-    )
+def fallback_scores(lead: dict) -> dict:
+    """Локальная оценка без Claude — быстро, без API."""
+    text = (lead.get("quote", "") + " " + lead.get("title", "")).lower()
+    high_intent = ["хочу развестись", "муж изменил", "жена изменила", "спасти брак",
+                   "помогите", "не знаю что делать", "психолог", "терапевт", "консультация"]
+    medium_intent = ["кризис", "конфликт", "ругаемся", "охладел", "не понимает",
+                     "потеряли близость", "чужие", "развод", "измена"]
+    score = 30
+    for phrase in high_intent:
+        if phrase in text:
+            score += 15
+    for phrase in medium_intent:
+        if phrase in text:
+            score += 8
+    score = min(score, 95)
+    return {"authenticity": 70, "problem_match": score, "readiness": max(30, score - 15),
+            "confidence_score": round((70 + score + max(30, score - 15)) / 3),
+            "notes": "локальная оценка"}
+
+
+async def ai_validate_batch(candidates: list[dict]) -> list[dict]:
+    """Один вызов Claude для всех кандидатов — экономит время."""
+    leads_for_prompt = [
+        {"id": i, "source": l.get("source", ""), "author": l.get("author", ""),
+         "quote": l.get("quote", "")[:200]}
+        for i, l in enumerate(candidates)
+    ]
+    prompt = BATCH_VALIDATE_PROMPT.format(leads_json=json.dumps(leads_for_prompt, ensure_ascii=False))
+    raw = await ask_claude(prompt, max_wait=90)
+
+    if not raw:
+        return [fallback_scores(l) for l in candidates]
+
     try:
-        raw = await ask_claude(prompt)
         if "```" in raw:
             raw = raw.split("```")[1].lstrip("json").strip()
-        return json.loads(raw)
-    except Exception as e:
-        return {"authenticity": 50, "problem_match": 50, "readiness": 30, "confidence_score": 43, "notes": str(e)}
+        results = json.loads(raw)
+        if isinstance(results, list) and len(results) == len(candidates):
+            return results
+    except Exception:
+        pass
+
+    return [fallback_scores(l) for l in candidates]
 
 
 async def run():
@@ -91,17 +137,29 @@ async def run():
     raw_leads = json.loads(INPUT_FILE.read_text(encoding="utf-8"))
     print(f"[validator] Лидов на входе: {len(raw_leads)}", flush=True)
 
-    enriched = []
-
+    # Базовая фильтрация
+    candidates = []
     for i, lead in enumerate(raw_leads):
         ok, reason = basic_validate(lead)
         if not ok:
             print(f"[validator] #{i+1} отклонён: {reason}", flush=True)
-            continue
+        else:
+            candidates.append(lead)
 
-        scores = await ai_validate(lead)
+    print(f"[validator] Прошли базовый фильтр: {len(candidates)}", flush=True)
+
+    if not candidates:
+        OUTPUT_FILE.write_text("[]", encoding="utf-8")
+        print("[validator] Нет кандидатов для AI-валидации", flush=True)
+        sys.exit(0)
+
+    # Один батчевый вызов Claude для всех кандидатов
+    print(f"[validator] Батчевая AI-валидация {len(candidates)} лидов...", flush=True)
+    all_scores = await ai_validate_batch(candidates)
+
+    enriched = []
+    for lead, scores in zip(candidates, all_scores):
         confidence = scores.get("confidence_score", 0)
-
         enriched_lead = {
             **lead,
             "validation": scores,
@@ -110,8 +168,7 @@ async def run():
             "ready_for_contact": confidence >= 55,
         }
         enriched.append(enriched_lead)
-        print(f"[validator] #{i+1} {lead.get('source', '')} confidence={confidence:.0f}", flush=True)
-        await asyncio.sleep(0.5)
+        print(f"[validator] {lead.get('source', '')} confidence={confidence:.0f}", flush=True)
 
     OUTPUT_FILE.write_text(json.dumps(enriched, ensure_ascii=False, indent=2), encoding="utf-8")
     ready = sum(1 for l in enriched if l["ready_for_contact"])
