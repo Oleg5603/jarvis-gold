@@ -1,5 +1,6 @@
 """
 Booking Agent — финальный шаг прогрева: приглашение записаться через @LanaS777Bot.
+Горячие лиды автоматически отправляются в бота и напрямую Лане.
 Вход: warming_pipeline/sequences.json → Выход: warming_pipeline/booked_leads.json
 """
 
@@ -11,6 +12,8 @@ from datetime import datetime
 from pathlib import Path
 
 import anthropic
+import urllib.request
+import urllib.parse
 
 if not os.environ.get("ANTHROPIC_API_KEY"):
     env_file = Path(__file__).parent.parent.parent / ".env"
@@ -28,6 +31,45 @@ INPUT_FILE = ROOT / "warming_pipeline" / "sequences.json"
 OUTPUT_FILE = ROOT / "warming_pipeline" / "booked_leads.json"
 
 BOT_USERNAME = "LanaS777Bot"
+LANA_BOT_TOKEN = os.environ.get("LANA_BOT_TOKEN", "")
+LANA_CHAT_ID = os.environ.get("LANA_CHAT_ID", "")
+
+
+def send_telegram(token: str, chat_id: str, text: str) -> bool:
+    if not token or not chat_id:
+        return False
+    try:
+        url = f"https://api.telegram.org/bot{token}/sendMessage"
+        data = urllib.parse.urlencode({
+            "chat_id": chat_id,
+            "text": text,
+            "parse_mode": "HTML",
+        }).encode()
+        req = urllib.request.Request(url, data=data, method="POST")
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return resp.status == 200
+    except Exception as e:
+        print(f"[booking] Ошибка отправки в Telegram: {e}", flush=True)
+        return False
+
+
+def notify_hot_lead(lead: dict, booking: dict) -> None:
+    author = lead.get("author", "неизвестен")
+    source_url = lead.get("url", "")
+    pain = lead.get("profile", {}).get("pain_point", "семейный кризис")
+    booking_msg = booking.get("booking_message", "")
+
+    text = (
+        f"🔥 <b>Горячий лид!</b>\n\n"
+        f"👤 Автор: <b>{author}</b>\n"
+        f"💬 Боль: {pain}\n"
+        f"🔗 Пост: {source_url}\n\n"
+        f"📝 Готовое сообщение:\n<i>{booking_msg}</i>"
+    )
+
+    if LANA_BOT_TOKEN and LANA_CHAT_ID:
+        ok = send_telegram(LANA_BOT_TOKEN, LANA_CHAT_ID, text)
+        print(f"[booking] Отправка Лане: {'✅' if ok else '❌'}", flush=True)
 
 BOOKING_PROMPT = """Ты копирайтер для психотерапевта (специализация: семейные кризисы).
 
@@ -123,6 +165,10 @@ async def run():
         print(f"[booking] {i}/{len(sequences)}: {author}", flush=True)
 
         booking = await generate_booking_message(lead)
+
+        priority = booking.get("priority", "")
+        if priority == "горячий":
+            notify_hot_lead(lead, booking)
 
         booked.append({
             **lead,
