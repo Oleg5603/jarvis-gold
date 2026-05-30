@@ -1,0 +1,33 @@
+2026-05-30 17:05:16,337 [INFO] warming_rop: ============================================================
+2026-05-30 17:05:16,338 [INFO] warming_rop: AI-команда прогрева: warming_team
+2026-05-30 17:05:16,338 [INFO] warming_rop: Лидов на входе: 21
+2026-05-30 17:05:16,338 [INFO] warming_rop: Агентов в команде: 4
+2026-05-30 17:05:16,338 [INFO] warming_rop: ============================================================
+2026-05-30 17:05:16,338 [INFO] warming_rop: 
+--- Этап 1: ['profiler'] ---
+2026-05-30 17:05:16,338 [INFO] warming_rop: ▶ Profiler Agent (Психолог)
+2026-05-30 17:05:17,322 [INFO] warming_rop:   ✅ Profiler Agent (Психолог) — готово
+2026-05-30 17:05:17,323 [INFO] warming_rop: 
+--- Этап 2: ['script_writer'] ---
+2026-05-30 17:05:17,323 [INFO] warming_rop: ▶ Script Writer Agent (Копирайтер)
+2026-05-30 17:05:18,364 [INFO] warming_rop:   ✅ Script Writer Agent (Копирайтер) — готово
+2026-05-30 17:05:18,364 [INFO] warming_rop: 
+--- Этап 3: ['sequence_builder'] ---
+2026-05-30 17:05:18,364 [INFO] warming_rop: ▶ Sequence Builder Agent (Стратег)
+2026-05-30 17:05:19,304 [INFO] warming_rop:   ✅ Sequence Builder Agent (Стратег) — готово
+2026-05-30 17:05:19,304 [INFO] warming_rop: 
+--- Этап 4: ['reporter'] ---
+2026-05-30 17:05:19,304 [INFO] warming_rop: ▶ Reporter Agent (Аналитик)
+2026-05-30 17:05:19,351 [INFO] warming_rop:   ✅ Reporter Agent (Аналитик) — готово
+2026-05-30 17:05:19,351 [INFO] warming_rop: 
+============================================================
+2026-05-30 17:05:19,351 [INFO] warming_rop: ИТОГИ КОМАНДЫ:
+2026-05-30 17:05:19,351 [INFO] warming_rop:   ✅ Profiler Agent (Психолог)
+2026-05-30 17:05:19,351 [INFO] warming_rop:   ✅ Script Writer Agent (Копирайтер)
+2026-05-30 17:05:19,351 [INFO] warming_rop:   ✅ Sequence Builder Agent (Стратег)
+2026-05-30 17:05:19,351 [INFO] warming_rop:   ✅ Reporter Agent (Аналитик)
+2026-05-30 17:05:19,352 [INFO] warming_rop: 
+🎯 Готово к отправке: 21 лидов
+2026-05-30 17:05:19,352 [INFO] warming_rop: 📋 Скриптов написано: 21
+2026-05-30 17:05:19,352 [INFO] warming_rop: 📅 Последовательностей: 21
+2026-05-30 17:05:19,352 [INFO] warming_rop: ============================================================

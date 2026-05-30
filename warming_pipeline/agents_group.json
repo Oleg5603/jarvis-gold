@@ -1,0 +1,66 @@
+{
+  "group": "warming_team",
+  "version": "1.0",
+  "description": "AI-команда по отработке и прогреванию лидов для психотерапевта. РОП — оркестратор.",
+  "data_dir": "./warming_pipeline",
+  "logs_dir": "./warming_pipeline/logs",
+  "files": {
+    "input":     "leads_pipeline/ready_for_crm.json",
+    "profiles":  "warming_pipeline/profiles.json",
+    "scripts":   "warming_pipeline/scripts.json",
+    "sequences": "warming_pipeline/sequences.json",
+    "report":    "warming_pipeline/report.json"
+  },
+  "agents": [
+    {
+      "id": "profiler",
+      "name": "Profiler Agent (Психолог)",
+      "description": "Читает пост лида и составляет психологический профиль: боль, состояние, стиль общения",
+      "module": "warming_pipeline/agents/profiler_agent.py",
+      "input": "leads_pipeline/ready_for_crm.json",
+      "output": "warming_pipeline/profiles.json",
+      "depends_on": [],
+      "retry": 2,
+      "timeout_sec": 180
+    },
+    {
+      "id": "script_writer",
+      "name": "Script Writer Agent (Копирайтер)",
+      "description": "Пишет персональное первое сообщение под каждый профиль — мягко, без давления",
+      "module": "warming_pipeline/agents/script_writer_agent.py",
+      "input": "warming_pipeline/profiles.json",
+      "output": "warming_pipeline/scripts.json",
+      "depends_on": ["profiler"],
+      "retry": 2,
+      "timeout_sec": 180
+    },
+    {
+      "id": "sequence_builder",
+      "name": "Sequence Builder Agent (Стратег)",
+      "description": "Строит план прогрева 5 касаний: от первого контакта до мягкого предложения",
+      "module": "warming_pipeline/agents/sequence_agent.py",
+      "input": "warming_pipeline/scripts.json",
+      "output": "warming_pipeline/sequences.json",
+      "depends_on": ["script_writer"],
+      "retry": 2,
+      "timeout_sec": 180
+    },
+    {
+      "id": "reporter",
+      "name": "Reporter Agent (Аналитик)",
+      "description": "Формирует итоговый отчёт команды: кто готов к контакту, приоритеты, статистика",
+      "module": "warming_pipeline/agents/report_agent.py",
+      "input": "warming_pipeline/sequences.json",
+      "output": "warming_pipeline/report.json",
+      "depends_on": ["sequence_builder"],
+      "retry": 1,
+      "timeout_sec": 60
+    }
+  ],
+  "pipeline_order": [
+    ["profiler"],
+    ["script_writer"],
+    ["sequence_builder"],
+    ["reporter"]
+  ]
+}

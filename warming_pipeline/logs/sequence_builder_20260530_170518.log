@@ -1,0 +1,25 @@
+[sequence_builder] Старт Sequence Builder Agent
+[sequence_builder] Скриптов на входе: 21
+[sequence_builder] Нет API-ключа — использую шаблонные последовательности
+[sequence_builder] 1/21: HappyTalkie
+[sequence_builder] 2/21: Zyla87
+[sequence_builder] 3/21: Zyla87
+[sequence_builder] 4/21: user6426421
+[sequence_builder] 5/21: ramshik1
+[sequence_builder] 6/21: Mirage.Mage
+[sequence_builder] 7/21: zxpg
+[sequence_builder] 8/21: ogonvpechi
+[sequence_builder] 9/21: DecimusDecius
+[sequence_builder] 10/21: Le.Bateleur
+[sequence_builder] 11/21: RasumPotr
+[sequence_builder] 12/21: OMGWTFZBS
+[sequence_builder] 13/21: Montana7.62
+[sequence_builder] 14/21: KirDracon
+[sequence_builder] 15/21: usermenn
+[sequence_builder] 16/21: ProfessoreSV
+[sequence_builder] 17/21: MrLugovskiy
+[sequence_builder] 18/21: user6426421
+[sequence_builder] 19/21: Аноним
+[sequence_builder] 20/21: Аноним
+[sequence_builder] 21/21: asdfqwerzxc
+[sequence_builder] Готово: 21 последовательностей → /root/telegram-bot/warming_pipeline/sequences.json

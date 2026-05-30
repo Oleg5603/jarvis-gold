@@ -1,0 +1,25 @@
+[profiler] Старт Profiler Agent
+[profiler] Лидов на входе: 21
+[profiler] ANTHROPIC_API_KEY не найден — использую шаблонные профили
+[profiler] 1/21: HappyTalkie
+[profiler] 2/21: Zyla87
+[profiler] 3/21: Zyla87
+[profiler] 4/21: user6426421
+[profiler] 5/21: ramshik1
+[profiler] 6/21: Mirage.Mage
+[profiler] 7/21: zxpg
+[profiler] 8/21: ogonvpechi
+[profiler] 9/21: DecimusDecius
+[profiler] 10/21: Le.Bateleur
+[profiler] 11/21: RasumPotr
+[profiler] 12/21: OMGWTFZBS
+[profiler] 13/21: Montana7.62
+[profiler] 14/21: KirDracon
+[profiler] 15/21: usermenn
+[profiler] 16/21: ProfessoreSV
+[profiler] 17/21: MrLugovskiy
+[profiler] 18/21: user6426421
+[profiler] 19/21: Аноним
+[profiler] 20/21: Аноним
+[profiler] 21/21: asdfqwerzxc
+[profiler] Готово: 21 профилей → /root/telegram-bot/warming_pipeline/profiles.json

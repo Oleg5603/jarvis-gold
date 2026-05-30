@@ -1,0 +1,25 @@
+[script_writer] Старт Script Writer Agent
+[script_writer] Профилей на входе: 21
+[script_writer] Нет API-ключа — использую шаблонные скрипты
+[script_writer] 1/21: HappyTalkie
+[script_writer] 2/21: Zyla87
+[script_writer] 3/21: Zyla87
+[script_writer] 4/21: user6426421
+[script_writer] 5/21: ramshik1
+[script_writer] 6/21: Mirage.Mage
+[script_writer] 7/21: zxpg
+[script_writer] 8/21: ogonvpechi
+[script_writer] 9/21: DecimusDecius
+[script_writer] 10/21: Le.Bateleur
+[script_writer] 11/21: RasumPotr
+[script_writer] 12/21: OMGWTFZBS
+[script_writer] 13/21: Montana7.62
+[script_writer] 14/21: KirDracon
+[script_writer] 15/21: usermenn
+[script_writer] 16/21: ProfessoreSV
+[script_writer] 17/21: MrLugovskiy
+[script_writer] 18/21: user6426421
+[script_writer] 19/21: Аноним
+[script_writer] 20/21: Аноним
+[script_writer] 21/21: asdfqwerzxc
+[script_writer] Готово: 21 скриптов → /root/telegram-bot/warming_pipeline/scripts.json
