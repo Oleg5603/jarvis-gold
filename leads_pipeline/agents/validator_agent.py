@@ -5,14 +5,26 @@ Validator Agent — верифицирует авторов: проверяет 
 
 import asyncio
 import json
-import os
 import re
-import sys
 from datetime import datetime
 from pathlib import Path
 
-import aiohttp
-import anthropic
+CLAUDE_BIN = "/usr/bin/claude"
+
+
+async def ask_claude(prompt: str, max_wait: int = 60) -> str:
+    proc = await asyncio.create_subprocess_exec(
+        CLAUDE_BIN, "-p", "--output-format", "text",
+        stdin=asyncio.subprocess.PIPE,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,
+    )
+    try:
+        stdout, _ = await asyncio.wait_for(proc.communicate(prompt.encode()), timeout=max_wait)
+        return stdout.decode().strip()
+    except asyncio.TimeoutError:
+        proc.kill()
+        return ""
 
 ROOT = Path(__file__).parent.parent.parent
 INPUT_FILE = ROOT / "leads_pipeline" / "raw_leads.json"
@@ -54,19 +66,14 @@ def basic_validate(lead: dict) -> tuple[bool, str]:
     return True, "OK"
 
 
-async def ai_validate(client: anthropic.Anthropic, lead: dict) -> dict:
+async def ai_validate(lead: dict) -> dict:
     prompt = VALIDATE_PROMPT.format(
         source=lead.get("source", ""),
         author=lead.get("author", ""),
         quote=lead.get("quote", "")[:250],
     )
     try:
-        msg = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=200,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        raw = msg.content[0].text.strip()
+        raw = await ask_claude(prompt)
         if "```" in raw:
             raw = raw.split("```")[1].lstrip("json").strip()
         return json.loads(raw)
@@ -84,7 +91,6 @@ async def run():
     raw_leads = json.loads(INPUT_FILE.read_text(encoding="utf-8"))
     print(f"[validator] Лидов на входе: {len(raw_leads)}", flush=True)
 
-    client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
     enriched = []
 
     for i, lead in enumerate(raw_leads):
@@ -93,7 +99,7 @@ async def run():
             print(f"[validator] #{i+1} отклонён: {reason}", flush=True)
             continue
 
-        scores = await ai_validate(client, lead)
+        scores = await ai_validate(lead)
         confidence = scores.get("confidence_score", 0)
 
         enriched_lead = {
