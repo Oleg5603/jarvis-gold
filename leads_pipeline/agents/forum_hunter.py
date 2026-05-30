@@ -36,20 +36,24 @@ OUTPUT_FILE = ROOT / "leads_pipeline" / "raw_leads.json"
 TARGETS = [
     {
         "name": "pikabu",
-        "url": "https://pikabu.ru/tag/%D0%BE%D1%82%D0%BD%D0%BE%D1%88%D0%B5%D0%BD%D0%B8%D1%8F/hot",
+        "url_template": "https://pikabu.ru/tag/%D0%BE%D1%82%D0%BD%D0%BE%D1%88%D0%B5%D0%BD%D0%B8%D1%8F/hot?page={page}",
+        "pages": 5,
     },
     {
         "name": "woman.ru",
-        "url": "https://www.woman.ru/relations/",
+        "url_template": "https://www.woman.ru/relations/forum/?p={page}",
+        "pages": 5,
     },
     {
         "name": "reddit",
-        "url": "https://www.reddit.com/r/relationships/.json?limit=50&t=week",
+        "url": "https://www.reddit.com/r/relationships/.json?limit=100&t=week",
         "is_json": True,
+        "pages": 1,
     },
     {
         "name": "babyblog",
-        "url": "https://www.babyblog.ru/community/family",
+        "url_template": "https://www.babyblog.ru/community/family?page={page}",
+        "pages": 5,
     },
 ]
 
@@ -218,26 +222,44 @@ async def run():
 
     async with aiohttp.ClientSession() as session:
         for target in TARGETS:
-            print(f"[forum_hunter] Парсим {target['name']}...", flush=True)
+            name = target["name"]
+            pages = target.get("pages", 1)
             is_json = target.get("is_json", False)
-            data = await fetch(session, target["url"], is_json)
-            if not data:
-                continue
+            target_total_raw = 0
+            target_total_rel = 0
 
-            if target["name"] == "pikabu":
-                raw = parse_pikabu(data)
-            elif target["name"] == "woman.ru":
-                raw = parse_woman(data)
-            elif target["name"] == "reddit":
-                raw = parse_reddit(data)
-            elif target["name"] == "babyblog":
-                raw = parse_babyblog(data)
-            else:
-                raw = []
+            for page in range(1, pages + 1):
+                if "url_template" in target:
+                    url = target["url_template"].format(page=page)
+                else:
+                    url = target["url"]
 
-            relevant = [l for l in raw if is_relevant(l["quote"], keywords)]
-            print(f"[forum_hunter] {target['name']}: {len(raw)} постов, {len(relevant)} релевантных", flush=True)
-            all_leads.extend(relevant)
+                print(f"[forum_hunter] {name} стр.{page}/{pages}...", flush=True)
+                data = await fetch(session, url, is_json)
+                if not data:
+                    break
+
+                if name == "pikabu":
+                    raw = parse_pikabu(data)
+                elif name == "woman.ru":
+                    raw = parse_woman(data)
+                elif name == "reddit":
+                    raw = parse_reddit(data)
+                elif name == "babyblog":
+                    raw = parse_babyblog(data)
+                else:
+                    raw = []
+
+                relevant = [l for l in raw if is_relevant(l["quote"], keywords)]
+                target_total_raw += len(raw)
+                target_total_rel += len(relevant)
+                all_leads.extend(relevant)
+
+                if not raw:
+                    break
+                await asyncio.sleep(0.5)
+
+            print(f"[forum_hunter] {name}: {target_total_raw} постов, {target_total_rel} релевантных", flush=True)
 
     print(f"[forum_hunter] Скоринг {len(all_leads)} лидов...", flush=True)
 
