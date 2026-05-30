@@ -130,6 +130,16 @@ async def generate_booking_message(lead: dict) -> dict:
 def _template_booking(lead: dict) -> dict:
     profile = lead.get("profile", {})
     pain = profile.get("pain_point", "то, через что вы проходите")
+    intent = lead.get("intent_score", 0) or 0
+    confidence = lead.get("confidence_score", 0) or 0
+
+    if intent >= 8 or confidence >= 60:
+        priority = "горячий"
+    elif intent >= 4 or confidence >= 43:
+        priority = "тёплый"
+    else:
+        priority = "холодный"
+
     return {
         "booking_message": (
             f"Я понимаю, как непросто справляться с {pain} в одиночку. "
@@ -137,7 +147,7 @@ def _template_booking(lead: dict) -> dict:
             f"Если откликается — напишите боту @{BOT_USERNAME}, он подберёт удобное время для бесплатной первой встречи."
         ),
         "cta": f"Написать @{BOT_USERNAME} для записи",
-        "priority": "тёплый",
+        "priority": priority,
         "_fallback": True,
     }
 
