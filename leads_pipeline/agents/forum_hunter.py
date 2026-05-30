@@ -35,25 +35,47 @@ OUTPUT_FILE = ROOT / "leads_pipeline" / "raw_leads.json"
 
 TARGETS = [
     {
-        "name": "pikabu",
+        "name": "pikabu_otnosheniya",
         "url_template": "https://pikabu.ru/tag/%D0%BE%D1%82%D0%BD%D0%BE%D1%88%D0%B5%D0%BD%D0%B8%D1%8F/hot?page={page}",
         "pages": 5,
+        "parser": "pikabu",
     },
     {
-        "name": "woman.ru",
-        "url_template": "https://www.woman.ru/relations/forum/?p={page}",
+        "name": "pikabu_semya",
+        "url_template": "https://pikabu.ru/tag/%D1%81%D0%B5%D0%BC%D1%8C%D1%8F/hot?page={page}",
         "pages": 5,
+        "parser": "pikabu",
+    },
+    {
+        "name": "woman_psyche",
+        "url_template": "https://www.woman.ru/psyche/medley/?p={page}",
+        "pages": 5,
+        "parser": "woman",
+    },
+    {
+        "name": "woman_relations",
+        "url_template": "https://www.woman.ru/relations/medley/?p={page}",
+        "pages": 5,
+        "parser": "woman",
     },
     {
         "name": "reddit",
         "url": "https://www.reddit.com/r/relationships/.json?limit=100&t=week",
         "is_json": True,
         "pages": 1,
+        "parser": "reddit",
     },
     {
-        "name": "babyblog",
+        "name": "babyblog_family",
         "url_template": "https://www.babyblog.ru/community/family?page={page}",
         "pages": 5,
+        "parser": "babyblog",
+    },
+    {
+        "name": "babyblog_psychology",
+        "url_template": "https://www.babyblog.ru/community/psychology?page={page}",
+        "pages": 5,
+        "parser": "babyblog",
     },
 ]
 
@@ -98,20 +120,57 @@ def parse_pikabu(html: str) -> list[dict]:
 def parse_woman(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     leads = []
-    for item in soup.select("a.thread.forum-threads__thread")[:30]:
-        href = item.get("href", "")
-        title_el = item.select_one(".thread__title")
-        title = title_el.get_text(strip=True) if title_el else item.get_text(strip=True)
-        if not href or not title:
+
+    # Пробуем разные селекторы — woman.ru меняла вёрстку несколько раз
+    SELECTORS = [
+        ("a.thread.forum-threads__thread", ".thread__title", None),
+        ("article.article-preview", "h2,h3,.article__title", ".article__author"),
+        ("div.article-card", "h2,h3,.article-card__title", None),
+        (".item-preview", "h2,h3", None),
+    ]
+
+    for sel, title_sel, author_sel in SELECTORS:
+        items = soup.select(sel)[:30]
+        if not items:
             continue
-        leads.append({
-            "url": href if href.startswith("http") else "https://www.woman.ru" + href,
-            "author": "woman.ru reader",
-            "quote": title,
-            "source": "woman.ru",
-            "createdAt": datetime.now().isoformat(),
-        })
-    return leads
+        for item in items:
+            href = item.get("href", "") or (item.select_one("a") or {}).get("href", "")
+            title_el = item.select_one(title_sel) if title_sel else None
+            title = title_el.get_text(strip=True) if title_el else item.get_text(strip=True)[:200]
+            if not title or len(title) < 10:
+                continue
+            author = "woman.ru reader"
+            if author_sel:
+                a_el = item.select_one(author_sel)
+                if a_el:
+                    author = a_el.get_text(strip=True)[:50] or author
+            url = href if href.startswith("http") else ("https://www.woman.ru" + href if href else "https://www.woman.ru")
+            leads.append({
+                "url": url,
+                "author": author,
+                "quote": title,
+                "source": "woman.ru",
+                "createdAt": datetime.now().isoformat(),
+            })
+        if leads:
+            break
+
+    # Финальный fallback — ищем любые ссылки с длинным текстом
+    if not leads:
+        for a in soup.find_all("a", href=True)[:60]:
+            text = a.get_text(strip=True)
+            if len(text) > 20:
+                href = a["href"]
+                url = href if href.startswith("http") else "https://www.woman.ru" + href
+                leads.append({
+                    "url": url,
+                    "author": "woman.ru reader",
+                    "quote": text[:300],
+                    "source": "woman.ru",
+                    "createdAt": datetime.now().isoformat(),
+                })
+
+    return leads[:30]
 
 
 def parse_babyblog(html: str) -> list[dict]:
@@ -239,13 +298,14 @@ async def run():
                 if not data:
                     break
 
-                if name == "pikabu":
+                parser = target.get("parser", name)
+                if parser == "pikabu":
                     raw = parse_pikabu(data)
-                elif name == "woman.ru":
+                elif parser == "woman":
                     raw = parse_woman(data)
-                elif name == "reddit":
+                elif parser == "reddit":
                     raw = parse_reddit(data)
-                elif name == "babyblog":
+                elif parser == "babyblog":
                     raw = parse_babyblog(data)
                 else:
                     raw = []
