@@ -9,6 +9,7 @@
     "profiles":  "warming_pipeline/profiles.json",
     "scripts":   "warming_pipeline/scripts.json",
     "sequences": "warming_pipeline/sequences.json",
+    "booked":    "warming_pipeline/booked_leads.json",
     "report":    "warming_pipeline/report.json"
   },
   "agents": [
@@ -46,13 +47,24 @@
       "timeout_sec": 180
     },
     {
+      "id": "booking",
+      "name": "Booking Agent (Запись)",
+      "description": "Финальный шаг прогрева: мягкое приглашение записаться через @LanaS777Bot",
+      "module": "warming_pipeline/agents/booking_agent.py",
+      "input": "warming_pipeline/sequences.json",
+      "output": "warming_pipeline/booked_leads.json",
+      "depends_on": ["sequence_builder"],
+      "retry": 1,
+      "timeout_sec": 120
+    },
+    {
       "id": "reporter",
       "name": "Reporter Agent (Аналитик)",
       "description": "Формирует итоговый отчёт команды: кто готов к контакту, приоритеты, статистика",
       "module": "warming_pipeline/agents/report_agent.py",
       "input": "warming_pipeline/sequences.json",
       "output": "warming_pipeline/report.json",
-      "depends_on": ["sequence_builder"],
+      "depends_on": ["booking"],
       "retry": 1,
       "timeout_sec": 60
     }
@@ -61,6 +73,7 @@
     ["profiler"],
     ["script_writer"],
     ["sequence_builder"],
+    ["booking"],
     ["reporter"]
   ]
 }
