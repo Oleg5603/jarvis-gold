@@ -40,7 +40,7 @@ TARGETS = [
     },
     {
         "name": "woman.ru",
-        "url": "https://www.woman.ru/psyche/relationship/",
+        "url": "https://www.woman.ru/relations/",
     },
     {
         "name": "reddit",
@@ -49,7 +49,7 @@ TARGETS = [
     },
     {
         "name": "babyblog",
-        "url": "https://www.babyblog.ru/community/list/family_relationship",
+        "url": "https://www.babyblog.ru/community/family",
     },
 ]
 
@@ -94,18 +94,16 @@ def parse_pikabu(html: str) -> list[dict]:
 def parse_woman(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     leads = []
-    for item in soup.select(".article-list__item")[:20]:
-        link = item.select_one("a")
-        text = item.select_one(".article-list__item-desc")
-        if not link:
+    for item in soup.select("a.thread.forum-threads__thread")[:30]:
+        href = item.get("href", "")
+        title_el = item.select_one(".thread__title")
+        title = title_el.get_text(strip=True) if title_el else item.get_text(strip=True)
+        if not href or not title:
             continue
-        href = link.get("href", "")
-        if not href.startswith("http"):
-            href = "https://www.woman.ru" + href
         leads.append({
-            "url": href,
+            "url": href if href.startswith("http") else "https://www.woman.ru" + href,
             "author": "woman.ru reader",
-            "quote": text.get_text(strip=True)[:300] if text else link.text.strip(),
+            "quote": title,
             "source": "woman.ru",
             "createdAt": datetime.now().isoformat(),
         })
@@ -115,25 +113,25 @@ def parse_woman(html: str) -> list[dict]:
 def parse_babyblog(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     leads = []
-    for item in soup.select(".community-record, .post-item, article")[:20]:
-        link = item.select_one("a[href*='/user/'], a[href*='/community/']") or item.select_one("a")
-        title = item.select_one("h2, h3, .post-title, .record-title")
-        text_el = item.select_one(".record-text, .post-text, p")
-        if not link and not title:
-            continue
-        href = (link.get("href", "") if link else "") or ""
+    for item in soup.select("article.postCard")[:20]:
+        link = item.find("a", href=lambda h: h and "/post/" in h)
+        title_el = item.find(class_=lambda c: c and "title" in c.lower() if c else False)
+        text_el = item.find(class_=lambda c: c and ("text" in c.lower() or "content" in c.lower()) if c else False)
+        author_el = item.find(class_=lambda c: c and "author" in c.lower() if c else False)
+        href = link.get("href", "") if link else ""
         if href and not href.startswith("http"):
             href = "https://www.babyblog.ru" + href
         quote = ""
-        if text_el:
+        if title_el:
+            quote = title_el.get_text(strip=True)[:300]
+        elif text_el:
             quote = text_el.get_text(strip=True)[:300]
-        elif title:
-            quote = title.get_text(strip=True)
         if not quote:
             continue
+        author = author_el.get_text(strip=True).split("→")[0].strip() if author_el else "babyblog reader"
         leads.append({
             "url": href or "https://www.babyblog.ru",
-            "author": "babyblog reader",
+            "author": author[:50],
             "quote": quote,
             "source": "babyblog.ru",
             "createdAt": datetime.now().isoformat(),
@@ -164,13 +162,22 @@ def parse_reddit(data: dict) -> list[dict]:
     return leads
 
 
-# Строгие маркеры — требуем минимум 2 совпадения из этого списка
+# Маркеры — достаточно одного из них
 STRONG_MARKERS = [
     "измена", "развод", "кризис в браке", "не понимаем друг друга",
     "хочу развестись", "муж изменил", "жена изменила", "расстаёмся",
     "нужна помощь психолога", "семейный психолог", "потеряли близость",
     "ругаемся каждый день", "не могу простить", "предательство",
-    "хочу сохранить брак", "разлюбил", "разлюбила",
+    "хочу сохранить брак", "разлюбил", "разлюбила", "на грани развода",
+    "бывший муж", "бывшая жена", "расстались", "не живём вместе",
+    "муж ушёл", "жена ушла", "не общается с ребёнком", "раздельное проживание",
+]
+
+# Мягкие ключевые слова — нужно минимум 2
+SOFT_KEYWORDS = [
+    "муж", "жена", "брак", "семья", "ребёнок", "дети", "отношения",
+    "психолог", "конфликт", "ссора", "обида", "измена", "развод",
+    "кризис", "расстались", "разлучились", "не понимает",
 ]
 
 
@@ -183,13 +190,16 @@ def load_keywords() -> list[str]:
 
 def is_relevant(text: str, keywords: list[str]) -> bool:
     text_lower = text.lower()
-    # Минимум 2 точных совпадения из Scout-ключевых слов
-    kw_hits = sum(1 for kw in keywords if kw.lower() in text_lower)
-    if kw_hits >= 2:
+    # 1 сильного маркера достаточно
+    if any(m in text_lower for m in STRONG_MARKERS):
         return True
-    # Или хотя бы 1 сильный маркер + 1 ключевое слово
-    strong_hits = sum(1 for m in STRONG_MARKERS if m in text_lower)
-    return strong_hits >= 1 and kw_hits >= 1
+    # Или 2 мягких ключевых слова из SOFT_KEYWORDS
+    soft_hits = sum(1 for kw in SOFT_KEYWORDS if kw in text_lower)
+    if soft_hits >= 2:
+        return True
+    # Или 2 Scout-ключевых слова (из файла raw_keywords.json)
+    kw_hits = sum(1 for kw in keywords if kw.lower() in text_lower)
+    return kw_hits >= 2
 
 
 async def score_intent(text: str) -> int:
