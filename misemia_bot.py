@@ -335,7 +335,6 @@ async def process_comments(group_id: int) -> int:
     result = await vk_api("wall.get", {
         "owner_id": f"-{group_id}",
         "count": 5,
-        "filter": "owner",
     })
     if "error" in result:
         logging.error(f"VK wall.get error: {result['error']}")
