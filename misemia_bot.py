@@ -86,16 +86,20 @@ def set_owner(user_id: int) -> None:
 
 
 async def download_image(url: str) -> bytes | None:
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, timeout=aiohttp.ClientTimeout(total=60), allow_redirects=True) as resp:
-                if resp.status == 200:
-                    data = await resp.read()
-                    if len(data) > 1000:  # проверка что это реальное изображение
-                        return data
-                    logging.warning(f"Слишком маленький ответ от {url}: {len(data)} байт")
-    except Exception as e:
-        logging.warning(f"Не удалось скачать изображение: {e}")
+    for attempt in range(2):
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, timeout=aiohttp.ClientTimeout(total=90), allow_redirects=True) as resp:
+                    logging.info(f"download_image attempt {attempt+1}: HTTP {resp.status}")
+                    if resp.status == 200:
+                        data = await resp.read()
+                        if len(data) > 1000:
+                            return data
+                        logging.warning(f"Слишком маленький ответ от {url}: {len(data)} байт")
+        except Exception as e:
+            logging.warning(f"Попытка {attempt+1} скачать изображение не удалась: {e}")
+        if attempt == 0:
+            await asyncio.sleep(5)
     return None
 
 
