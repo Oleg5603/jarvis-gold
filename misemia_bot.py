@@ -4,6 +4,7 @@ import json
 import random
 import asyncio
 import logging
+from io import BytesIO
 from pathlib import Path
 from datetime import time as dtime, timezone
 import aiohttp
@@ -87,9 +88,12 @@ def set_owner(user_id: int) -> None:
 async def download_image(url: str) -> bytes | None:
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, timeout=aiohttp.ClientTimeout(total=30), allow_redirects=True) as resp:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=60), allow_redirects=True) as resp:
                 if resp.status == 200:
-                    return await resp.read()
+                    data = await resp.read()
+                    if len(data) > 1000:  # проверка что это реальное изображение
+                        return data
+                    logging.warning(f"Слишком маленький ответ от {url}: {len(data)} байт")
     except Exception as e:
         logging.warning(f"Не удалось скачать изображение: {e}")
     return None
@@ -243,7 +247,11 @@ async def generate_post(topic: str) -> str:
 async def send_draft(message, text: str, photo_url: str = "") -> None:
     if photo_url:
         try:
-            await message.reply_photo(photo=photo_url, caption="📸 Фото для поста")
+            image_bytes = await download_image(photo_url)
+            if image_bytes:
+                await message.reply_photo(photo=BytesIO(image_bytes), caption="📸 Фото для поста")
+            else:
+                logging.warning("Фото не скачалось — отправляю пост без превью изображения")
         except Exception as e:
             logging.warning(f"Не удалось отправить фото превью: {e}")
     preview = text[:3800] if len(text) > 3800 else text
