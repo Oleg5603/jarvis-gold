@@ -8,7 +8,7 @@ import asyncio
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import anthropic
@@ -29,6 +29,16 @@ _client = anthropic.Anthropic(api_key=_api_key) if _api_key else None
 ROOT = Path(__file__).parent.parent.parent
 INPUT_FILE = ROOT / "warming_pipeline" / "sequences.json"
 OUTPUT_FILE = ROOT / "warming_pipeline" / "booked_leads.json"
+
+MSK = timezone(timedelta(hours=3))
+WORK_START = 12  # 12:00 МСК
+WORK_END = 15    # 15:00 МСК
+
+
+def is_business_hours() -> bool:
+    now = datetime.now(MSK)
+    return now.weekday() < 5 and WORK_START <= now.hour < WORK_END
+
 
 BOT_USERNAME = "LanaS777Bot"
 LANA_BOT_TOKEN = os.environ.get("LANA_BOT_TOKEN", "")
@@ -53,9 +63,9 @@ def send_telegram(token: str, chat_id: str, text: str) -> bool:
         return False
 
 
-def notify_hot_lead(lead: dict, booking: dict) -> None:
+def notify_hot_lead(lead: dict, booking: dict) -> bool:
     author = lead.get("author", "неизвестен")
-    source_url = lead.get("url", "")
+    source_url = lead.get("source_url") or lead.get("url", "")
     pain = lead.get("profile", {}).get("pain_point", "семейный кризис")
     booking_msg = booking.get("booking_message", "")
 
@@ -64,26 +74,39 @@ def notify_hot_lead(lead: dict, booking: dict) -> None:
         f"👤 Автор: <b>{author}</b>\n"
         f"💬 Боль: {pain}\n"
         f"🔗 Пост: {source_url}\n\n"
+        f"📋 <b>Формат работы:</b>\n"
+        f"• Индивидуально, онлайн, 60 мин\n"
+        f"• Первичная консультация — 5 000 ₽\n"
+        f"• Регулярные сессии — 3 000 ₽ (курс 4–5 встреч)\n"
+        f"• Приём: Пн–Пт, 12:00–15:00\n\n"
         f"📝 Готовое сообщение:\n<i>{booking_msg}</i>"
     )
 
     if LANA_BOT_TOKEN and LANA_CHAT_ID:
         ok = send_telegram(LANA_BOT_TOKEN, LANA_CHAT_ID, text)
         print(f"[booking] Отправка Лане: {'✅' if ok else '❌'}", flush=True)
+        return ok
+    return False
 
 BOOKING_PROMPT = """Ты копирайтер для психотерапевта (специализация: семейные кризисы).
 
-Человек прошёл несколько касаний, тема разговора развивалась. Теперь нужно мягко предложить записаться на бесплатную консультацию через Telegram-бота.
+Человек прошёл несколько касаний, тема разговора развивалась. Теперь нужно мягко предложить записаться на первичную консультацию через Telegram-бота.
 
 Профиль человека:
 - Боль: {pain_point}
 - Состояние: {emotional_state}
 - Первое сообщение, которое ему написали: {first_message}
 
+Формат работы психотерапевта:
+- Индивидуальные сессии, 60 минут, онлайн
+- Первичная консультация — 5 000 ₽
+- Регулярные сессии — 3 000 ₽ (курс 4–5 встреч)
+- Приём: Пн–Пт, 12:00–15:00
+
 Напиши ОДНО финальное сообщение (5-е касание):
 - 2–3 предложения
 - Никакого давления — только мягкое предложение
-- Упомяни что это бесплатная первая встреча
+- Упомяни формат: онлайн, 60 минут
 - Включи: "Если откликается — можно написать боту @{bot}: он подберёт удобное время"
 - Тон тёплый, как от живого человека
 
@@ -143,8 +166,8 @@ def _template_booking(lead: dict) -> dict:
     return {
         "booking_message": (
             f"Я понимаю, как непросто справляться с {pain} в одиночку. "
-            f"Иногда один разговор с психологом помогает увидеть выход. "
-            f"Если откликается — напишите боту @{BOT_USERNAME}, он подберёт удобное время для бесплатной первой встречи."
+            f"Иногда один разговор помогает увидеть выход — это онлайн-сессия, 60 минут, в удобное для вас время. "
+            f"Если откликается — напишите боту @{BOT_USERNAME}, он подберёт время (Пн–Пт, 12:00–15:00)."
         ),
         "cta": f"Написать @{BOT_USERNAME} для записи",
         "priority": priority,
@@ -177,8 +200,13 @@ async def run():
         booking = await generate_booking_message(lead)
 
         priority = booking.get("priority", "")
+        notification_sent = False
         if priority == "горячий":
-            notify_hot_lead(lead, booking)
+            if is_business_hours():
+                notification_sent = notify_hot_lead(lead, booking)
+            else:
+                now_msk = datetime.now(MSK)
+                print(f"[booking] {author}: горячий лид, но сейчас вне рабочего времени ({now_msk:%H:%M} МСК, буднии 12:00–15:00)", flush=True)
 
         booked.append({
             **lead,
@@ -187,6 +215,7 @@ async def run():
                 "bot_link": f"https://t.me/{BOT_USERNAME}",
                 "touch_number": 5,
                 "generated_at": datetime.now().isoformat(),
+                "notification_sent": notification_sent,
             },
         })
 

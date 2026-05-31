@@ -168,7 +168,7 @@ async def run():
             "validation": scores,
             "confidence_score": confidence,
             "validated_at": datetime.now().isoformat(),
-            "ready_for_contact": confidence >= 55,
+            "ready_for_contact": confidence >= 40,
         }
         enriched.append(enriched_lead)
         print(f"[validator] {lead.get('source', '')} confidence={confidence:.0f}", flush=True)

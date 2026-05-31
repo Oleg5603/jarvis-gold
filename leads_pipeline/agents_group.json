@@ -54,7 +54,7 @@
       "output": "leads_pipeline/enriched_leads.json",
       "depends_on": ["monitor", "forum_hunter"],
       "retry": 2,
-      "timeout_sec": 180
+      "timeout_sec": 300
     },
     {
       "id": "crm",
