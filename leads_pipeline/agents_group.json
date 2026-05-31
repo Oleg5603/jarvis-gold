@@ -1,0 +1,85 @@
+{
+  "group": "psycho_leads_finder",
+  "version": "1.0",
+  "description": "Мульти-агентная система поиска лидов для психотерапевта (супружеские отношения)",
+  "data_dir": "./leads_pipeline",
+  "logs_dir": "./leads_pipeline/logs",
+  "files": {
+    "keywords": "leads_pipeline/raw_keywords.json",
+    "raw_leads": "leads_pipeline/raw_leads.json",
+    "enriched_leads": "leads_pipeline/enriched_leads.json",
+    "ready_for_crm": "leads_pipeline/ready_for_crm.json"
+  },
+  "agents": [
+    {
+      "id": "scout",
+      "name": "Scout Agent",
+      "description": "Собирает семантику — реальные фразы людей о проблемах в браке",
+      "module": "leads_pipeline/agents/scout_agent.py",
+      "output": "leads_pipeline/raw_keywords.json",
+      "depends_on": [],
+      "retry": 2,
+      "timeout_sec": 120
+    },
+    {
+      "id": "monitor",
+      "name": "Monitor Agent",
+      "description": "Сканирует публичные Telegram-каналы по тегам #отношения #брак #психология",
+      "module": "leads_pipeline/agents/monitor_agent.py",
+      "input": "leads_pipeline/raw_keywords.json",
+      "output": "leads_pipeline/raw_leads.json",
+      "depends_on": ["scout"],
+      "parallel_with": ["forum_hunter"],
+      "retry": 2,
+      "timeout_sec": 300
+    },
+    {
+      "id": "forum_hunter",
+      "name": "Forum Hunter Agent",
+      "description": "Парсит свежие темы (<7 дней) на woman.ru, pikabu.ru, babyblog.ru, reddit, vc.ru",
+      "module": "leads_pipeline/agents/forum_hunter.py",
+      "input": "leads_pipeline/raw_keywords.json",
+      "output": "leads_pipeline/raw_leads.json",
+      "depends_on": ["scout"],
+      "parallel_with": ["monitor"],
+      "retry": 3,
+      "timeout_sec": 300
+    },
+    {
+      "id": "validator",
+      "name": "Validator Agent",
+      "description": "Верифицирует авторов: проверяет Telegram ID, историю постов, исключает ботов",
+      "module": "leads_pipeline/agents/validator_agent.py",
+      "input": "leads_pipeline/raw_leads.json",
+      "output": "leads_pipeline/enriched_leads.json",
+      "depends_on": ["monitor", "forum_hunter"],
+      "retry": 2,
+      "timeout_sec": 300
+    },
+    {
+      "id": "crm",
+      "name": "CRM Agent",
+      "description": "Выгружает верифицированные контакты в файл и опционально в Google Sheets",
+      "module": "leads_pipeline/agents/crm_agent.py",
+      "input": "leads_pipeline/enriched_leads.json",
+      "output": "leads_pipeline/ready_for_crm.json",
+      "depends_on": ["validator"],
+      "retry": 1,
+      "timeout_sec": 60
+    }
+  ],
+  "pipeline_order": [
+    ["scout"],
+    ["monitor", "forum_hunter"],
+    ["validator"],
+    ["crm"]
+  ],
+  "ethical_disclaimer": "Все лиды найдены в открытых публичных источниках. Данные не включают приватную переписку. Используется только для информирования о помощи специалиста.",
+  "sources": [
+    "pikabu.ru/tag/отношения",
+    "woman.ru/psyche",
+    "babyblog.ru/community/list/family",
+    "reddit.com/r/relationships",
+    "vc.ru/tag/family"
+  ]
+}
