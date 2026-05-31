@@ -73,7 +73,7 @@ input string   S6               = "=== СЕССИИ ===";
 input bool     UseSessionFilter = true;
 input int      LondonOpen       = 8;
 input int      LondonClose      = 17;
-input bool     AutoDST          = true;    // НОВОЕ v4: автокоррекция GMT+1 летом
+input bool     AutoDST          = true;
 input bool     BlockFriday      = true;
 
 //=== RSI ФИЛЬТР ===
@@ -85,7 +85,7 @@ input int      RSI_OS_M1        = 30;
 input int      RSI_OB_Sr        = 65;
 input int      RSI_OS_Sr        = 35;
 input bool     UseRSI_Senior    = true;
-input bool     UseDynamicRSI    = true;    // НОВОЕ v4: порог сдвигается при сильном тренде
+input bool     UseDynamicRSI    = true;
 
 //=== MACD ФИЛЬТР ===
 input string   S8               = "=== MACD ФИЛЬТР ===";
@@ -96,9 +96,9 @@ input int      MACD_Signal      = 9;
 
 //=== ATR ФИЛЬТР ВОЛАТИЛЬНОСТИ ===
 input string   S9               = "=== ATR ВОЛАТИЛЬНОСТЬ ===";
-input bool     UseATR_Filter    = true;
-input double   ATR_Min_Pips     = 5.0;
-input double   ATR_Max_Pips     = 80.0;
+input bool     UseATR_Filter    = false;
+input double   ATR_Min_Pips     = 30.0;   // XAUUSD: 30 pips = $0.30 per M15 bar min
+input double   ATR_Max_Pips     = 10000.0; // XAUUSD: high enough to not block gold
 // v4: ATR считается на M15
 
 //=== НОВОСТНОЙ ФИЛЬТР ===
@@ -339,6 +339,7 @@ bool IsMACDOK(int dir)
 bool IsVolatilityOK()
 {
    double atr     = iATR(Symbol(), PERIOD_M15, ATR_Period, 1);
+   if(atr <= 0) { Print("ATR=0 данные?"); return(true); }
    double atrPips = atr / Point / pointMult;
    if(atrPips < ATR_Min_Pips) { Print("ATR флэт:",atrPips); return(false); }
    if(atrPips > ATR_Max_Pips) { Print("ATR хаос:",atrPips); return(false); }
@@ -441,11 +442,21 @@ double CalculateLot(double slPoints)
    double riskAmt  = balance * RiskPercent / 100.0;
    double tickVal  = MarketInfo(Symbol(), MODE_TICKVALUE);
    double tickSize = MarketInfo(Symbol(), MODE_TICKSIZE);
-   if(tickVal==0 || tickSize==0 || slPoints==0) return(MinLot);
-   double lot  = riskAmt / (slPoints * tickVal / tickSize);
-   double step = MarketInfo(Symbol(), MODE_LOTSTEP);
+   double step     = MarketInfo(Symbol(), MODE_LOTSTEP);
+   double brokerMin = MarketInfo(Symbol(), MODE_MINLOT);
+   double brokerMax = MarketInfo(Symbol(), MODE_MAXLOT);
+   double lotMin   = MathMax(MinLot, brokerMin);
+   double lotMax   = MathMin(MaxLot, brokerMax > 0 ? brokerMax : MaxLot);
+
+   if(tickVal==0 || tickSize==0 || slPoints==0 || step==0)
+      return(NormalizeDouble(lotMin, 2));
+
+   double lot = riskAmt / (slPoints * tickVal / tickSize);
    lot = MathFloor(lot / step) * step;
-   return(NormalizeDouble(MathMax(MinLot, MathMin(MaxLot, lot)), 2));
+   if(lot < lotMin) lot = lotMin;
+   if(lot > lotMax) lot = lotMax;
+   Print("Lot calc: risk=",riskAmt," slPts=",slPoints," tv=",tickVal," ts=",tickSize," step=",step," brokerMin=",brokerMin," lot=",lot);
+   return(NormalizeDouble(lot, 2));
 }
 
 //+------------------------------------------------------------------+
@@ -454,7 +465,8 @@ double CalculateLot(double slPoints)
 void OpenOrder(int dir)
 {
    double atr = iATR(Symbol(), PERIOD_M15, ATR_Period, 1);
-   if(atr == 0) return;
+   Print("OpenOrder dir=",dir," ATR(M15)=",atr," Ask=",Ask," Bid=",Bid);
+   if(atr == 0) { Print("ATR=0 выход"); return; }
    double slPts = atr * ATR_SL_Mult / Point;
    double lot   = CalculateLot(slPts);
    double price, sl, tp; int otype;
