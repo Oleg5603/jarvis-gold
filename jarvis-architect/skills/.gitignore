@@ -1,0 +1,14 @@
+.DS_Store
+*.pyc
+__pycache__/
+.venv/
+venv/
+node_modules/
+.env
+.env.local
+*.log
+config.json
+oauth_client.json
+credentials.json
+*.key
+*.pem

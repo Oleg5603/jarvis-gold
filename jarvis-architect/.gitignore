@@ -1,0 +1,21 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Secrets — никогда не коммитим
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Claude Code локальные настройки
+.claude/settings.local.json
