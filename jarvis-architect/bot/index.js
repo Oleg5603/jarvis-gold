@@ -26,6 +26,9 @@ import { hasAnyTranscriber, registerVoiceHelpers, voiceFallbackKeyboard, VOICE_F
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
 
+import { config } from "dotenv";
+config();
+
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const AGENT_HOME = process.env.AGENT_HOME || "/home/agent";
 const WORKSPACE = join(AGENT_HOME, "workspace");
