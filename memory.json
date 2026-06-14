@@ -247,6 +247,22 @@
     {
       "role": "assistant",
       "content": "Готово. Теперь по папкам проекта:\n\n---\n\n**Папки в `/root/telegram-bot/`:**\n\n| Папка | Что это |\n|---|---|\n| `nutritionist/` | Суфлёр нутрициолога (PyQt6, распознавание речи) |\n| `acupuncture/` | ТКМ-ассистент рефлексотерапевта (TKM-acu) |\n| `leads_pipeline/` | Пайплайн лидогенерации |\n| `misemia_landing/` | Лендинг для мисемии |\n| `vpn_switcher/` | Переключалка VPN |\n| `warming_pipeline/` | Прогрев (имейл/ТГ) |\n\n---\n\n**Что исправил в Stop-хуке:**\n\nБыло: `sleep 420 && auto_commit.sh` — блокировало процесс на 7 минут, Claude Code зависал.\n\nСтало: `nohup bash -c 'sleep 420 && auto_commit.sh' >> /tmp/auto_commit.log 2>&1 &` — запускает в фоне, хук сразу возвращает управление. Лог пишется в `/tmp/auto_commit.log`."
+    },
+    {
+      "role": "user",
+      "content": "Папки  должны быть ТКМ, Нутрицеорог, Психотерапевт, Советник Форекс, Рассортируй. Спроси..."
+    },
+    {
+      "role": "assistant",
+      "content": "Вижу реальную картину. Прежде чем рассортировать — уточню несколько моментов.\n\n**Что сейчас есть:**\n\n| Что | Куда предлагаю |\n|---|---|\n| `acupuncture/` | → `tkm/` |\n| `nutritionist/` | → `nutritionist/` (без изменений) |\n| `*.mq4` + `trading.py`, `gold_news.py` | → `forex/` |\n| `leads_pipeline/`, `warming_pipeline/`, `misemia_landing/`, `misemia_bot.py` | → `psychotherapist/` ? |\n| `vpn_switcher/` | → куда? |\n| `bot.py` (Гаврик — главный бот) | → остаётся в корне? |\n\n**Вопросы перед сортировкой:**\n\n1. `leads_pipeline/`, `warming_pipeline/`, `misemia_landing/`, `misemia_bot.py` — это всё для проекта Светланы / Психотерапевт?\n\n2. `vpn_switcher/` — что это, куда его?\n\n3. `bot.py` (основной Гаврик) — оставить в корне или тоже в отдельную папку?\n\n4. Как назвать папки — по-русски или по-английс"
+    },
+    {
+      "role": "user",
+      "content": "Задание по созданию приложения по ТКМ помнишь?"
+    },
+    {
+      "role": "assistant",
+      "content": "Агент не вернул ответ."
     }
   ]
 }
