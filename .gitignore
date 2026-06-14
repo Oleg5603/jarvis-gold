@@ -3,3 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 "ystemctl restart telegram-bot.service"
+logs/
+*.log
+leads_pipeline/logs/
+warming_pipeline/logs/

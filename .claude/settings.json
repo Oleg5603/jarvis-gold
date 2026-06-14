@@ -1,6 +1,25 @@
 {
   "permissions": {
-    "allow": ["Write", "Edit", "Bash(*)"],
+    "allow": [
+      "Write",
+      "Edit",
+      "Bash(*)",
+      "WebSearch",
+      "WebFetch(*)"
+    ],
     "deny": []
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sleep 420 && /root/telegram-bot/auto_commit.sh"
+          }
+        ]
+      }
+    ]
   }
 }
