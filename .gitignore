@@ -1,8 +1,10 @@
 .env
+.envbash
+memory.json
+owner.txt
 __pycache__/
 *.pyc
 *.pyo
-"ystemctl restart telegram-bot.service"
 logs/
 *.log
 leads_pipeline/logs/
