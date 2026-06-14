@@ -19,8 +19,8 @@ def _get_whisper():
         _whisper_model = WhisperModel("small", device="cpu", compute_type="int8")
     return _whisper_model
 
-from gold_news import build_news_report, build_gold_analysis, build_morning_brief
-from trading import (
+from forex.gold_news import build_news_report, build_gold_analysis, build_morning_brief
+from forex.trading import (
     load_trading_data, save_trading_data,
     build_signal, build_technical_analysis,
     calc_risk_report, add_trade, close_trade,
@@ -31,7 +31,7 @@ from tasks import (
     load_tasks, save_tasks, add_task, mark_done, delete_task,
     format_task_list, format_reminder, PRIORITY_MAP, parse_deadline,
 )
-from leads import (
+from psychotherapist.leads import (
     load_leads, save_leads, add_lead, get_lead, set_status, add_note,
     delete_lead, format_lead, format_leads_list, format_leads_stats,
     STATUS_ALIASES, STATUS_LABELS,
