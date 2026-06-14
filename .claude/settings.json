@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sleep 420 && /root/telegram-bot/auto_commit.sh"
+            "command": "nohup bash -c 'sleep 420 && /root/telegram-bot/auto_commit.sh' >> /tmp/auto_commit.log 2>&1 &"
           }
         ]
       }
