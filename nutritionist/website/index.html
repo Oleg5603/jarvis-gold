@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Нутрициолог Маргарита Еремеева | Пермь</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ШАПКА -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-role">Врач-нутрициолог · Пермь</p>
+      <h1>Маргарита Еремеева</h1>
+      <p class="hero-tagline">Помогаю худеть без голода, срывов и запретов — с медицинским подходом</p>
+      <p class="hero-edu">Окончила ПГМИ · врачебная практика</p>
+      <a href="#contact" class="btn-primary">Записаться на консультацию</a>
+    </div>
+    <div class="hero-avatar">
+      <div class="avatar-placeholder">М</div>
+    </div>
+  </div>
+</header>
+
+<!-- НАВИГАЦИЯ-ЯКОРЯ -->
+<nav class="sticky-nav">
+  <a href="#about">О враче</a>
+  <a href="#services">Услуги</a>
+  <a href="#bio-age">Биологический возраст</a>
+  <a href="#kbju">Калькулятор КБЖУ</a>
+  <a href="#quiz-products">Нежелательные продукты</a>
+  <a href="#contact">Запись</a>
+</nav>
+
+<!-- О ВРАЧЕ -->
+<section id="about" class="section">
+  <div class="container">
+    <h2>О враче</h2>
+    <div class="about-grid">
+      <div class="about-card">
+        <span class="about-icon">🎓</span>
+        <p>Высшее медицинское образование — ПГМИ</p>
+      </div>
+      <div class="about-card">
+        <span class="about-icon">⚕️</span>
+        <p>Врачебный подход: без экспериментов, с учётом здоровья</p>
+      </div>
+      <div class="about-card">
+        <span class="about-icon">📉</span>
+        <p>Специализация — снижение веса без жёстких диет</p>
+      </div>
+    </div>
+    <p class="about-text">Я работаю с причинами лишнего веса, а не со следствиями. Составляю план питания под вас лично: с учётом образа жизни, вкусовых предпочтений и медицинских ограничений. Без голодовок. Без «нельзя». С результатом.</p>
+    <a href="https://vk.ru/eremeevamargo" target="_blank" class="btn-outline">Страница ВКонтакте</a>
+  </div>
+</section>
+
+<!-- УСЛУГИ -->
+<section id="services" class="section section-alt">
+  <div class="container">
+    <h2>Услуги</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Первичная консультация</h3>
+        <p>Разбор питания, анализов, образа жизни. Составление персонального плана.</p>
+        <span class="price">от 2 500 ₽</span>
+      </div>
+      <div class="service-card">
+        <h3>Программа снижения веса</h3>
+        <p>3 месяца сопровождения. Еженедельные корректировки. Контроль результата.</p>
+        <span class="price">от 9 000 ₽</span>
+      </div>
+      <div class="service-card">
+        <h3>Рацион на месяц</h3>
+        <p>Готовое меню с рецептами под ваши параметры и цели.</p>
+        <span class="price">от 3 500 ₽</span>
+      </div>
+      <div class="service-card">
+        <h3>Экспресс-разбор питания</h3>
+        <p>Онлайн 30 минут — анализ дневника питания + рекомендации.</p>
+        <span class="price">от 1 200 ₽</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- БЛОК 1: БИОЛОГИЧЕСКИЙ ВОЗРАСТ -->
+<section id="bio-age" class="section">
+  <div class="container">
+    <h2>Определите свой биологический возраст</h2>
+    <p class="section-sub">15 вопросов — результат сразу</p>
+    <div class="quiz-box" id="bioage-quiz">
+      <div id="bioage-questions">
+        <!-- Вопросы генерируются JS -->
+      </div>
+      <div id="bioage-result" class="result-box hidden"></div>
+      <button id="bioage-btn" class="btn-primary" onclick="calcBioAge()">Узнать биологический возраст</button>
+    </div>
+  </div>
+</section>
+
+<!-- БЛОК 2: КАЛЬКУЛЯТОР КБЖУ -->
+<section id="kbju" class="section section-alt">
+  <div class="container">
+    <h2>Калькулятор суточной нормы</h2>
+    <p class="section-sub">Калории, белки, жиры, углеводы — под ваши цели</p>
+    <div class="calc-box">
+      <div class="calc-row">
+        <label>Пол</label>
+        <select id="kbju-sex">
+          <option value="f">Женский</option>
+          <option value="m">Мужской</option>
+        </select>
+      </div>
+      <div class="calc-row">
+        <label>Возраст</label>
+        <input type="number" id="kbju-age" placeholder="лет" min="15" max="80" />
+      </div>
+      <div class="calc-row">
+        <label>Рост</label>
+        <input type="number" id="kbju-height" placeholder="см" min="140" max="220" />
+      </div>
+      <div class="calc-row">
+        <label>Вес</label>
+        <input type="number" id="kbju-weight" placeholder="кг" min="40" max="200" />
+      </div>
+      <div class="calc-row">
+        <label>Активность</label>
+        <select id="kbju-activity">
+          <option value="1.2">Минимальная (сидячая работа)</option>
+          <option value="1.375">Лёгкая (1–3 тренировки в нед.)</option>
+          <option value="1.55" selected>Умеренная (3–5 раз в нед.)</option>
+          <option value="1.725">Высокая (6–7 раз в нед.)</option>
+        </select>
+      </div>
+      <div class="calc-row">
+        <label>Цель</label>
+        <select id="kbju-goal">
+          <option value="0.8">Снижение веса</option>
+          <option value="1.0">Поддержание веса</option>
+          <option value="1.15">Набор массы</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="calcKBJU()">Рассчитать</button>
+      <div id="kbju-result" class="result-box hidden"></div>
+    </div>
+  </div>
+</section>
+
+<!-- БЛОК 3: НЕЖЕЛАТЕЛЬНЫЕ ПРОДУКТЫ -->
+<section id="quiz-products" class="section">
+  <div class="container">
+    <h2>Какие продукты вам нежелательны?</h2>
+    <p class="section-sub">Ответьте на вопросы — получите персональный список</p>
+    <div class="quiz-box">
+      <div class="quiz-check">
+        <label><input type="checkbox" id="p-lactose" /> Вздутие после молока или сыра</label>
+        <label><input type="checkbox" id="p-gluten" /> Дискомфорт в животе после хлеба, каши, макарон</label>
+        <label><input type="checkbox" id="p-sugar" /> Повышенный сахар крови или диабет 2 типа</label>
+        <label><input type="checkbox" id="p-gkt" /> Гастрит, изжога или рефлюкс</label>
+        <label><input type="checkbox" id="p-thyroid" /> Проблемы со щитовидной железой</label>
+        <label><input type="checkbox" id="p-heart" /> Повышенное давление или болезни сердца</label>
+        <label><input type="checkbox" id="p-kidney" /> Болезни почек или мочекаменная болезнь</label>
+        <label><input type="checkbox" id="p-allergy" /> Аллергия на орехи / яйца / рыбу</label>
+      </div>
+      <button class="btn-primary" onclick="calcProducts()">Показать нежелательные продукты</button>
+      <div id="products-result" class="result-box hidden"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ЗАПИСЬ -->
+<section id="contact" class="section section-alt">
+  <div class="container contact-center">
+    <h2>Записаться на консультацию</h2>
+    <p>Пишите в ВКонтакте — отвечу в течение дня</p>
+    <a href="https://vk.ru/eremeevamargo" target="_blank" class="btn-primary btn-big">Написать Маргарите ВКонтакте</a>
+    <p class="contact-note">г. Пермь · онлайн и очно</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>© 2026 Маргарита Еремеева — врач-нутрициолог, Пермь</p>
+    <p><a href="https://vk.ru/eremeevamargo" target="_blank">ВКонтакте</a></p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
