@@ -319,12 +319,22 @@ STRONG_MARKERS = [
     "муж ушёл", "жена ушла", "не общается с ребёнком", "раздельное проживание",
 ]
 
-# Мягкие ключевые слова — нужно минимум 2
+# Мягкие ключевые слова — нужно минимум 3
 SOFT_KEYWORDS = [
     "муж", "жена", "брак", "семья", "ребёнок", "дети", "отношения",
     "психолог", "конфликт", "ссора", "обида", "измена", "развод",
     "кризис", "расстались", "разлучились", "не понимает",
 ]
+
+# Стоп-слова — пост с любым из них исключается
+STOP_WORDS = [
+    "подборка", "реклама", "конкурс", "промо", "акция", "скидка",
+    "топ-10", "топ 10", "рейтинг", "обзор фильм", "сериал",
+    "рецепт", "мода", "стиль", "красота", "макияж", "диета",
+    "звезды", "знаменитости", "гороскоп", "знак зодиака",
+]
+
+INTENT_THRESHOLD = 40  # Минимальный intentScore для сохранения лида
 
 
 def load_keywords() -> list[str]:
@@ -336,22 +346,27 @@ def load_keywords() -> list[str]:
 
 def is_relevant(text: str, keywords: list[str], source_name: str = "") -> bool:
     text_lower = text.lower()
+    # Стоп-слова — исключаем сразу
+    if any(s in text_lower for s in STOP_WORDS):
+        return False
+    # Минимальная длина — отсеиваем заголовки-огрызки
+    if len(text.strip()) < 30:
+        return False
     # Для babyblog/psychology — проверяем психологический словарь
     if source_name == "babyblog_psychology":
         if any(m in text_lower for m in PSYCHOLOGY_MARKERS):
             return True
-        # Ещё вариант: 1 сильный маркер тоже подойдёт
         return any(m in text_lower for m in STRONG_MARKERS)
     # 1 сильного маркера достаточно
     if any(m in text_lower for m in STRONG_MARKERS):
         return True
-    # Или 2 мягких ключевых слова из SOFT_KEYWORDS
+    # Или 3 мягких ключевых слова из SOFT_KEYWORDS (было 2)
     soft_hits = sum(1 for kw in SOFT_KEYWORDS if kw in text_lower)
-    if soft_hits >= 2:
+    if soft_hits >= 3:
         return True
-    # Или 2 Scout-ключевых слова (из файла raw_keywords.json)
+    # Или 3 Scout-ключевых слова (было 2)
     kw_hits = sum(1 for kw in keywords if kw.lower() in text_lower)
-    return kw_hits >= 2
+    return kw_hits >= 3
 
 
 async def score_intent(text: str) -> int:
@@ -436,7 +451,10 @@ async def run():
         score = await score_intent(lead["quote"])
         lead["intentScore"] = score
         lead["disclaimer"] = "Лид найден в открытом публичном источнике"
-        scored.append(lead)
+        if score >= INTENT_THRESHOLD:
+            scored.append(lead)
+        else:
+            print(f"[forum_hunter] отброшен (score={score}): {lead['quote'][:60]}", flush=True)
         await asyncio.sleep(0.3)
 
     # Мердж с существующим файлом

@@ -41,9 +41,21 @@
       "input": "leads_pipeline/raw_keywords.json",
       "output": "leads_pipeline/raw_leads.json",
       "depends_on": ["scout"],
-      "parallel_with": ["monitor"],
+      "parallel_with": ["monitor", "vk"],
       "retry": 3,
       "timeout_sec": 300
+    },
+    {
+      "id": "vk",
+      "name": "VK Agent",
+      "description": "Парсит ВКонтакте — посты и комментарии в группах по психологии и отношениям",
+      "module": "leads_pipeline/agents/vk_agent.py",
+      "input": "leads_pipeline/raw_keywords.json",
+      "output": "leads_pipeline/raw_leads.json",
+      "depends_on": ["scout"],
+      "parallel_with": ["monitor", "forum_hunter"],
+      "retry": 2,
+      "timeout_sec": 180
     },
     {
       "id": "validator",
@@ -52,7 +64,7 @@
       "module": "leads_pipeline/agents/validator_agent.py",
       "input": "leads_pipeline/raw_leads.json",
       "output": "leads_pipeline/enriched_leads.json",
-      "depends_on": ["monitor", "forum_hunter"],
+      "depends_on": ["monitor", "forum_hunter", "vk"],
       "retry": 2,
       "timeout_sec": 300
     },
@@ -70,7 +82,7 @@
   ],
   "pipeline_order": [
     ["scout"],
-    ["monitor", "forum_hunter"],
+    ["monitor", "forum_hunter", "vk"],
     ["validator"],
     ["crm"]
   ],
@@ -80,6 +92,9 @@
     "woman.ru/psyche",
     "babyblog.ru/community/list/family",
     "reddit.com/r/relationships",
-    "vc.ru/tag/family"
+    "vc.ru/tag/family",
+    "vk.com/psychologies",
+    "vk.com/psy_online",
+    "vk.com/otnosheniya_i_semya"
   ]
 }
