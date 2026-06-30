@@ -29,9 +29,19 @@
 
 - Компьютер: Windows, диск C (основной), диск F (архив)
 - Проекты: C:\Users\HP\Documents\Project\
-- Бот Гаврила: C:\Users\HP\Documents\Project\jarvis-architect\bot\
+- Бот Гаврика (локально): C:\Users\HP\Documents\Project\jarvis-architect\bot\
+- Бот Гаврика (на сервере): /root/telegram-bot/bot.py
+- **VPS сервер:** 159.194.200.172 (root, SSH ключ C:\Users\HP\.ssh\id_ed25519)
+- Код проекта jarvis-gold: C:\Users\HP\jarvis-gold\ (синхронизирован с сервером)
 
-*VPS — планируется.*
+## Токены и секреты (ГДЕ ЛЕЖАТ)
+
+- **@mayroden_bot (Гаврик):** C:\Users\HP\Documents\Project\jarvis-architect\bot\.env → BOT_TOKEN
+  - Продублирован в: C:\Users\HP\jarvis-gold\.env → TELEGRAM_BOT_TOKEN
+  - На сервере: /root/telegram-bot/.env → TELEGRAM_BOT_TOKEN
+- **@LanaS777Bot (misemia клиент):** токен у клиента, на сервере в .env → MISEMIA_BOT_TOKEN
+- **VK токен misemia:** на сервере в .env → MISEMIA_VK_TOKEN
+- SSH доступ на сервер: ssh -i C:\Users\HP\.ssh\id_ed25519 root@159.194.200.172
 
 ---
 
@@ -67,7 +77,7 @@
 
 ## Ссылки на knowledge/
 
-*Пока пусто.*
+- [knowledge/gavrik-recovery.md](knowledge/gavrik-recovery.md) — что делать если Гаврик упал
 
 ---
 
