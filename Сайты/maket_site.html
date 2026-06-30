@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Макет сайта — 8 блоков</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color:#222; }
+
+  /* ── БЛОК 1: Обложка ── */
+  .b1 {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color:#fff; text-align:center;
+    padding: 120px 20px 100px;
+  }
+  .b1 .tag { font-size:13px; letter-spacing:3px; text-transform:uppercase; color:#a0b4cc; margin-bottom:20px; }
+  .b1 h1 { font-size:42px; font-weight:700; line-height:1.25; max-width:700px; margin:0 auto 20px; }
+  .b1 p  { font-size:18px; color:#b0c4d8; max-width:500px; margin:0 auto 40px; }
+  .btn-main {
+    display:inline-block; background:#e94560; color:#fff;
+    padding:16px 40px; border-radius:4px; font-size:16px;
+    font-weight:600; text-decoration:none; letter-spacing:.5px;
+    transition: background .2s;
+  }
+  .btn-main:hover { background:#c73050; }
+
+  /* ── ОБЩИЕ СТИЛИ ── */
+  section { padding: 80px 20px; }
+  .container { max-width:960px; margin:0 auto; }
+  .section-title { font-size:32px; font-weight:700; text-align:center; margin-bottom:12px; }
+  .section-sub   { font-size:16px; color:#666; text-align:center; margin-bottom:50px; }
+
+  /* ── БЛОК 2: Услуги ── */
+  .b2 { background:#f8f9fb; }
+  .cards { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .card {
+    background:#fff; border-radius:8px; padding:28px 24px;
+    width:280px; box-shadow:0 2px 12px rgba(0,0,0,.07);
+  }
+  .card .icon { font-size:32px; margin-bottom:12px; }
+  .card h3 { font-size:17px; font-weight:600; margin-bottom:8px; }
+  .card p  { font-size:14px; color:#666; line-height:1.6; }
+
+  /* ── БЛОК 3: Этапы ── */
+  .b3 { background:#fff; }
+  .steps { display:flex; flex-wrap:wrap; gap:0; justify-content:center; counter-reset:step; }
+  .step { text-align:center; padding:20px 30px; max-width:220px; counter-increment:step; }
+  .step::before {
+    content: counter(step);
+    display:block; width:52px; height:52px; line-height:52px;
+    border-radius:50%; background:#e94560; color:#fff;
+    font-size:20px; font-weight:700; margin:0 auto 16px;
+  }
+  .step h3 { font-size:15px; font-weight:600; margin-bottom:6px; }
+  .step p  { font-size:13px; color:#888; line-height:1.5; }
+
+  /* ── БЛОК 4: Цифры ── */
+  .b4 { background:#1a1a2e; color:#fff; }
+  .stats { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .stat { text-align:center; padding:20px 40px; }
+  .stat .num { font-size:48px; font-weight:800; color:#e94560; }
+  .stat .lbl { font-size:14px; color:#a0b4cc; margin-top:4px; }
+
+  /* ── БЛОК 5: О специалисте ── */
+  .b5 { background:#f8f9fb; }
+  .about { display:flex; gap:50px; align-items:center; flex-wrap:wrap; justify-content:center; }
+  .about-photo {
+    width:260px; height:320px; background:#d0d8e4; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; color:#888; flex-shrink:0;
+    border: 3px dashed #b0b8c4;
+  }
+  .about-text { max-width:480px; }
+  .about-text h2 { font-size:26px; font-weight:700; margin-bottom:16px; }
+  .about-text p  { font-size:15px; color:#555; line-height:1.8; margin-bottom:12px; }
+  .about-text .creds { display:flex; gap:16px; flex-wrap:wrap; margin-top:20px; }
+  .cred { background:#e94560; color:#fff; font-size:13px; padding:6px 14px; border-radius:4px; }
+
+  /* ── БЛОК 6: Кейсы ── */
+  .b6 { background:#fff; }
+  .cases { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .case-card {
+    border:1px solid #eee; border-radius:8px; padding:24px;
+    max-width:440px; display:flex; gap:20px;
+  }
+  .case-card .arrow { font-size:28px; align-self:center; }
+  .case-side h4 { font-size:13px; color:#999; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+  .case-side p  { font-size:14px; color:#333; line-height:1.5; }
+  .case-divider { width:1px; background:#eee; flex-shrink:0; }
+
+  /* ── БЛОК 7: Отзывы ── */
+  .b7 { background:#f8f9fb; }
+  .reviews { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .review {
+    background:#fff; border-radius:8px; padding:24px 28px;
+    max-width:420px; box-shadow:0 2px 10px rgba(0,0,0,.06);
+    border-left:4px solid #e94560;
+  }
+  .review p    { font-size:15px; color:#444; line-height:1.7; font-style:italic; margin-bottom:16px; }
+  .review .who { font-size:13px; color:#999; font-style:normal; }
+  .stars { color:#f5a623; font-size:14px; margin-bottom:10px; }
+
+  /* ── БЛОК 8: Форма ── */
+  .b8 { background: linear-gradient(135deg, #e94560 0%, #c73050 100%); color:#fff; text-align:center; }
+  .b8 h2 { font-size:32px; font-weight:700; margin-bottom:10px; }
+  .b8 p  { font-size:16px; opacity:.85; margin-bottom:40px; }
+  .form-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .form-row input {
+    padding:14px 20px; border-radius:4px; border:none;
+    font-size:15px; width:220px; outline:none;
+  }
+  .btn-white {
+    background:#fff; color:#e94560; padding:14px 36px;
+    border-radius:4px; font-size:15px; font-weight:700;
+    border:none; cursor:pointer; transition: opacity .2s;
+  }
+  .btn-white:hover { opacity:.9; }
+  .form-note { margin-top:16px; font-size:12px; opacity:.6; }
+
+  /* ── Навигация-метки (для клиента) ── */
+  .block-label {
+    background:#333; color:#fff; font-size:11px; letter-spacing:2px;
+    text-align:center; padding:6px; text-transform:uppercase;
+  }
+
+  @media(max-width:640px){
+    .b1 h1 { font-size:28px; }
+    .stat .num { font-size:36px; }
+    .about-photo { width:100%; height:200px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────────────── БЛОК 1 ───────────────── -->
+<div class="block-label">Блок 1 — Обложка / Hero</div>
+<section class="b1">
+  <div class="tag">Юридические услуги</div>
+  <h1>Решу ваш юридический вопрос без лишних слов и нервов</h1>
+  <p>Юрист с 10-летним опытом. Работаю онлайн по всей России. Первая консультация — бесплатно.</p>
+  <a href="#form" class="btn-main">Получить консультацию →</a>
+</section>
+
+<!-- ───────────────── БЛОК 2 ───────────────── -->
+<div class="block-label">Блок 2 — Услуги</div>
+<section class="b2">
+  <div class="container">
+    <div class="section-title">С чем я помогу</div>
+    <p class="section-sub">Работаю с физическими лицами и ИП</p>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">👨‍👩‍👧</div>
+        <h3>Семейные споры</h3>
+        <p>Развод, раздел имущества, алименты, опека над детьми</p>
+      </div>
+      <div class="card">
+        <div class="icon">💼</div>
+        <h3>Трудовые конфликты</h3>
+        <p>Незаконное увольнение, задержка зарплаты, восстановление на работе</p>
+      </div>
+      <div class="card">
+        <div class="icon">🏠</div>
+        <h3>Недвижимость</h3>
+        <p>Сделки купли-продажи, аренда, споры с застройщиком</p>
+      </div>
+      <div class="card">
+        <div class="icon">📋</div>
+        <h3>Договоры</h3>
+        <p>Составление, проверка, защита ваших интересов</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚖️</div>
+        <h3>Суд под ключ</h3>
+        <p>Представляю ваши интересы на всех этапах судебного процесса</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧾</div>
+        <h3>Защита потребителей</h3>
+        <p>Возврат денег, некачественный товар или услуга</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── БЛОК 3 ───────────────── -->
+<div class="block-label">Блок 3 — Как работаем</div>
+<section class="b3">
+  <div class="container">
+    <div class="section-title">Как проходит работа</div>
+    <p class="section-sub">Всё просто и прозрачно</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Заявка</h3>
+        <p>Оставляете контакт — я свяжусь в течение часа</p>
+      </div>
+      <div class="step">
+        <h3>Консультация</h3>
+        <p>Разбираем вашу ситуацию, определяем стратегию</p>
+      </div>
+      <div class="step">
+        <h3>Работа</h3>
+        <p>Готовлю документы и представляю ваши интересы</p>
+      </div>
+      <div class="step">
+        <h3>Результат</h3>
+        <p>Получаете решение — фиксируем и закрываем вопрос</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── БЛОК 4 ───────────────── -->
+<div class="block-label">Блок 4 — Цифры и факты</div>
+<section class="b4">
+  <div class="container">
+    <div class="stats">
+      <div class="stat"><div class="num">10</div><div class="lbl">лет опыта</div></div>
+      <div class="stat"><div class="num">300+</div><div class="lbl">выигранных дел</div></div>
+      <div class="stat"><div class="num">95%</div><div class="lbl">клиентов получили результат</div></div>
+      <div class="stat"><div class="num">24ч</div><div class="lbl">ответ на запрос</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── БЛОК 5 ───────────────── -->
+<div class="block-label">Блок 5 — О специалисте</div>
+<section class="b5">
+  <div class="container">
+    <div class="about">
+      <div class="about-photo">📷 Фото специалиста</div>
+      <div class="about-text">
+        <h2>Иван Иванов — практикующий юрист</h2>
+        <p>Более 10 лет защищаю интересы клиентов в судах и досудебных спорах. Специализируюсь на семейном и трудовом праве.</p>
+        <p>Работаю по всей России онлайн. Принимаю очно в Москве. Всегда на связи — объясняю сложное простыми словами.</p>
+        <div class="creds">
+          <span class="cred">МГУ, юрфак</span>
+          <span class="cred">Адвокатский стаж</span>
+          <span class="cred">Член ФПА РФ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── БЛОК 6 ───────────────── -->
+<div class="block-label">Блок 6 — Кейсы / Результаты</div>
+<section class="b6">
+  <div class="container">
+    <div class="section-title">Реальные результаты</div>
+    <p class="section-sub">Примеры дел из практики</p>
+    <div class="cases">
+      <div class="case-card">
+        <div class="case-side">
+          <h4>Ситуация</h4>
+          <p>Уволили без причины, задержали зарплату за 3 месяца</p>
+        </div>
+        <div class="case-divider"></div>
+        <div class="arrow">→</div>
+        <div class="case-divider"></div>
+        <div class="case-side">
+          <h4>Результат</h4>
+          <p>Восстановление + компенсация <strong>180 000 ₽</strong></p>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-side">
+          <h4>Ситуация</h4>
+          <p>Сосед залил квартиру, отказался возмещать ущерб</p>
+        </div>
+        <div class="case-divider"></div>
+        <div class="arrow">→</div>
+        <div class="case-divider"></div>
+        <div class="case-side">
+          <h4>Результат</h4>
+          <p>Взыскано через суд <strong>340 000 ₽</strong></p>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-side">
+          <h4>Ситуация</h4>
+          <p>Застройщик задержал сдачу квартиры на 14 месяцев</p>
+        </div>
+        <div class="case-divider"></div>
+        <div class="arrow">→</div>
+        <div class="case-divider"></div>
+        <div class="case-side">
+          <h4>Результат</h4>
+          <p>Неустойка и штраф — <strong>210 000 ₽</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── БЛОК 7 ───────────────── -->
+<div class="block-label">Блок 7 — Отзывы</div>
+<section class="b7">
+  <div class="container">
+    <div class="section-title">Что говорят клиенты</div>
+    <p class="section-sub">Более 300 человек уже решили свои вопросы</p>
+    <div class="reviews">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>«Помог выиграть дело, которое казалось безнадёжным. Всё объяснял чётко, без воды. Очень рад результату.»</p>
+        <div class="who">Анна К., Москва</div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>«Разобрался с ситуацией по незаконному увольнению за 3 дня. Работодатель выплатил всё до копейки. Рекомендую.»</p>
+        <div class="who">Михаил Р., Екатеринбург</div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p>«Обращалась по разделу имущества после развода. Грамотно, спокойно, результативно. Спасибо огромное.»</p>
+        <div class="who">Светлана В., Новосибирск</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── БЛОК 8 ───────────────── -->
+<div class="block-label">Блок 8 — Форма заявки / CTA</div>
+<section class="b8" id="form">
+  <div class="container">
+    <h2>Опишите ситуацию — отвечу в течение часа</h2>
+    <p>Бесплатная консультация. Без обязательств.</p>
+    <div class="form-row">
+      <input type="text"  placeholder="Ваше имя">
+      <input type="tel"   placeholder="Телефон или WhatsApp">
+      <button class="btn-white">Отправить заявку</button>
+    </div>
+    <div class="form-note">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</div>
+  </div>
+</section>
+
+</body>
+</html>
