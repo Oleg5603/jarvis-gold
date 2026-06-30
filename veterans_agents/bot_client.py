@@ -2,71 +2,44 @@
 """
 Бот ветеранской организации — готовый к передаче клиенту.
 Запуск: python bot_client.py
-Зависимости: pip install anthropic google-generativeai groq python-telegram-bot
-(можно поставить только те библиотеки, чьим провайдером будете пользоваться)
+Зависимости: pip install openai python-telegram-bot
+Один ключ OPENROUTER_API_KEY — доступ ко всем моделям ниже.
 """
 import os
 import logging
+from openai import OpenAI
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 
-# ── ПРОВАЙДЕРЫ ─────────────────────────────────────────────────────────────────
+client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=OPENROUTER_API_KEY)
 
-PROVIDERS = {
-    "Claude": {"label": "🟣 Claude (платный)", "model": "claude-haiku-4-5-20251001"},
-    "Gemini": {"label": "🔵 Gemini (бесплатно)", "model": "gemini-2.0-flash"},
-    "Groq":   {"label": "🟠 Groq (бесплатно)", "model": "llama-3.3-70b-versatile"},
+# ── МОДЕЛИ (через OpenRouter, один ключ на всё) ─────────────────────────────────
+
+MODELS = {
+    "Llama":  {"label": "🟢 Llama 3.3 (бесплатно)", "model": "meta-llama/llama-3.3-70b-instruct:free"},
+    "Claude": {"label": "🟣 Claude Haiku (платно)", "model": "anthropic/claude-haiku-4.5"},
+    "Gemini": {"label": "🔵 Gemini Flash (платно)", "model": "google/gemini-2.0-flash-001"},
 }
-DEFAULT_PROVIDER = "Claude"
+DEFAULT_MODEL = "Llama"
 
 
-def call_llm(provider: str, system: str, user_text: str) -> str:
-    """Единая точка вызова любой модели."""
-    if provider == "Claude":
-        from anthropic import Anthropic
-        key = os.getenv("ANTHROPIC_API_KEY", "")
-        if not key:
-            return "⚠️ Не задан ANTHROPIC_API_KEY. Переключитесь на другого провайдера или добавьте ключ."
-        client = Anthropic(api_key=key)
-        resp = client.messages.create(
-            model=PROVIDERS["Claude"]["model"],
-            max_tokens=2048,
-            system=system,
-            messages=[{"role": "user", "content": user_text}],
-        )
-        return resp.content[0].text
-
-    if provider == "Gemini":
-        import google.generativeai as genai
-        key = os.getenv("GEMINI_API_KEY", "")
-        if not key:
-            return "⚠️ Не задан GEMINI_API_KEY. Переключитесь на другого провайдера или добавьте ключ."
-        genai.configure(api_key=key)
-        model = genai.GenerativeModel(PROVIDERS["Gemini"]["model"], system_instruction=system)
-        resp = model.generate_content(user_text)
-        return resp.text
-
-    if provider == "Groq":
-        from groq import Groq
-        key = os.getenv("GROQ_API_KEY", "")
-        if not key:
-            return "⚠️ Не задан GROQ_API_KEY. Переключитесь на другого провайдера или добавьте ключ."
-        client = Groq(api_key=key)
-        resp = client.chat.completions.create(
-            model=PROVIDERS["Groq"]["model"],
-            max_tokens=2048,
-            messages=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": user_text},
-            ],
-        )
-        return resp.choices[0].message.content
-
-    raise ValueError(f"Неизвестный провайдер: {provider}")
+def call_llm(model_key: str, system: str, user_text: str) -> str:
+    if not OPENROUTER_API_KEY:
+        return "⚠️ Не задан OPENROUTER_API_KEY. Получите ключ на openrouter.ai/keys."
+    resp = client.chat.completions.create(
+        model=MODELS[model_key]["model"],
+        max_tokens=2048,
+        messages=[
+            {"role": "system", "content": system},
+            {"role": "user", "content": user_text},
+        ],
+    )
+    return resp.choices[0].message.content
 
 
 # ── ПРОМПТЫ АГЕНТОВ ────────────────────────────────────────────────────────────
@@ -116,22 +89,22 @@ ROUTING_PROMPT = f"""Определи, к какому разделу относ
 
 # ── СОСТОЯНИЕ ─────────────────────────────────────────────────────────────────
 
-user_agent: dict[int, str] = {}      # chat_id -> выбранный агент
-user_provider: dict[int, str] = {}   # chat_id -> выбранный провайдер
+user_agent: dict[int, str] = {}   # chat_id -> выбранный агент
+user_model: dict[int, str] = {}   # chat_id -> выбранная модель
 
 # ── KEYBOARD ──────────────────────────────────────────────────────────────────
 
 def main_keyboard():
-    keys = list(AGENTS.keys()) + ["🔀 Авто (оркестратор)", "⚙️ Провайдер ИИ"]
+    keys = list(AGENTS.keys()) + ["🔀 Авто (оркестратор)", "⚙️ Модель ИИ"]
     rows = [keys[i:i+2] for i in range(0, len(keys), 2)]
     return ReplyKeyboardMarkup(rows, resize_keyboard=True)
 
-def provider_keyboard():
-    rows = [[p["label"]] for p in PROVIDERS.values()] + [["⬅️ Назад"]]
+def model_keyboard():
+    rows = [[m["label"]] for m in MODELS.values()] + [["⬅️ Назад"]]
     return ReplyKeyboardMarkup(rows, resize_keyboard=True)
 
-def label_to_provider(label: str) -> str | None:
-    for key, info in PROVIDERS.items():
+def label_to_model(label: str) -> str | None:
+    for key, info in MODELS.items():
         if info["label"] == label:
             return key
     return None
@@ -149,12 +122,12 @@ async def handle_message(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
     chat_id = update.effective_chat.id
 
-    # ── меню провайдера ──
-    if text == "⚙️ Провайдер ИИ":
-        current = user_provider.get(chat_id, DEFAULT_PROVIDER)
+    # ── меню модели ──
+    if text == "⚙️ Модель ИИ":
+        current = user_model.get(chat_id, DEFAULT_MODEL)
         await update.message.reply_text(
-            f"Текущий провайдер: {PROVIDERS[current]['label']}\n\nВыберите другой:",
-            reply_markup=provider_keyboard(),
+            f"Текущая модель: {MODELS[current]['label']}\n\nВыберите другую:",
+            reply_markup=model_keyboard(),
         )
         return
 
@@ -162,11 +135,11 @@ async def handle_message(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Главное меню:", reply_markup=main_keyboard())
         return
 
-    chosen_provider = label_to_provider(text)
-    if chosen_provider:
-        user_provider[chat_id] = chosen_provider
+    chosen_model = label_to_model(text)
+    if chosen_model:
+        user_model[chat_id] = chosen_model
         await update.message.reply_text(
-            f"Готово ✅ Теперь использую: {PROVIDERS[chosen_provider]['label']}",
+            f"Готово ✅ Теперь использую: {MODELS[chosen_model]['label']}",
             reply_markup=main_keyboard(),
         )
         return
@@ -185,17 +158,17 @@ async def handle_message(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         return
 
     # ── определяем агента ──
-    provider = user_provider.get(chat_id, DEFAULT_PROVIDER)
+    model_key = user_model.get(chat_id, DEFAULT_MODEL)
     agent_key = user_agent.get(chat_id)
 
     if not agent_key:
-        routed = call_llm(provider, ROUTING_PROMPT, text).strip().strip('"')
+        routed = call_llm(model_key, ROUTING_PROMPT, text).strip().strip('"')
         agent_key = routed if routed in AGENTS else "📋 Документы"
 
     system_prompt = AGENTS[agent_key]["prompt"]
-    await update.message.reply_text(f"⚙️ {agent_key} · {PROVIDERS[provider]['label']}…")
+    await update.message.reply_text(f"⚙️ {agent_key} · {MODELS[model_key]['label']}…")
 
-    answer = call_llm(provider, system_prompt, text)
+    answer = call_llm(model_key, system_prompt, text)
 
     # telegram max 4096 chars
     for chunk in [answer[i:i+4000] for i in range(0, len(answer), 4000)]:
@@ -206,8 +179,8 @@ async def handle_message(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 def main():
     if not TELEGRAM_TOKEN:
         raise SystemExit("Нет TELEGRAM_BOT_TOKEN")
-    if not any(os.getenv(k) for k in ("ANTHROPIC_API_KEY", "GEMINI_API_KEY", "GROQ_API_KEY")):
-        raise SystemExit("Нужен хотя бы один ключ: ANTHROPIC_API_KEY, GEMINI_API_KEY или GROQ_API_KEY")
+    if not OPENROUTER_API_KEY:
+        raise SystemExit("Нет OPENROUTER_API_KEY (получить на openrouter.ai/keys)")
 
     app = Application.builder().token(TELEGRAM_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
