@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сакартвело — Грузинская кухня с доставкой</title>
+<meta name="description" content="Доставка настоящей грузинской еды — хинкали, хачапури, чахохбили. Быстро, горячо, вкусно.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wine:#6B1A1A;
+  --wine2:#8B2525;
+  --gold:#C9972A;
+  --gold2:#E0B040;
+  --cream:#FDF6EC;
+  --cream2:#F5EAD4;
+  --dark:#1C1008;
+  --text:#2D1A0A;
+  --sub:#7A5C40;
+  --border:#E8D5B0;
+  --white:#FFFFFF;
+  --r:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--cream);line-height:1.6}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;line-height:1.2}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{max-width:100%}
+.container{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* ORNAMENT */
+.ornament{height:6px;background:repeating-linear-gradient(90deg,var(--gold) 0,var(--gold) 8px,transparent 8px,transparent 16px,var(--wine) 16px,var(--wine) 24px,transparent 24px,transparent 32px)}
+
+/* HEADER */
+.site-header{position:sticky;top:0;z-index:500;background:var(--dark);box-shadow:0 2px 20px rgba(0,0,0,.4)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1180px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{font-size:32px}
+.logo-name{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);font-weight:700;line-height:1}
+.logo-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.header-nav{display:flex;gap:24px}
+.header-nav a{color:rgba(255,255,255,.75);font-size:14px;font-weight:500;transition:color .2s}
+.header-nav a:hover{color:var(--gold)}
+.header-right{display:flex;align-items:center;gap:12px}
+.cart-btn{
+  position:relative;display:flex;align-items:center;gap:8px;
+  background:var(--wine);color:#fff;border:none;padding:10px 18px;
+  border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;
+  transition:background .2s;font-family:inherit;
+}
+.cart-btn:hover{background:var(--wine2)}
+.cart-count{
+  position:absolute;top:-6px;right:-6px;
+  background:var(--gold);color:var(--dark);
+  width:20px;height:20px;border-radius:50%;
+  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.cart-count.hidden{display:none}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,var(--dark) 0%,#2D0A0A 50%,#1C0808 100%);
+  color:#fff;padding:80px 0 70px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle at 70% 50%,rgba(201,151,42,.12) 0%,transparent 60%);
+}
+.hero-geo{
+  position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+  font-size:260px;opacity:.06;pointer-events:none;user-select:none;
+}
+.hero-content{position:relative;max-width:600px}
+.hero-tag{
+  display:inline-block;background:rgba(201,151,42,.2);border:1px solid rgba(201,151,42,.4);
+  color:var(--gold2);padding:5px 16px;border-radius:100px;
+  font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;
+}
+.hero h1{font-size:clamp(36px,6vw,64px);color:#fff;margin-bottom:16px}
+.hero h1 span{color:var(--gold)}
+.hero-sub{color:rgba(255,255,255,.7);font-size:17px;max-width:480px;margin-bottom:32px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border-radius:100px;font-weight:600;font-size:15px;
+  border:2px solid transparent;cursor:pointer;transition:all .2s;font-family:inherit;
+}
+.btn-gold{background:var(--gold);color:var(--dark)}
+.btn-gold:hover{background:var(--gold2)}
+.btn-outline-w{background:transparent;border-color:rgba(255,255,255,.3);color:#fff}
+.btn-outline-w:hover{border-color:#fff}
+.hero-stats{display:flex;gap:32px;margin-top:40px}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold)}
+.hero-stat-label{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
+
+/* BADGES */
+.badges{background:var(--wine);padding:12px 0}
+.badges-inner{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
+.badge-item{color:rgba(255,255,255,.85);font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
+.badge-item span{font-size:16px}
+
+/* MENU */
+.menu-section{padding:60px 0}
+.section-header{text-align:center;margin-bottom:40px}
+.section-tag{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px}
+.section-header h2{font-size:clamp(28px,4vw,40px)}
+
+/* CATEGORY TABS */
+.cat-tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:36px}
+.cat-tab{
+  padding:8px 20px;border-radius:100px;font-size:14px;font-weight:500;
+  border:2px solid var(--border);background:#fff;cursor:pointer;
+  transition:all .2s;color:var(--sub);
+}
+.cat-tab:hover,.cat-tab.active{background:var(--wine);border-color:var(--wine);color:#fff}
+
+/* MENU GRID */
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+}
+.menu-card{
+  background:#fff;border-radius:14px;overflow:hidden;
+  border:1px solid var(--border);
+  transition:box-shadow .3s,transform .3s;
+  display:flex;flex-direction:column;
+}
+.menu-card:hover{box-shadow:0 8px 32px rgba(107,26,26,.12);transform:translateY(-3px)}
+.menu-card-img{
+  height:160px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:72px;position:relative;
+}
+.menu-card-body{padding:16px;flex:1;display:flex;flex-direction:column}
+.menu-card-name{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:6px}
+.menu-card-desc{font-size:13px;color:var(--sub);line-height:1.5;flex:1;margin-bottom:14px}
+.menu-card-footer{display:flex;align-items:center;justify-content:space-between}
+.menu-card-price{font-size:18px;font-weight:700;color:var(--wine)}
+.add-btn{
+  background:var(--wine);color:#fff;border:none;
+  padding:8px 16px;border-radius:100px;font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:inherit;display:flex;align-items:center;gap:6px;
+}
+.add-btn:hover{background:var(--wine2)}
+.add-btn.added{background:var(--gold);color:var(--dark)}
+.menu-badge{
+  position:absolute;top:10px;left:10px;
+  background:var(--wine);color:#fff;
+  padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;
+}
+.menu-badge.hit{background:var(--gold);color:var(--dark)}
+.menu-badge.new{background:#2E7D32;color:#fff}
+
+/* PROMO */
+.promo-section{background:linear-gradient(135deg,var(--wine),#2D0A0A);color:#fff;padding:50px 0}
+.promo-inner{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.promo-text h2{color:#fff;font-size:28px;margin-bottom:8px}
+.promo-text p{color:rgba(255,255,255,.7);font-size:15px}
+.promo-form{display:flex;gap:10px;flex-wrap:wrap}
+.promo-input{
+  padding:12px 20px;border-radius:100px;border:2px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.1);color:#fff;font-size:14px;
+  width:220px;font-family:inherit;outline:none;
+}
+.promo-input::placeholder{color:rgba(255,255,255,.5)}
+.promo-input:focus{border-color:var(--gold)}
+.btn-gold-sm{background:var(--gold);color:var(--dark);padding:12px 22px;border-radius:100px;border:none;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit}
+
+/* ABOUT */
+.about-section{padding:60px 0;background:var(--cream2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-img{border-radius:16px;background:linear-gradient(135deg,var(--wine),#3D0A0A);height:380px;display:flex;align-items:center;justify-content:center;font-size:120px}
+.about-tag{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px}
+.about-text h2{font-size:32px;margin-bottom:16px}
+.about-text p{color:var(--sub);margin-bottom:14px;font-size:15px}
+.about-list{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.about-list li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--sub)}
+.about-list li::before{content:'✦';color:var(--gold);flex-shrink:0}
+
+/* FOOTER */
+footer{background:var(--dark);color:rgba(255,255,255,.7);padding:48px 0 0}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-logo-name{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);margin-bottom:8px}
+.footer-desc{font-size:13px;line-height:1.8;color:rgba(255,255,255,.5)}
+.footer-h{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-bottom:14px;font-weight:700}
+.footer-links li{margin-bottom:8px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.55);transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;text-align:center;font-size:12px;color:rgba(255,255,255,.3)}
+
+/* CART SIDEBAR */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:800;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-sidebar{
+  position:fixed;right:0;top:0;bottom:0;width:420px;max-width:100vw;
+  background:#fff;z-index:900;transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+}
+.cart-sidebar.open{transform:translateX(0)}
+.cart-head{
+  padding:20px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--dark);color:#fff;
+}
+.cart-head h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold)}
+.cart-close{background:none;border:none;color:#fff;font-size:24px;cursor:pointer;line-height:1}
+.cart-items{flex:1;overflow-y:auto;padding:16px 24px}
+.cart-empty{text-align:center;padding:48px 20px;color:var(--sub)}
+.cart-empty-icon{font-size:56px;margin-bottom:12px}
+.cart-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.cart-item-icon{font-size:36px;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-weight:600;font-size:14px;margin-bottom:2px}
+.cart-item-price{font-size:13px;color:var(--sub)}
+.cart-item-controls{display:flex;align-items:center;gap:8px}
+.qty-btn{
+  width:28px;height:28px;border-radius:50%;border:2px solid var(--border);
+  background:#fff;cursor:pointer;font-size:16px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;color:var(--wine);transition:all .2s;
+}
+.qty-btn:hover{background:var(--wine);color:#fff;border-color:var(--wine)}
+.qty-val{font-weight:700;min-width:20px;text-align:center}
+.cart-footer{padding:16px 24px;border-top:1px solid var(--border)}
+.promo-row{display:flex;gap:8px;margin-bottom:16px}
+.promo-cart-input{
+  flex:1;padding:10px 14px;border:2px solid var(--border);border-radius:8px;
+  font-size:13px;font-family:inherit;outline:none;
+}
+.promo-cart-input:focus{border-color:var(--gold)}
+.promo-apply-btn{
+  background:var(--wine);color:#fff;border:none;padding:10px 16px;
+  border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;
+}
+.promo-msg{font-size:12px;margin-bottom:12px;min-height:18px}
+.promo-msg.ok{color:#2E7D32}
+.promo-msg.err{color:#C62828}
+.cart-total-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px}
+.cart-total-row.big{font-size:18px;font-weight:700;color:var(--wine);margin-bottom:16px}
+.checkout-btn{
+  width:100%;padding:14px;background:var(--wine);color:#fff;border:none;
+  border-radius:100px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:background .2s;
+}
+.checkout-btn:hover{background:var(--wine2)}
+.checkout-btn:disabled{background:#ccc;cursor:default}
+
+/* ORDER MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--sub)}
+.modal h3{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:24px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.form-control{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s}
+.form-control:focus{border-color:var(--wine)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pay-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.pay-opt{
+  flex:1;min-width:100px;padding:10px;border:2px solid var(--border);border-radius:8px;
+  text-align:center;cursor:pointer;font-size:13px;font-weight:500;transition:all .2s;
+}
+.pay-opt:hover{border-color:var(--wine);color:var(--wine)}
+.pay-opt.selected{border-color:var(--wine);background:#FFF0F0;color:var(--wine);font-weight:700}
+.submit-order-btn{
+  width:100%;padding:14px;background:var(--wine);color:#fff;border:none;
+  border-radius:100px;font-size:15px;font-weight:700;cursor:pointer;margin-top:20px;font-family:inherit;
+}
+.submit-order-btn:hover{background:var(--wine2)}
+.order-success{text-align:center;padding:20px 0}
+.order-success .success-icon{font-size:72px;margin-bottom:16px}
+.order-success h3{color:var(--wine)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .header-nav{display:none}
+  .about-grid{grid-template-columns:1fr}
+  .about-img{height:220px}
+  .footer-grid{grid-template-columns:1fr}
+  .hero-stats{gap:20px}
+  .cart-sidebar{width:100vw}
+  .form-row{grid-template-columns:1fr}
+  .promo-inner{flex-direction:column}
+}
+@media(max-width:480px){
+  .menu-grid{grid-template-columns:1fr 1fr}
+  .menu-card-img{height:120px;font-size:52px}
+  .hero{padding:50px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP ORNAMENT -->
+<div class="ornament"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🇬🇪</div>
+      <div>
+        <div class="logo-name">Сакартвело</div>
+        <div class="logo-sub">Грузинская кухня</div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="#menu">Меню</a>
+      <a href="#promo">Акции</a>
+      <a href="#about">О нас</a>
+      <a href="#footer">Контакты</a>
+    </nav>
+    <div class="header-right">
+      <button class="cart-btn" onclick="openCart()">
+        🛒 Корзина
+        <span class="cart-count hidden" id="cart-count">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">🍷 Настоящая Грузия в каждом блюде</div>
+      <h1>Вкус<br><span>Грузии</span><br>с доставкой</h1>
+      <p class="hero-sub">Хинкали, хачапури, чахохбили — готовим по традиционным рецептам. Доставка за 45 минут.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-gold">Заказать сейчас</a>
+        <a href="#about" class="btn btn-outline-w">О нас</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">45 мин</div><div class="hero-stat-label">Среднее время доставки</div></div>
+        <div><div class="hero-stat-num">30+</div><div class="hero-stat-label">Блюд в меню</div></div>
+        <div><div class="hero-stat-num">4.9 ★</div><div class="hero-stat-label">Рейтинг</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-geo">🍷</div>
+</section>
+
+<!-- BADGES -->
+<div class="badges">
+  <div class="badges-inner">
+    <div class="badge-item"><span>🚚</span> Доставка от 500 ₽</div>
+    <div class="badge-item"><span>⏱️</span> 45 минут</div>
+    <div class="badge-item"><span>💳</span> Оплата онлайн</div>
+    <div class="badge-item"><span>🌿</span> Только свежие продукты</div>
+    <div class="badge-item"><span>🍷</span> Грузинские вина</div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">✦ Наше меню ✦</div>
+      <h2>Выберите блюдо</h2>
+    </div>
+
+    <div class="cat-tabs" id="cat-tabs">
+      <button class="cat-tab active" data-cat="all">Все блюда</button>
+      <button class="cat-tab" data-cat="khachapuri">🫓 Хачапури</button>
+      <button class="cat-tab" data-cat="khinkali">🥟 Хинкали</button>
+      <button class="cat-tab" data-cat="hot">🍲 Горячее</button>
+      <button class="cat-tab" data-cat="snacks">🥗 Закуски</button>
+      <button class="cat-tab" data-cat="soups">🍜 Супы</button>
+      <button class="cat-tab" data-cat="desserts">🍮 Десерты</button>
+      <button class="cat-tab" data-cat="drinks">🥤 Напитки</button>
+    </div>
+
+    <div class="menu-grid" id="menu-grid"></div>
+  </div>
+</section>
+
+<!-- PROMO -->
+<section class="promo-section" id="promo">
+  <div class="container">
+    <div class="promo-inner">
+      <div class="promo-text">
+        <h2>🎁 Есть промокод?</h2>
+        <p>Введите промокод и получите скидку на заказ.<br>Попробуйте: <strong>GEORGIA10</strong> — скидка 10%</p>
+      </div>
+      <div class="promo-form">
+        <input class="promo-input" type="text" placeholder="Введите промокод" id="hero-promo-input">
+        <button class="btn-gold-sm" onclick="applyHeroPromo()">Применить</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img">🥘</div>
+      <div class="about-text">
+        <div class="about-tag">✦ О нас ✦</div>
+        <h2>Грузинская кухня — это наше призвание</h2>
+        <p>Мы готовим по рецептам, которые передаются из поколения в поколение в грузинских семьях. Каждое блюдо — это частица Тбилиси, Кутаиси, Батуми.</p>
+        <p>Наши повара родом из Грузии и привезли с собой не только рецепты, но и душу настоящей грузинской кухни.</p>
+        <ul class="about-list">
+          <li>Свежие продукты каждый день</li>
+          <li>Традиционные специи и травы</li>
+          <li>Хинкали лепим вручную — не менее 18 складок</li>
+          <li>Хачапури из настоящего имеретинского сыра</li>
+          <li>Работаем без выходных, 11:00–23:00</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM ORNAMENT -->
+<div class="ornament"></div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-name">🇬🇪 Сакартвело</div>
+        <p class="footer-desc">Доставка настоящей грузинской еды. Хинкали, хачапури, чахохбили и многое другое.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.5);margin-top:12px">📞 +7 (495) 000-00-00</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px">📧 hello@sakartvelo.ru</p>
+      </div>
+      <div>
+        <p class="footer-h">Меню</p>
+        <ul class="footer-links">
+          <li><a href="#menu">Хачапури</a></li>
+          <li><a href="#menu">Хинкали</a></li>
+          <li><a href="#menu">Горячие блюда</a></li>
+          <li><a href="#menu">Десерты</a></li>
+          <li><a href="#menu">Напитки</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-h">Информация</p>
+        <ul class="footer-links">
+          <li><a href="#about">О нас</a></li>
+          <li><a href="#promo">Акции</a></li>
+          <li><a href="#">Доставка и оплата</a></li>
+          <li><a href="#">Политика конф.</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Сакартвело. Все права защищены.</div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-head">
+    <h3>🛒 Корзина</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🍽️</div>
+      <p>Корзина пуста</p>
+      <p style="font-size:13px;color:var(--sub);margin-top:4px">Добавьте блюда из меню</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="promo-row">
+      <input class="promo-cart-input" type="text" placeholder="Промокод" id="cart-promo-input">
+      <button class="promo-apply-btn" onclick="applyPromo()">OK</button>
+    </div>
+    <div class="promo-msg" id="promo-msg"></div>
+    <div class="cart-total-row" id="discount-row" style="display:none;color:var(--gold)">
+      <span>Скидка</span><span id="discount-amount">−0 ₽</span>
+    </div>
+    <div class="cart-total-row">
+      <span>Доставка</span><span>300 ₽</span>
+    </div>
+    <div class="cart-total-row big">
+      <span>Итого</span><span id="cart-total">0 ₽</span>
+    </div>
+    <button class="checkout-btn" id="checkout-btn" onclick="openOrder()" disabled>Оформить заказ</button>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="order-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeOrder()">✕</button>
+    <div id="order-form-wrap">
+      <h3>Оформление заказа</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Имя *</label><input class="form-control" type="text" id="o-name" placeholder="Ваше имя"></div>
+        <div class="form-group"><label>Телефон *</label><input class="form-control" type="tel" id="o-phone" placeholder="+7 (___) ___-__-__"></div>
+      </div>
+      <div class="form-group"><label>Улица и дом *</label><input class="form-control" type="text" id="o-addr" placeholder="ул. Пушкина, д. 10"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Квартира</label><input class="form-control" type="text" placeholder="12"></div>
+        <div class="form-group"><label>Подъезд</label><input class="form-control" type="text" placeholder="2"></div>
+      </div>
+      <div class="form-group"><label>Комментарий к заказу</label><input class="form-control" type="text" placeholder="Не звонить в дверь, оставить у двери"></div>
+      <div class="form-group">
+        <label>Способ оплаты</label>
+        <div class="pay-options">
+          <div class="pay-opt selected" onclick="selectPay(this)">💳 Картой онлайн</div>
+          <div class="pay-opt" onclick="selectPay(this)">💵 Наличными</div>
+          <div class="pay-opt" onclick="selectPay(this)">📱 СБП</div>
+        </div>
+      </div>
+      <div style="background:#FFF8EC;border:1px solid var(--border);border-radius:8px;padding:14px;font-size:14px;color:var(--sub)">
+        <strong style="color:var(--text)">Итого к оплате: <span id="modal-total" style="color:var(--wine)">0 ₽</span></strong>
+      </div>
+      <button class="submit-order-btn" onclick="submitOrder()">Подтвердить и оплатить →</button>
+    </div>
+    <div id="order-success-wrap" class="order-success" style="display:none">
+      <div class="success-icon">🎉</div>
+      <h3>Заказ принят!</h3>
+      <p style="color:var(--sub);margin:12px 0">Мы позвоним вам в течение 5 минут для подтверждения.</p>
+      <p style="font-size:14px;color:var(--sub)">Ожидаемое время доставки: <strong>40–55 минут</strong></p>
+      <button class="btn btn-gold" style="margin-top:20px" onclick="closeOrder()">Отлично!</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══ MENU DATA ═══
+var MENU = [
+  // Хачапури
+  {id:1,cat:'khachapuri',name:'Хачапури по-аджарски',desc:'Лодочка из теста с сыром, яйцом и маслом',price:490,emoji:'🫓',badge:'Хит',badgeType:'hit'},
+  {id:2,cat:'khachapuri',name:'Хачапури по-имеретински',desc:'Круглый, с имеретинским сыром внутри',price:420,emoji:'🫓'},
+  {id:3,cat:'khachapuri',name:'Хачапури по-мегрельски',desc:'С двойным сыром: внутри и снаружи',price:450,emoji:'🫓',badge:'Новинка',badgeType:'new'},
+  // Хинкали
+  {id:4,cat:'khinkali',name:'Хинкали с мясом (5 шт)',desc:'Говядина + свинина, зелень, специи',price:380,emoji:'🥟',badge:'Хит',badgeType:'hit'},
+  {id:5,cat:'khinkali',name:'Хинкали с грибами (5 шт)',desc:'Лесные грибы, лук, свежая зелень',price:350,emoji:'🥟'},
+  {id:6,cat:'khinkali',name:'Хинкали с сыром (5 шт)',desc:'Сулугуни, зелень, топлёное масло',price:340,emoji:'🥟'},
+  {id:7,cat:'khinkali',name:'Хинкали с картофелем (5 шт)',desc:'Пюре с луком и укропом',price:320,emoji:'🥟'},
+  // Горячее
+  {id:8,cat:'hot',name:'Чахохбили из курицы',desc:'Тушёная курица в томатном соусе с травами',price:560,emoji:'🍲',badge:'Хит',badgeType:'hit'},
+  {id:9,cat:'hot',name:'Чанахи',desc:'Баранина с овощами в горшочке',price:620,emoji:'🍲'},
+  {id:10,cat:'hot',name:'Оджахури',desc:'Свинина с картофелем и луком на сковороде',price:590,emoji:'🍳'},
+  {id:11,cat:'hot',name:'Мцвади (шашлык из свинины)',desc:'Мраморная свинина, маринад из красного вина',price:650,emoji:'🍖'},
+  {id:12,cat:'hot',name:'Мцвади из говядины',desc:'Нежная говядина на углях, соус ткемали',price:690,emoji:'🍖',badge:'Новинка',badgeType:'new'},
+  {id:13,cat:'hot',name:'Телятина по-кахетински',desc:'Тушёная телятина с помидорами и базиликом',price:710,emoji:'🥩'},
+  // Закуски
+  {id:14,cat:'snacks',name:'Пхали (ассорти 3 вида)',desc:'Шпинат, свёкла, фасоль с грецким орехом',price:380,emoji:'🥗'},
+  {id:15,cat:'snacks',name:'Сациви из курицы',desc:'Курица в ореховом соусе с грузинскими специями',price:420,emoji:'🍗',badge:'Хит',badgeType:'hit'},
+  {id:16,cat:'snacks',name:'Лобиани',desc:'Лепёшка с пряной фасолью',price:290,emoji:'🫔'},
+  {id:17,cat:'snacks',name:'Аджапсандали',desc:'Тушёные овощи с зеленью и чесноком (веган)',price:340,emoji:'🥘'},
+  {id:18,cat:'snacks',name:'Сыр сулугуни жареный',desc:'Молодой сулугуни на гриле, мята',price:310,emoji:'🧀'},
+  // Супы
+  {id:19,cat:'soups',name:'Харчо',desc:'Насыщенный суп из говядины с рисом и ткемали',price:380,emoji:'🍜',badge:'Хит',badgeType:'hit'},
+  {id:20,cat:'soups',name:'Суп из красной чечевицы',desc:'С аджикой, луком и грузинскими травами',price:320,emoji:'🍵'},
+  {id:21,cat:'soups',name:'Чихиртма',desc:'Куриный суп с яйцом и лимоном',price:340,emoji:'🍲'},
+  // Хлеб
+  {id:22,cat:'snacks',name:'Шоти (грузинский хлеб)',desc:'Традиционный лаваш из тандыра',price:140,emoji:'🍞'},
+  // Десерты
+  {id:23,cat:'desserts',name:'Чурчхела',desc:'Орехи в виноградном соке, домашняя',price:190,emoji:'🍡'},
+  {id:24,cat:'desserts',name:'Пахлава грузинская',desc:'С грецким орехом и мёдом',price:220,emoji:'🍮'},
+  {id:25,cat:'desserts',name:'Козинаки',desc:'Грецкий орех в карамели',price:170,emoji:'🍯'},
+  {id:26,cat:'desserts',name:'Назуки',desc:'Сладкий хлеб с изюмом и кардамоном',price:200,emoji:'🍞'},
+  // Напитки
+  {id:27,cat:'drinks',name:'Лимонад Тархун',desc:'Классический эстрагоновый лимонад, 0.5 л',price:180,emoji:'🥤'},
+  {id:28,cat:'drinks',name:'Лимонад Бадаги',desc:'Виноградное сусло, без алкоголя, 0.5 л',price:190,emoji:'🍹',badge:'Новинка',badgeType:'new'},
+  {id:29,cat:'drinks',name:'Боржоми',desc:'Минеральная вода, 0.5 л',price:120,emoji:'💧'},
+  {id:30,cat:'drinks',name:'Грузинское вино Саперави',desc:'Красное сухое, Кахетия, 0.75 л',price:890,emoji:'🍷'},
+];
+
+// BG colors per category
+var CAT_COLORS = {
+  khachapuri:'linear-gradient(135deg,#3D1A00,#7A3500)',
+  khinkali:'linear-gradient(135deg,#0D2B00,#1A5C00)',
+  hot:'linear-gradient(135deg,#3D0000,#8B1A1A)',
+  snacks:'linear-gradient(135deg,#1A2D00,#3D6B00)',
+  soups:'linear-gradient(135deg,#001A3D,#0A4D8B)',
+  desserts:'linear-gradient(135deg,#3D1A3D,#8B3D8B)',
+  drinks:'linear-gradient(135deg,#001A1A,#0A5C5C)',
+};
+
+// ═══ CART STATE ═══
+var cart = {};
+var discount = 0;
+var promoApplied = '';
+
+function getSubtotal(){
+  return Object.values(cart).reduce(function(s,i){return s+i.price*i.qty;},0);
+}
+function getTotal(){
+  var sub = getSubtotal();
+  var disc = Math.round(sub * discount);
+  return sub - disc + 300;
+}
+function getTotalItems(){
+  return Object.values(cart).reduce(function(s,i){return s+i.qty;},0);
+}
+
+function updateCartUI(){
+  var total = getTotalItems();
+  var countEl = document.getElementById('cart-count');
+  if(total>0){countEl.textContent=total;countEl.classList.remove('hidden');}
+  else{countEl.classList.add('hidden');}
+
+  var itemsEl = document.getElementById('cart-items');
+  var items = Object.values(cart);
+  if(items.length===0){
+    itemsEl.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🍽️</div><p>Корзина пуста</p><p style="font-size:13px;color:var(--sub);margin-top:4px">Добавьте блюда из меню</p></div>';
+    document.getElementById('checkout-btn').disabled=true;
+  } else {
+    itemsEl.innerHTML=items.map(function(item){
+      return '<div class="cart-item">'+
+        '<div class="cart-item-icon">'+item.emoji+'</div>'+
+        '<div class="cart-item-info">'+
+          '<div class="cart-item-name">'+item.name+'</div>'+
+          '<div class="cart-item-price">'+item.price+' ₽ × '+item.qty+' = '+(item.price*item.qty)+' ₽</div>'+
+        '</div>'+
+        '<div class="cart-item-controls">'+
+          '<button class="qty-btn" onclick="changeQty('+item.id+',-1)">−</button>'+
+          '<span class="qty-val">'+item.qty+'</span>'+
+          '<button class="qty-btn" onclick="changeQty('+item.id+',1)">+</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+    document.getElementById('checkout-btn').disabled=false;
+  }
+
+  var sub = getSubtotal();
+  var disc = Math.round(sub * discount);
+  var discRow = document.getElementById('discount-row');
+  if(disc>0){
+    discRow.style.display='flex';
+    document.getElementById('discount-amount').textContent='−'+disc+' ₽';
+  } else { discRow.style.display='none'; }
+  document.getElementById('cart-total').textContent=getTotal()+' ₽';
+  document.getElementById('modal-total').textContent=getTotal()+' ₽';
+}
+
+function addToCart(id){
+  var item = MENU.find(function(m){return m.id===id;});
+  if(!item) return;
+  if(cart[id]){cart[id].qty++;}
+  else{cart[id]={id:id,name:item.name,price:item.price,emoji:item.emoji,qty:1};}
+  updateCartUI();
+  // flash button
+  var btn = document.getElementById('add-btn-'+id);
+  if(btn){btn.classList.add('added');btn.textContent='✓ Добавлено';setTimeout(function(){btn.classList.remove('added');btn.textContent='+ В корзину';},1200);}
+}
+
+function changeQty(id,delta){
+  if(!cart[id]) return;
+  cart[id].qty+=delta;
+  if(cart[id].qty<=0) delete cart[id];
+  updateCartUI();
+}
+
+// ═══ CART OPEN/CLOSE ═══
+function openCart(){
+  document.getElementById('cart-sidebar').classList.add('open');
+  document.getElementById('cart-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCart(){
+  document.getElementById('cart-sidebar').classList.remove('open');
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ═══ PROMO ═══
+var PROMOS = {GEORGIA10:{disc:0.10,label:'Скидка 10%'},KHINKALI15:{disc:0.15,label:'Скидка 15%'},NEWCLIENT:{disc:0.20,label:'Скидка 20%'}};
+
+function applyPromo(){
+  var code = document.getElementById('cart-promo-input').value.trim().toUpperCase();
+  var msg = document.getElementById('promo-msg');
+  if(PROMOS[code]){
+    discount=PROMOS[code].disc;
+    promoApplied=code;
+    msg.textContent='✓ '+PROMOS[code].label+' применена!';
+    msg.className='promo-msg ok';
+  } else if(code===''){
+    msg.textContent='';discount=0;
+  } else {
+    msg.textContent='✗ Промокод не найден';
+    msg.className='promo-msg err';discount=0;
+  }
+  updateCartUI();
+}
+
+function applyHeroPromo(){
+  var code = document.getElementById('hero-promo-input').value.trim().toUpperCase();
+  document.getElementById('cart-promo-input').value=code;
+  openCart();
+  setTimeout(applyPromo,300);
+}
+
+// ═══ ORDER MODAL ═══
+function openOrder(){
+  if(Object.keys(cart).length===0) return;
+  closeCart();
+  document.getElementById('modal-total').textContent=getTotal()+' ₽';
+  document.getElementById('order-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeOrder(){
+  document.getElementById('order-modal').classList.remove('open');
+  document.body.style.overflow='';
+  document.getElementById('order-form-wrap').style.display='';
+  document.getElementById('order-success-wrap').style.display='none';
+}
+
+function selectPay(el){
+  document.querySelectorAll('.pay-opt').forEach(function(e){e.classList.remove('selected');});
+  el.classList.add('selected');
+}
+
+function submitOrder(){
+  var name=document.getElementById('o-name').value.trim();
+  var phone=document.getElementById('o-phone').value.trim();
+  var addr=document.getElementById('o-addr').value.trim();
+  if(!name||!phone||!addr){alert('Заполните имя, телефон и адрес');return;}
+  // Simulate processing
+  var btn=document.querySelector('.submit-order-btn');
+  btn.textContent='Обрабатываем...';btn.disabled=true;
+  setTimeout(function(){
+    cart={};discount=0;promoApplied='';
+    updateCartUI();
+    document.getElementById('order-form-wrap').style.display='none';
+    document.getElementById('order-success-wrap').style.display='block';
+  },1200);
+}
+
+// ═══ RENDER MENU ═══
+function renderMenu(cat){
+  var items = cat==='all' ? MENU : MENU.filter(function(m){return m.cat===cat;});
+  var grid = document.getElementById('menu-grid');
+  grid.innerHTML = items.map(function(item){
+    var badge = item.badge ? '<span class="menu-badge '+item.badgeType+'">'+item.badge+'</span>' : '';
+    var bg = CAT_COLORS[item.cat] || 'linear-gradient(135deg,#2D1A0A,#5C3820)';
+    return '<div class="menu-card">'+
+      '<div class="menu-card-img" style="background:'+bg+'">'+item.emoji+badge+'</div>'+
+      '<div class="menu-card-body">'+
+        '<div class="menu-card-name">'+item.name+'</div>'+
+        '<div class="menu-card-desc">'+item.desc+'</div>'+
+        '<div class="menu-card-footer">'+
+          '<div class="menu-card-price">'+item.price+' ₽</div>'+
+          '<button class="add-btn" id="add-btn-'+item.id+'" onclick="addToCart('+item.id+')">+ В корзину</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+// ═══ CATEGORY TABS ═══
+document.querySelectorAll('.cat-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.cat-tab').forEach(function(t){t.classList.remove('active');});
+    tab.classList.add('active');
+    renderMenu(tab.dataset.cat);
+  });
+});
+
+// ═══ INIT ═══
+renderMenu('all');
+updateCartUI();
+</script>
+
+<script>
+(function(){
+  var wm=document.createElement('div');
+  wm.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden';
+  var txt=document.createElement('div');
+  txt.textContent='ДЕМО';
+  txt.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);font-size:clamp(60px,14vw,140px);font-weight:900;color:rgba(107,26,26,0.07);white-space:nowrap;user-select:none;font-family:serif;letter-spacing:12px';
+  wm.appendChild(txt);document.body.appendChild(wm);
+  var badge=document.createElement('div');
+  badge.innerHTML='⚠ ДЕМО — только для просмотра';
+  badge.style.cssText='position:fixed;top:70px;right:16px;z-index:10000;background:rgba(107,26,26,.92);color:#fff;padding:6px 14px;border-radius:100px;font-size:12px;font-weight:700;font-family:sans-serif;box-shadow:0 2px 12px rgba(0,0,0,.3);pointer-events:none';
+  document.body.appendChild(badge);
+  var bar=document.createElement('div');
+  bar.textContent='Демо-версия сайта — создано для клиента. Не для публичного использования.';
+  bar.style.cssText='position:fixed;bottom:0;left:0;right:0;z-index:10000;background:rgba(28,16,8,.9);color:rgba(255,255,255,.7);text-align:center;font-size:12px;padding:8px;font-family:sans-serif;pointer-events:none';
+  document.body.appendChild(bar);
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+  document.addEventListener('keydown',function(e){if(e.key==='F12'||(e.ctrlKey&&['u','U','s','S','a','A'].includes(e.key)))e.preventDefault();});
+  document.addEventListener('dragstart',function(e){e.preventDefault();});
+})();
+</script>
+</body>
+</html>
