@@ -7,14 +7,24 @@
 """
 import os
 import logging
+from dotenv import load_dotenv
 from openai import OpenAI
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+
+# Пусто = доступ открыт всем (по умолчанию, для публичного клиентского бота).
+# Если задать через запятую в .env (ALLOWED_USER_IDS=123,456) — доступ будет только у них.
+_raw_allowed_ids = os.getenv("ALLOWED_USER_IDS", "")
+ALLOWED_USER_IDS: set[int] = {
+    int(x.strip()) for x in _raw_allowed_ids.split(",") if x.strip().isdigit()
+}
 
 client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=OPENROUTER_API_KEY)
 
@@ -111,7 +121,14 @@ def label_to_model(label: str) -> str | None:
 
 # ── ХЭНДЛЕРЫ ──────────────────────────────────────────────────────────────────
 
+def _is_allowed(chat_id: int) -> bool:
+    return not ALLOWED_USER_IDS or chat_id in ALLOWED_USER_IDS
+
+
 async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    if not _is_allowed(update.effective_chat.id):
+        await update.message.reply_text("⛔ Доступ к этому боту ограничен.")
+        return
     await update.message.reply_text(
         "👋 Добро пожаловать в систему помощи ветеранской организации!\n\n"
         "Выберите раздел или напишите вопрос — я сам определю нужного специалиста.\n",
@@ -121,6 +138,10 @@ async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 async def handle_message(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
     chat_id = update.effective_chat.id
+
+    if not _is_allowed(chat_id):
+        await update.message.reply_text("⛔ Доступ к этому боту ограничен.")
+        return
 
     # ── меню модели ──
     if text == "⚙️ Модель ИИ":
