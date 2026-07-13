@@ -21,7 +21,7 @@ import { createWriteStream } from "node:fs";
 import { execSync } from "node:child_process";
 import https from "node:https";
 import http from "node:http";
-import { handlePendingInput, registerSecretsHandlers } from "./secrets-menu.js";
+import { handlePendingInput, registerSecretsHandlers, loadEnvVars } from "./secrets-menu.js";
 import { hasAnyTranscriber, registerVoiceHelpers, voiceFallbackKeyboard, VOICE_FALLBACK_PROMPT } from "./voice-helper.js";
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
@@ -1221,6 +1221,26 @@ function getMemoryText() {
   );
 }
 
+// ─── SECRET REDACTION ───────────────────────────────────────────────────────
+// Values stored in ~/.agent/.env (API keys, tokens) must never reach the user
+// verbatim through a chat reply — even a well-intentioned agent can echo them
+// back while explaining what it did. Keys whose value is just an operational
+// identifier (not a secret) are excluded so normal status messages keep working.
+const REDACT_EXCLUDE_KEYS = new Set(["AGENT_HOME", "OWNER_ID"]);
+
+function redactSecrets(text) {
+  const vars = loadEnvVars();
+  let result = text;
+  for (const [key, value] of Object.entries(vars)) {
+    if (REDACT_EXCLUDE_KEYS.has(key)) continue;
+    if (!value || value.length < 8) continue;
+    if (result.includes(value)) {
+      result = result.split(value).join("[REDACTED]");
+    }
+  }
+  return result;
+}
+
 // ─── SEND RESPONSE ──────────────────────────────────────────────────────────
 
 const CHUNK_SOFT_LIMIT = 1800;
@@ -1257,7 +1277,7 @@ function sendChunked(html) {
 
 async function sendResponse(ctx, text) {
   // Extract media tags before formatting
-  const { cleaned, media } = extractMediaTags(text);
+  const { cleaned, media } = extractMediaTags(redactSecrets(text));
   const html = mdToTgHtml(cleaned);
 
   // Check if response needs confirmation buttons
