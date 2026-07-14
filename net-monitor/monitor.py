@@ -15,7 +15,7 @@ from datetime import datetime
 import tkinter as tk
 from tkinter import ttk
 
-from chain_checks import CHAIN, run_chain, find_break_point
+from chain_checks import CHAIN, run_chain, find_break_point, get_active_vpn_names
 
 LOCK_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".monitor.lock")
 
@@ -181,7 +181,7 @@ class NetMonitorApp:
                 self.pending_break_name = brk.name
                 self.pending_fail_count = 1
                 self.first_fail_at_time = now
-                self._log_line(f"[{now:%Y-%m-%d %H:%M:%S}] сбой (1 опрос) — этап: {brk.name} — {brk.detail}")
+                self._log_line(f"[{now:%Y-%m-%d %H:%M:%S}] сбой (1 опрос) — этап: {brk.name} — {brk.detail}{self._vpn_suffix()}")
 
             confirm_threshold = (FAIL_CONFIRM_COUNT_CLAUDE_API if brk.name == CLAUDE_API_STEP_NAME
                                   else FAIL_CONFIRM_COUNT)
@@ -190,7 +190,7 @@ class NetMonitorApp:
                 if self.consecutive_fail_at is None:
                     self.consecutive_fail_at = brk.name
                     self.last_break_started = self.first_fail_at_time
-                    self._log_line(f"[{self.last_break_started:%Y-%m-%d %H:%M:%S}] НАЧАЛО ОБРЫВА — этап: {brk.name} — {brk.detail}")
+                    self._log_line(f"[{self.last_break_started:%Y-%m-%d %H:%M:%S}] НАЧАЛО ОБРЫВА — этап: {brk.name} — {brk.detail}{self._vpn_suffix()}")
                     self.tree.insert("", 0, values=(self.last_break_started.strftime("%Y-%m-%d %H:%M:%S"), brk.name, brk.detail, "…"))
             else:
                 self.status_line.config(
@@ -202,7 +202,7 @@ class NetMonitorApp:
             if self.consecutive_fail_at is not None:
                 dur = now - self.last_break_started
                 self._log_line(f"[{now:%Y-%m-%d %H:%M:%S}] СВЯЗЬ ВОССТАНОВЛЕНА "
-                                f"(этап был: {self.consecutive_fail_at}, длительность {dur})")
+                                f"(этап был: {self.consecutive_fail_at}, длительность {dur}){self._vpn_suffix()}")
                 # обновить длительность в первой строке журнала
                 first = self.tree.get_children()
                 if first:
@@ -211,6 +211,10 @@ class NetMonitorApp:
                     self.tree.item(first[0], values=vals)
                 self.consecutive_fail_at = None
                 self.last_break_started = None
+
+    def _vpn_suffix(self) -> str:
+        vpns = get_active_vpn_names()
+        return f" [VPN: {', '.join(vpns)}]" if vpns else " [VPN: нет]"
 
     def _log_line(self, text: str):
         try:

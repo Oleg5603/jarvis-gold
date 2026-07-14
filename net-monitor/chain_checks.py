@@ -122,10 +122,16 @@ def check_isp() -> CheckResult:
     return CheckResult("Провайдер (интернет по IP)", False, last_detail)
 
 
-def check_vpn() -> CheckResult:
+def get_active_vpn_names() -> list[str]:
+    """Список активных VPN/туннельных интерфейсов (напр. happ-tun) — для корреляции
+    обрывов с конкретным VPN-клиентом в журнале."""
     stats = psutil.net_if_stats()
-    active_vpn = [name for name, s in stats.items()
-                  if s.isup and any(h in name.lower() for h in VPN_HINTS)]
+    return [name for name, s in stats.items()
+            if s.isup and any(h in name.lower() for h in VPN_HINTS)]
+
+
+def check_vpn() -> CheckResult:
+    active_vpn = get_active_vpn_names()
     if not active_vpn:
         return CheckResult("VPN", True, "VPN не используется (интерфейс не найден)")
     return CheckResult("VPN", True, f"активен: {', '.join(active_vpn)}")
