@@ -52,6 +52,12 @@
       "/home/agent/projects"
     ]
   },
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Bash(git push origin master)"
+    ]
+  },
   "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
   "enabledPlugins": {

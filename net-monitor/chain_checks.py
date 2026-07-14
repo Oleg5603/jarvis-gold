@@ -29,6 +29,7 @@ PING_TIMEOUT_MS = 1500
 DNS_TEST_HOST = "google.com"
 PUBLIC_DNS_IPS = ["1.1.1.1", "8.8.8.8"]
 TARGET_URLS = ["https://www.google.com", "https://ya.ru"]
+CLAUDE_API_URL = "https://api.anthropic.com"
 
 VPN_HINTS = ("tun", "tap", "wireguard", "wg", "vpn", "openvpn", "nordlynx", "zerotier", "cloudflarewarp")
 
@@ -169,6 +170,26 @@ def check_target() -> CheckResult:
     return CheckResult("Целевой сайт (HTTPS)", False, "; ".join(errors))
 
 
+def check_claude_api() -> CheckResult:
+    """Проверка реального эндпоинта Claude API, а не произвольного сайта —
+    прежние обрывы фиксировались только для ya.ru/google.com, что не доказывает,
+    что рвётся именно соединение чата с Anthropic."""
+    import urllib.request
+    for attempt in range(TARGET_RETRIES + 1):
+        try:
+            t0 = time.time()
+            urllib.request.urlopen(CLAUDE_API_URL, timeout=TARGET_TIMEOUT_SEC)
+            lat = (time.time() - t0) * 1000
+            return CheckResult("Claude API (api.anthropic.com)", True, f"{lat:.0f} мс", lat)
+        except urllib.error.HTTPError as e:
+            # любой HTTP-ответ (даже 404/401) означает, что соединение установлено
+            lat = (time.time() - t0) * 1000
+            return CheckResult("Claude API (api.anthropic.com)", True, f"HTTP {e.code} (соединение есть), {lat:.0f} мс", lat)
+        except Exception as e:
+            last_err = str(e)
+    return CheckResult("Claude API (api.anthropic.com)", False, last_err)
+
+
 def check_claude_code_auth() -> CheckResult:
     """Отдельная причина обрыва: не сеть, а сбой авторизации Claude Code
     (истёкший токен, разлогин) — сеть при этом может быть полностью исправна."""
@@ -196,7 +217,7 @@ def check_claude_code_auth() -> CheckResult:
         return CheckResult("Claude Code (авторизация)", False, f"ошибка проверки: {e}")
 
 
-CHAIN = [check_os_adapter, check_router, check_isp, check_vpn, check_dns, check_target, check_claude_code_auth]
+CHAIN = [check_os_adapter, check_router, check_isp, check_vpn, check_dns, check_target, check_claude_api, check_claude_code_auth]
 
 
 def run_chain() -> list[CheckResult]:

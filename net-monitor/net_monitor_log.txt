@@ -2,3 +2,258 @@
 [2026-07-12 15:57:54] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Целевой сайт (HTTPS), длительность 0:00:10.410599)
 [2026-07-12 16:54:37] НАЧАЛО ОБРЫВА — этап: Целевой сайт (HTTPS) — https://ya.ru: The read operation timed out
 [2026-07-12 16:54:49] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Целевой сайт (HTTPS), длительность 0:00:11.963978)
+[2026-07-12 23:35:48] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-12 23:37:37] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-12 23:38:45] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 00:32:47] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 00:50:56] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 00:53:11] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 00:54:21] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 00:57:30] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:06:06] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:09:09] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:18:14] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:18:14] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:18:22] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.303637)
+[2026-07-13 01:39:35] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:39:35] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:39:59] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:24.500215)
+[2026-07-13 01:54:47] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:54:47] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 01:54:56] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.841867)
+[2026-07-13 02:11:08] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 02:11:08] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 02:12:32] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:01:24.008602)
+[2026-07-13 02:22:52] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 02:22:52] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 02:23:16] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:24.400655)
+[2026-07-13 12:37:17] сбой (1 опрос) — этап: ОС / сетевой адаптер — нет активных сетевых интерфейсов
+[2026-07-13 12:37:55] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>; https://ya.ru: <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>
+[2026-07-13 12:37:55] НАЧАЛО ОБРЫВА — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>; https://ya.ru: <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>
+[2026-07-13 12:52:28] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Целевой сайт (HTTPS), длительность 0:14:33.440590)
+[2026-07-13 12:54:11] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 12:54:11] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 12:55:14] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:01:02.887307)
+[2026-07-13 13:01:57] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-13 13:02:52] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-13 13:15:00] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 13:15:00] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 13:16:13] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:01:12.747104)
+[2026-07-13 13:22:23] сбой (1 опрос) — этап: Роутер (шлюз) — 172.18.0.2: ошибка запуска ping: Command '['ping', '-n', '1', '-w', '1500', '172.18.0.2']' timed out after 3.5 seconds
+[2026-07-13 13:22:51] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-13 13:22:51] НАЧАЛО ОБРЫВА — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-13 13:23:55] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude Code (авторизация), длительность 0:01:03.943159)
+[2026-07-13 13:29:57] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 13:29:57] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 13:30:29] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:31.852843)
+[2026-07-13 13:36:30] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 13:36:30] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 13:37:29] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:58.498946)
+[2026-07-13 13:39:10] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+}
+[2026-07-13 13:39:10] НАЧАЛО ОБРЫВА — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+}
+[2026-07-13 13:44:19] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>
+[2026-07-13 13:45:21] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+}
+[2026-07-13 13:47:25] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 13:47:34] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+}
+[2026-07-13 13:57:36] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 13:58:01] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+}
+[2026-07-13 14:20:18] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:20:42] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+}
+[2026-07-13 14:30:35] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude Code (авторизация), длительность 0:51:24.304974)
+[2026-07-13 14:48:27] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:48:27] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:48:36] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.902766)
+[2026-07-13 14:48:59] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:48:59] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:49:09] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.410457)
+[2026-07-13 14:55:48] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:55:48] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:55:57] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.187674)
+[2026-07-13 14:57:41] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:57:41] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 14:57:58] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:16.781408)
+[2026-07-13 16:03:51] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 16:03:51] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 16:04:00] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.864321)
+[2026-07-13 16:04:24] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 16:04:24] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 16:04:40] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:16.797210)
+[2026-07-13 16:27:08] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 16:27:08] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 16:27:17] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.952177)
+[2026-07-13 16:52:01] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 16:52:01] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 16:52:28] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:26.988680)
+[2026-07-13 17:23:55] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:23:55] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:24:09] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:13.793789)
+[2026-07-13 17:34:51] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:34:51] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:35:17] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:25.504688)
+[2026-07-13 17:46:03] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:46:03] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:46:12] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.923130)
+[2026-07-13 17:56:36] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:56:36] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:56:55] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:18.393873)
+[2026-07-13 17:57:33] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:57:33] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 17:57:42] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.877443)
+[2026-07-13 18:19:10] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:19:10] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:19:20] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.845791)
+[2026-07-13 18:21:51] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:21:51] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:22:00] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.950036)
+[2026-07-13 18:34:48] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:34:48] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:35:28] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:39.245434)
+[2026-07-13 18:40:34] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:40:34] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:41:04] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:30.728760)
+[2026-07-13 18:41:42] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:41:42] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:41:51] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.157592)
+[2026-07-13 18:52:21] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:52:21] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 18:52:45] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:24.280903)
+[2026-07-13 19:03:50] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:03:50] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:03:59] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.669694)
+[2026-07-13 19:26:13] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:26:13] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:26:22] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.894802)
+[2026-07-13 19:37:29] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:37:29] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:37:38] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.929918)
+[2026-07-13 19:48:25] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:48:25] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:48:48] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:22.095496)
+[2026-07-13 19:55:03] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:55:03] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 19:55:41] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:38.323097)
+[2026-07-13 20:03:36] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 20:03:36] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 20:03:45] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.239474)
+[2026-07-13 20:10:52] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 20:10:52] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 20:11:54] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:01:02.017582)
+[2026-07-13 20:18:32] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 20:18:32] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 20:18:46] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:13.805157)
+[2026-07-13 20:19:26] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 20:19:26] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 20:19:35] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.606434)
+[2026-07-13 21:35:51] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-13 21:52:03] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 21:52:03] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 21:52:12] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.198329)
+[2026-07-13 22:01:16] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 22:01:16] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 22:01:34] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:17.458097)
+[2026-07-13 22:24:55] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 22:24:55] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 22:25:12] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:16.888015)
+[2026-07-13 22:56:41] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 22:56:41] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 22:56:52] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:11.001395)
+[2026-07-13 23:25:00] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 23:25:00] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 23:25:10] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.434294)
+[2026-07-13 23:32:34] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 23:32:34] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 23:32:43] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.514480)
+[2026-07-13 23:42:51] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 23:42:51] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 23:43:15] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:24.549697)
+[2026-07-13 23:55:09] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 23:55:09] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-13 23:55:18] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.900419)
+[2026-07-14 00:17:43] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 00:17:43] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 00:17:58] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:15.407552)
+[2026-07-14 00:25:16] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — The read operation timed out
+[2026-07-14 00:25:16] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — The read operation timed out
+[2026-07-14 00:26:00] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:43.389720)
+[2026-07-14 00:26:27] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — The read operation timed out
+[2026-07-14 00:26:27] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — The read operation timed out
+[2026-07-14 00:26:40] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:13.225267)
+[2026-07-14 00:27:02] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 00:27:02] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 00:27:12] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.505255)
+[2026-07-14 00:32:20] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 00:32:20] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 00:32:30] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.194756)
+[2026-07-14 00:51:03] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 00:51:03] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 00:51:30] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:26.739111)
+[2026-07-14 01:02:39] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 01:02:39] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 01:03:12] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:32.876378)
+[2026-07-14 01:14:41] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 01:14:41] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 01:14:58] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:17.141502)
+[2026-07-14 01:25:59] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 01:25:59] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 01:26:14] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:14.759474)
+[2026-07-14 01:47:51] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 01:47:51] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 01:48:08] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:17.787576)
+[2026-07-14 02:34:52] сбой (1 опрос) — этап: ОС / сетевой адаптер — нет активных сетевых интерфейсов
+[2026-07-14 11:53:35] сбой (1 опрос) — этап: Роутер (шлюз) — 172.18.0.2: ошибка запуска ping: Command '['ping', '-n', '1', '-w', '1500', '172.18.0.2']' timed out after 3.5 seconds
+[2026-07-14 11:58:28] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error _ssl.c:1063: The handshake operation timed out>; https://ya.ru: <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 11:59:54] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 11:59:54] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 12:00:41] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:47.311235)
+[2026-07-14 12:06:55] сбой (1 опрос) — этап: Роутер (шлюз) — 172.18.0.2: ошибка запуска ping: Command '['ping', '-n', '1', '-w', '1500', '172.18.0.2']' timed out after 3.5 seconds
+[2026-07-14 12:07:28] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 12:08:17] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 13:50:03] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 13:50:03] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 13:50:12] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.875677)
+[2026-07-14 15:47:53] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 15:47:53] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 15:48:03] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.841582)
+[2026-07-14 15:49:59] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 15:49:59] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 15:50:15] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:16.279165)
+[2026-07-14 16:22:08] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 16:23:45] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 16:30:38] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error _ssl.c:1063: The handshake operation timed out>; https://ya.ru: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>
+[2026-07-14 17:39:47] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 17:41:35] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 17:41:35] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 17:41:45] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.495520)
+[2026-07-14 17:55:10] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 17:55:10] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 17:55:29] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:19.034505)
+[2026-07-14 18:11:12] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 18:11:12] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 18:11:39] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:26.805353)
+[2026-07-14 18:19:35] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 18:19:35] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 18:19:45] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.409153)
