@@ -15,7 +15,7 @@ journalctl -u telegram-bot --no-pager -n 20
 **Главный источник правды:**
 ```
 C:\Users\HP\Documents\Project\jarvis-architect\bot\.env
-BOT_TOKEN=7960862830:AAGfQmQHOjN8B7HyspS3m4Pzg3rpzW5juSw
+BOT_TOKEN=<см. .env, не хранить значение здесь>
 ```
 
 **Копии токена (должны совпадать):**
@@ -38,7 +38,7 @@ systemctl restart telegram-bot
 
 ### 2. KeyError: 'TELEGRAM_BOT_TOKEN' — нет токена в .env
 ```bash
-echo 'TELEGRAM_BOT_TOKEN=7960862830:AAGfQmQHOjN8B7HyspS3m4Pzg3rpzW5juSw' >> /root/telegram-bot/.env
+echo 'TELEGRAM_BOT_TOKEN=<взять из основного .env, см. выше>' >> /root/telegram-bot/.env
 systemctl restart telegram-bot
 ```
 
