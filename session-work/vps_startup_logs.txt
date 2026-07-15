@@ -1,0 +1,49 @@
+==== journalctl -u gavrik.service -n 20 --no-pager ====
+Jul 14 10:24:11 obthqouenx python3[1377279]: 2026-07-14 10:24:11,672 [INFO] aiogram.event: Update id=598837787 is handled. Duration 852 ms by bot id=7960862830
+Jul 14 10:32:56 obthqouenx python3[1377279]: 2026-07-14 10:32:56,405 [INFO] aiogram.event: Update id=598837788 is handled. Duration 182 ms by bot id=7960862830
+Jul 14 10:32:58 obthqouenx python3[1377279]: 2026-07-14 10:32:58,320 [INFO] aiogram.event: Update id=598837789 is handled. Duration 397 ms by bot id=7960862830
+Jul 14 10:57:09 obthqouenx systemd[1]: Stopping gavrik.service - Gavrik Telegram Bot...
+Jul 14 10:57:09 obthqouenx python3[1377279]: 2026-07-14 10:57:09,273 [WARNING] aiogram.dispatcher: Received SIGTERM signal
+Jul 14 10:57:09 obthqouenx python3[1377279]: 2026-07-14 10:57:09,275 [INFO] aiogram.dispatcher: Polling stopped for bot @mayroden_bot id=7960862830 - 'gavrykbot'
+Jul 14 10:57:09 obthqouenx python3[1377279]: 2026-07-14 10:57:09,275 [INFO] aiogram.dispatcher: Polling stopped
+Jul 14 10:57:10 obthqouenx systemd[1]: gavrik.service: Deactivated successfully.
+Jul 14 10:57:10 obthqouenx systemd[1]: Stopped gavrik.service - Gavrik Telegram Bot.
+Jul 14 10:57:10 obthqouenx systemd[1]: gavrik.service: Consumed 5.361s CPU time, 72.0M memory peak, 0B memory swap peak.
+Jul 15 15:12:38 obthqouenx systemd[1]: Started gavrik.service - Gavrik Telegram Bot.
+Jul 15 15:12:41 obthqouenx python3[1573207]: 2026-07-15 15:12:41,221 [INFO] __main__: Гаврик запущен.
+Jul 15 15:12:41 obthqouenx python3[1573207]: 2026-07-15 15:12:41,222 [INFO] aiogram.dispatcher: Start polling
+Jul 15 15:12:41 obthqouenx python3[1573207]: 2026-07-15 15:12:41,504 [INFO] aiogram.dispatcher: Run polling for bot @mayroden_bot id=7960862830 - 'gavrykbot'
+Jul 15 15:12:47 obthqouenx python3[1573207]: 2026-07-15 15:12:47,032 [ERROR] aiogram.dispatcher: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Jul 15 15:12:47 obthqouenx python3[1573207]: 2026-07-15 15:12:47,032 [WARNING] aiogram.dispatcher: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7960862830)
+Jul 15 15:12:57 obthqouenx python3[1573207]: 2026-07-15 15:12:57,178 [ERROR] aiogram.dispatcher: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Jul 15 15:12:57 obthqouenx python3[1573207]: 2026-07-15 15:12:57,179 [WARNING] aiogram.dispatcher: Sleep for 1.197614 seconds and try again... (tryings = 1, bot id = 7960862830)
+Jul 15 15:13:08 obthqouenx python3[1573207]: 2026-07-15 15:13:08,461 [ERROR] aiogram.dispatcher: Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+Jul 15 15:13:08 obthqouenx python3[1573207]: 2026-07-15 15:13:08,461 [WARNING] aiogram.dispatcher: Sleep for 1.479369 seconds and try again... (tryings = 2, bot id = 7960862830)
+
+==== journalctl -u agent-bot.service -n 25 --no-pager ====
+Jul 15 15:13:01 obthqouenx node[1573230]:     at async Bot.loop (/home/agent/.agent/bot/node_modules/grammy/out/bot.js:396:33)
+Jul 15 15:13:01 obthqouenx node[1573230]:     at async Bot.start (/home/agent/.agent/bot/node_modules/grammy/out/bot.js:317:9) {
+Jul 15 15:13:01 obthqouenx node[1573230]:   method: 'getUpdates',
+Jul 15 15:13:01 obthqouenx node[1573230]:   payload: { offset: 1, limit: undefined, timeout: 30, allowed_updates: [] },
+Jul 15 15:13:01 obthqouenx node[1573230]:   ok: false,
+Jul 15 15:13:01 obthqouenx node[1573230]:   error_code: 409,
+Jul 15 15:13:01 obthqouenx node[1573230]:   description: 'Conflict: terminated by other getUpdates request; make sure that only one bot instance is running',
+Jul 15 15:13:01 obthqouenx node[1573230]:   parameters: {}
+Jul 15 15:13:01 obthqouenx node[1573230]: }
+Jul 15 15:13:01 obthqouenx node[1573230]: Node.js v20.20.2
+Jul 15 15:13:01 obthqouenx systemd[1]: agent-bot.service: Main process exited, code=exited, status=1/FAILURE
+Jul 15 15:13:01 obthqouenx systemd[1]: agent-bot.service: Failed with result 'exit-code'.
+Jul 15 15:13:07 obthqouenx systemd[1]: agent-bot.service: Scheduled restart job, restart counter is at 2.
+Jul 15 15:13:07 obthqouenx systemd[1]: Started agent-bot.service - Agent Bot - Personal AI Telegram Bot.
+Jul 15 15:13:07 obthqouenx node[1573244]: [owner] loaded from file: 449885090 (Олег Палкин)
+Jul 15 15:13:07 obthqouenx node[1573244]: [indexer] Watching /home/agent/workspace/memory
+Jul 15 15:13:07 obthqouenx node[1573244]: [indexer] Watching /home/agent/workspace/knowledge
+Jul 15 15:13:07 obthqouenx node[1573244]: [indexer] Watching MEMORY.md
+Jul 15 15:13:07 obthqouenx node[1573244]: [indexer] Starting full reindex...
+Jul 15 15:13:07 obthqouenx node[1573244]: [semantic-memory] Initialized
+Jul 15 15:13:07 obthqouenx node[1573244]: [scheduler] Started
+Jul 15 15:13:07 obthqouenx node[1573244]: Agent bot v2.0.0 started (workspace: /home/agent/workspace, projects: /home/agent/projects)
+Jul 15 15:13:07 obthqouenx node[1573244]: Model: sonnet, Bootstrap: done
+Jul 15 15:13:07 obthqouenx node[1573244]: Owner: 449885090 (only owner can use bot)
+Jul 15 15:13:07 obthqouenx node[1573244]: [indexer] Full reindex complete: 7 files, 58 total chunks
+

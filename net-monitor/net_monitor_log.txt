@@ -257,3 +257,306 @@
 [2026-07-14 18:19:35] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
 [2026-07-14 18:19:35] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
 [2026-07-14 18:19:45] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.409153)
+[2026-07-14 18:27:26] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 18:27:26] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 18:27:36] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.174164)
+[2026-07-14 18:41:58] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 18:41:58] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 18:42:13] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:14.382253)
+[2026-07-14 19:12:17] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 19:12:17] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 19:12:31] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:13.535156)
+[2026-07-14 19:38:38] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 19:44:27] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 19:44:27] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 19:44:42] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:15.680666)
+[2026-07-14 19:47:24] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>
+[2026-07-14 19:47:24] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>
+[2026-07-14 19:48:03] сбой (1 опрос) — этап: Роутер (шлюз) — 172.18.0.2: таймаут (нет ответа)
+[2026-07-14 19:48:31] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 19:48:48] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:01:23.662440)
+[2026-07-14 19:51:25] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 19:52:40] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 19:52:40] НАЧАЛО ОБРЫВА — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 19:54:06] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude Code (авторизация), длительность 0:01:25.471737)
+[2026-07-14 20:06:08] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 20:06:08] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 20:06:58] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:49.721149)
+[2026-07-14 20:07:36] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 20:07:36] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 20:07:52] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:15.630452)
+[2026-07-14 20:09:16] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 20:10:45] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с
+[2026-07-14 20:15:31] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 20:15:31] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 20:15:44] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:13.773779)
+[2026-07-14 20:16:42] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 20:16:42] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out>
+[2026-07-14 20:17:07] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:25.077032)
+[2026-07-14 20:55:26] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-14 20:55:26] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-14 20:56:06] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:39.301388) [VPN: happ-tun]
+[2026-07-14 21:02:20] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-14 21:02:20] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-14 21:02:48] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:28.426092) [VPN: happ-tun]
+[2026-07-14 21:10:25] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-14 21:10:25] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-14 21:10:40] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:15.067085) [VPN: happ-tun]
+[2026-07-14 21:25:20] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 21:25:20] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 21:25:30] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.835719) [VPN: нет]
+[2026-07-14 21:38:20] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 21:38:20] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 21:38:39] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:18.638669) [VPN: нет]
+[2026-07-14 21:46:19] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 21:46:19] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 21:46:44] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:24.281163) [VPN: нет]
+[2026-07-14 21:49:29] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 21:49:29] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 21:49:44] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:14.093693) [VPN: нет]
+[2026-07-14 22:04:21] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 22:04:21] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 22:04:34] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:13.729974) [VPN: нет]
+[2026-07-14 22:05:53] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 22:05:53] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 22:06:12] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:18.400534) [VPN: нет]
+[2026-07-14 22:06:42] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 22:06:42] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 22:06:53] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:11.076864) [VPN: нет]
+[2026-07-14 22:23:18] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: нет]
+[2026-07-14 22:25:02] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: нет]
+[2026-07-14 22:25:02] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: нет]
+[2026-07-14 22:26:42] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: нет]
+[2026-07-14 22:26:51] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:01:49.430602) [VPN: нет]
+[2026-07-14 22:35:24] сбой (1 опрос) — этап: Провайдер (интернет по IP) — 8.8.8.8: ошибка запуска ping: Command '['ping', '-n', '1', '-w', '1500', '8.8.8.8']' timed out after 3.5 seconds [VPN: нет]
+[2026-07-14 22:35:40] сбой (1 опрос) — этап: Роутер (шлюз) — 192.168.1.1: ошибка запуска ping: Command '['ping', '-n', '1', '-w', '1500', '192.168.1.1']' timed out after 3.5 seconds [VPN: нет]
+[2026-07-14 22:36:14] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: нет]
+[2026-07-14 22:36:14] НАЧАЛО ОБРЫВА — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: нет]
+[2026-07-14 22:37:47] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude Code (авторизация), длительность 0:01:33.752810) [VPN: нет]
+[2026-07-14 22:38:15] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: нет]
+[2026-07-14 22:52:22] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 22:52:22] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 22:52:33] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:11.619500) [VPN: нет]
+[2026-07-14 23:04:13] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: нет]
+[2026-07-14 23:16:23] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: нет]
+[2026-07-14 23:25:01] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:25:01] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:25:11] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.165239) [VPN: нет]
+[2026-07-14 23:27:46] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:27:46] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:28:13] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:26.709974) [VPN: нет]
+[2026-07-14 23:30:36] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:30:36] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:31:08] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:32.161303) [VPN: нет]
+[2026-07-14 23:39:01] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:39:01] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:39:26] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:25.716662) [VPN: нет]
+[2026-07-14 23:50:09] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: нет]
+[2026-07-14 23:50:09] НАЧАЛО ОБРЫВА — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: нет]
+[2026-07-14 23:51:24] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:51:43] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: нет]
+[2026-07-14 23:52:05] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:52:31] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: нет]
+[2026-07-14 23:52:54] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-14 23:53:27] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: нет]
+[2026-07-15 00:31:37] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: нет]
+[2026-07-15 00:31:55] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: нет]
+[2026-07-15 01:20:11] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error timed out>; https://ya.ru: <urlopen error timed out> [VPN: happ-tun]
+[2026-07-15 01:20:11] НАЧАЛО ОБРЫВА — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error timed out>; https://ya.ru: <urlopen error timed out> [VPN: happ-tun]
+[2026-07-15 01:22:03] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: happ-tun]
+[2026-07-15 01:23:53] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 01:24:00] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: happ-tun]
+[2026-07-15 01:29:05] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error [WinError 10054] Удаленный хост принудительно разорвал существующее подключение> [VPN: happ-tun]
+[2026-07-15 01:29:22] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>; https://ya.ru: <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение> [VPN: happ-tun]
+[2026-07-15 01:40:55] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 01:44:15] сбой (1 опрос) — этап: Роутер (шлюз) — 192.168.100.1: таймаут (нет ответа) [VPN: нет]
+[2026-07-15 01:44:45] сбой (1 опрос) — этап: Провайдер (интернет по IP) — 8.8.8.8:     (0% потерь) [VPN: нет]
+[2026-07-15 01:45:31] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 11:05:40] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 11:05:40] НАЧАЛО ОБРЫВА — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 11:08:10] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 11:08:32] сбой (1 опрос) — этап: ОС / сетевой адаптер — нет активных сетевых интерфейсов [VPN: нет]
+[2026-07-15 11:08:45] сбой (1 опрос) — этап: Роутер (шлюз) — 192.168.100.1: таймаут (нет ответа) [VPN: нет]
+[2026-07-15 11:08:45] НАЧАЛО ОБРЫВА — этап: Роутер (шлюз) — 192.168.100.1: таймаут (нет ответа) [VPN: нет]
+[2026-07-15 11:09:28] сбой (1 опрос) — этап: Провайдер (интернет по IP) — 8.8.8.8:     (0% потерь) [VPN: нет]
+[2026-07-15 11:10:25] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 11:31:00] сбой (1 опрос) — этап: Роутер (шлюз) — 192.168.100.1: узел недоступен (нет маршрута) [VPN: нет]
+[2026-07-15 11:31:53] сбой (1 опрос) — этап: Провайдер (интернет по IP) — 8.8.8.8:     (0% потерь) [VPN: нет]
+[2026-07-15 11:32:46] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 12:37:23] сбой (1 опрос) — этап: Роутер (шлюз) — 192.168.100.1: узел недоступен (нет маршрута) [VPN: нет]
+[2026-07-15 12:38:01] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 12:38:09] сбой (1 опрос) — этап: Провайдер (интернет по IP) — 8.8.8.8: таймаут (нет ответа) [VPN: нет]
+[2026-07-15 12:38:28] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 13:02:46] сбой (1 опрос) — этап: Провайдер (интернет по IP) — 8.8.8.8: таймаут (нет ответа) [VPN: нет]
+[2026-07-15 13:03:13] сбой (1 опрос) — этап: DNS — не удалось разрешить google.com: [Errno 11001] getaddrinfo failed [VPN: нет]
+[2026-07-15 13:30:47] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: happ-tun]
+[2026-07-15 13:30:47] НАЧАЛО ОБРЫВА — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: happ-tun]
+[2026-07-15 13:32:00] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 13:32:44] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error timed out>; https://ya.ru: <urlopen error timed out> [VPN: happ-tun]
+[2026-07-15 13:34:45] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: happ-tun]
+[2026-07-15 13:39:39] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error _ssl.c:1063: The handshake operation timed out>; https://ya.ru: <urlopen error [WinError 10054] Удаленный хост принудительно разорвал существующее подключение> [VPN: нет]
+[2026-07-15 13:43:32] сбой (1 опрос) — этап: Claude Code (авторизация) — команда завершилась с ошибкой (код 1): {
+  "loggedIn": false,
+  "authMethod": "none",
+  "apiProvider": "firstParty"
+} [VPN: happ-tun]
+[2026-07-15 13:54:05] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude Code (авторизация), длительность 0:23:18.417258) [VPN: happ-tun]
+[2026-07-15 14:00:30] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:00:30] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:00:38] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.752486) [VPN: happ-tun]
+[2026-07-15 14:03:29] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:03:29] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:04:09] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:39.819436) [VPN: happ-tun]
+[2026-07-15 14:08:24] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 14:08:24] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 14:08:32] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.384469) [VPN: happ-tun]
+[2026-07-15 14:23:31] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:23:31] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:24:02] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:31.025102) [VPN: happ-tun]
+[2026-07-15 14:35:07] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:35:07] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:35:21] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:13.745407) [VPN: happ-tun]
+[2026-07-15 14:54:57] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:54:57] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 14:55:21] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:24.557172) [VPN: happ-tun]
+[2026-07-15 15:39:05] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 15:39:05] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 15:39:23] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:17.766066) [VPN: happ-tun]
+[2026-07-15 15:42:24] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 15:42:24] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 15:42:31] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:07.446005) [VPN: happ-tun]
+[2026-07-15 16:10:17] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 16:10:17] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 16:10:42] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:24.976190) [VPN: happ-tun]
+[2026-07-15 17:09:32] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 17:09:32] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 17:09:41] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.807856) [VPN: happ-tun]
+[2026-07-15 17:14:07] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 17:14:07] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 17:14:33] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>; https://ya.ru: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 17:14:44] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:36.830684) [VPN: happ-tun]
+[2026-07-15 17:15:18] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 17:15:18] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 17:15:43] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>; https://ya.ru: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 17:16:40] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:01:22.985690) [VPN: happ-tun]
+[2026-07-15 17:18:15] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error _ssl.c:1063: The handshake operation timed out>; https://ya.ru: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]
+[2026-07-15 17:19:47] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 17:19:47] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 17:20:17] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:29.323943) [VPN: happ-tun]
+[2026-07-15 18:09:31] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 18:09:31] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 18:09:48] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:16.925912) [VPN: happ-tun]
+[2026-07-15 18:20:48] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 18:20:48] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 18:20:56] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.573792) [VPN: happ-tun]
+[2026-07-15 18:30:32] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: happ-tun]
+[2026-07-15 18:41:28] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 18:41:28] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 18:41:38] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.788469) [VPN: happ-tun]
+[2026-07-15 19:06:42] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: happ-tun]
+[2026-07-15 19:58:36] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 19:58:36] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 19:58:44] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.641131) [VPN: happ-tun]
+[2026-07-15 20:27:17] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 20:27:17] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 20:27:26] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.923020) [VPN: happ-tun]
+[2026-07-15 20:33:24] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 20:33:24] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 20:33:33] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:08.903065) [VPN: happ-tun]
+[2026-07-15 20:46:44] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: happ-tun]
+[2026-07-15 20:47:58] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: happ-tun]
+[2026-07-15 21:07:52] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 21:07:52] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 21:08:03] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.452789) [VPN: happ-tun]
+[2026-07-15 21:30:32] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: happ-tun]
+[2026-07-15 21:31:13] сбой (1 опрос) — этап: Claude Code (авторизация) — команда claude auth status не ответила за 15с [VPN: happ-tun]
+[2026-07-15 22:08:07] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:08:07] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:08:32] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:25.202258) [VPN: happ-tun]
+[2026-07-15 22:18:02] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:18:02] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:18:29] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:27.617665) [VPN: happ-tun]
+[2026-07-15 22:18:52] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:18:52] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:19:47] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:54.983729) [VPN: happ-tun]
+[2026-07-15 22:28:38] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:28:38] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:28:48] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.528776) [VPN: happ-tun]
+[2026-07-15 22:29:11] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:29:11] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:29:28] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:17.711361) [VPN: happ-tun]
+[2026-07-15 22:38:08] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:38:08] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:38:18] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:10.104032) [VPN: happ-tun]
+[2026-07-15 22:43:29] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:43:29] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:44:40] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:01:10.875948) [VPN: happ-tun]
+[2026-07-15 22:50:24] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:50:24] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:50:52] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:27.757330) [VPN: happ-tun]
+[2026-07-15 22:56:43] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:56:43] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 22:57:16] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:33.425673) [VPN: happ-tun]
+[2026-07-15 23:15:05] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 23:15:05] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 23:15:18] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:13.156505) [VPN: happ-tun]
+[2026-07-15 23:56:22] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 23:56:22] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-15 23:56:32] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.907037) [VPN: happ-tun]
+[2026-07-16 00:28:55] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-16 00:28:55] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-16 00:29:12] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:16.604457) [VPN: happ-tun]
+[2026-07-16 00:39:35] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-16 00:39:35] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-16 00:39:44] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.171625) [VPN: happ-tun]
+[2026-07-16 01:00:54] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-16 01:00:54] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-16 01:01:19] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:24.572469) [VPN: happ-tun]
+[2026-07-16 01:01:41] сбой (1 опрос) — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-16 01:01:41] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error _ssl.c:1063: The handshake operation timed out> [VPN: happ-tun]
+[2026-07-16 01:01:50] СВЯЗЬ ВОССТАНОВЛЕНА (этап был: Claude API (api.anthropic.com), длительность 0:00:09.208901) [VPN: happ-tun]
+[2026-07-16 01:26:18] сбой (1 опрос) — этап: Целевой сайт (HTTPS) — https://www.google.com: <urlopen error _ssl.c:1063: The handshake operation timed out>; https://ya.ru: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)> [VPN: happ-tun]

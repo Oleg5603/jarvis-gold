@@ -1,2 +1,6 @@
 *.exe
 node_modules/
+session-work/audio/
+net-monitor/.monitor.lock
+net-monitor/__pycache__/
+veterans_agents/__pycache__/

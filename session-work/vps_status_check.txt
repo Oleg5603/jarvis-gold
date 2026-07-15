@@ -1,0 +1,35 @@
+==== systemctl status gavrik.service --no-pager -l | tail -30 ====
+○ gavrik.service - Gavrik Telegram Bot
+     Loaded: loaded (/etc/systemd/system/gavrik.service; disabled; preset: enabled)
+     Active: inactive (dead)
+
+Jul 14 10:24:11 obthqouenx python3[1377279]: 2026-07-14 10:24:11,672 [INFO] aiogram.event: Update id=598837787 is handled. Duration 852 ms by bot id=7960862830
+Jul 14 10:32:56 obthqouenx python3[1377279]: 2026-07-14 10:32:56,405 [INFO] aiogram.event: Update id=598837788 is handled. Duration 182 ms by bot id=7960862830
+Jul 14 10:32:58 obthqouenx python3[1377279]: 2026-07-14 10:32:58,320 [INFO] aiogram.event: Update id=598837789 is handled. Duration 397 ms by bot id=7960862830
+Jul 14 10:57:09 obthqouenx systemd[1]: Stopping gavrik.service - Gavrik Telegram Bot...
+Jul 14 10:57:09 obthqouenx python3[1377279]: 2026-07-14 10:57:09,273 [WARNING] aiogram.dispatcher: Received SIGTERM signal
+Jul 14 10:57:09 obthqouenx python3[1377279]: 2026-07-14 10:57:09,275 [INFO] aiogram.dispatcher: Polling stopped for bot @mayroden_bot id=7960862830 - 'gavrykbot'
+Jul 14 10:57:09 obthqouenx python3[1377279]: 2026-07-14 10:57:09,275 [INFO] aiogram.dispatcher: Polling stopped
+Jul 14 10:57:10 obthqouenx systemd[1]: gavrik.service: Deactivated successfully.
+Jul 14 10:57:10 obthqouenx systemd[1]: Stopped gavrik.service - Gavrik Telegram Bot.
+Jul 14 10:57:10 obthqouenx systemd[1]: gavrik.service: Consumed 5.361s CPU time, 72.0M memory peak, 0B memory swap peak.
+
+==== systemctl status agent-bot.service --no-pager -l | tail -30 ====
+○ agent-bot.service - Agent Bot - Personal AI Telegram Bot
+     Loaded: loaded (/etc/systemd/system/agent-bot.service; enabled; preset: enabled)
+     Active: inactive (dead) since Fri 2026-06-12 13:50:10 UTC; 1 month 2 days ago
+   Duration: 2min 34.381s
+   Main PID: 709418 (code=killed, signal=TERM)
+        CPU: 760ms
+
+Jun 12 13:47:36 obthqouenx node[709418]: [indexer] Starting full reindex...
+Jun 12 13:47:36 obthqouenx node[709418]: [semantic-memory] Initialized
+Jun 12 13:47:36 obthqouenx node[709418]: [scheduler] Started
+Jun 12 13:47:36 obthqouenx node[709418]: Agent bot v2.0.0 started (workspace: /home/agent/workspace, projects: /home/agent/projects)
+Jun 12 13:47:36 obthqouenx node[709418]: Model: sonnet, Bootstrap: done
+Jun 12 13:47:36 obthqouenx node[709418]: Owner: 449885090 (only owner can use bot)
+Jun 12 13:47:37 obthqouenx node[709418]: [indexer] Full reindex complete: 7 files, 50 total chunks
+Jun 12 13:50:10 obthqouenx systemd[1]: Stopping agent-bot.service - Agent Bot - Personal AI Telegram Bot...
+Jun 12 13:50:10 obthqouenx systemd[1]: agent-bot.service: Deactivated successfully.
+Jun 12 13:50:10 obthqouenx systemd[1]: Stopped agent-bot.service - Agent Bot - Personal AI Telegram Bot.
+
