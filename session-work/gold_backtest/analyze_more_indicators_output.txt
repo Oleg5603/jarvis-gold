@@ -1,0 +1,122 @@
+Data range: 2004-06-11 05:00:00 -> 2026-07-17 14:00:00, bars=128552
+trades=1361 net_profit=1120.61 pf=1.35
+
+total=1361 winners=184 losers=767
+
+===== DISTRIBUTIONS =====
+-- macd_hist -- winners: mean=0.0836 median=0.0109 | losers: mean=-0.1470 median=-0.2328
+-- stoch_k -- winners: mean=53.0266 median=58.0922 | losers: mean=49.1004 median=46.1073
+-- stoch_d -- winners: mean=52.3003 median=54.4661 | losers: mean=47.9305 median=43.1604
+-- stoch_k_minus_d -- winners: mean=0.7263 median=1.7578 | losers: mean=1.1700 median=1.0646
+-- cci20 -- winners: mean=15.3272 median=25.7163 | losers: mean=-16.0365 median=-43.9947
+-- willr14 -- winners: mean=-46.9734 median=-41.9078 | losers: mean=-50.8996 median=-53.8927
+-- adx_slope3 -- winners: mean=1.1592 median=1.1389 | losers: mean=0.5411 median=0.2422
+-- adx_slope4 -- winners: mean=0.8047 median=0.5458 | losers: mean=0.0990 median=-0.0478
+-- dist_sma200_pct -- winners: mean=0.1654 median=0.3071 | losers: mean=0.2374 median=0.2386
+-- atr_chg5_pct -- winners: mean=26.7716 median=22.0333 | losers: mean=23.4197 median=18.8303
+-- atr_chg10_pct -- winners: mean=26.8058 median=21.8231 | losers: mean=23.7901 median=19.4224
+-- brr0 -- winners: mean=0.4996 median=0.5330 | losers: mean=0.4238 median=0.3978
+-- brr_avg3 -- winners: mean=0.5093 median=0.5114 | losers: mean=0.4789 median=0.4830
+-- brr_prev1 -- winners: mean=0.5101 median=0.5440 | losers: mean=0.4990 median=0.5200
+-- brr_prev2 -- winners: mean=0.5183 median=0.5580 | losers: mean=0.5138 median=0.5405
+-- brr_avg_prev3 -- winners: mean=0.4942 median=0.4933 | losers: mean=0.4932 median=0.5039
+
+===== BASELINE ===== net=1120.61 pf=1.35 trades=1361
+
+===== 1. MACD histogram =====
+[macd_hist>0] trades=615 removed_losers=436 removed_winners=92 net=1152.43 pf=1.84
+[macd_hist>-0.05] trades=630 removed_losers=426 removed_winners=91 net=1135.04 pf=1.81
+[macd_hist>0.05] trades=597 removed_losers=449 removed_winners=93 net=1156.49 pf=1.86
+[macd_hist<0] trades=746 removed_losers=331 removed_winners=92 net=-31.82 pf=0.98
+[macd_hist<0.05] trades=764 removed_losers=318 removed_winners=91 net=-35.87 pf=0.98
+[macd_hist<-0.05] trades=731 removed_losers=341 removed_winners=93 net=-14.43 pf=0.99
+[macd_hist aligned with side] trades=1302 removed_losers=42 removed_winners=6 net=1232.68 pf=1.40
+
+===== 2. Stochastic =====
+[stoch_k in [20,80]] trades=718 removed_losers=258 removed_winners=120 net=-639.01 pf=0.70
+[stoch_k in [30,70]] trades=423 removed_losers=453 removed_winners=153 net=-437.12 pf=0.65
+[stoch_k in [10,90]] trades=1092 removed_losers=81 removed_winners=67 net=-65.66 pf=0.98
+[stoch_k>stoch_d] trades=744 removed_losers=357 removed_winners=75 net=821.44 pf=1.48
+[stoch_k vs d aligned with side] trades=581 removed_losers=573 removed_winners=51 net=2044.67 pf=3.66
+
+===== 3. CCI =====
+[cci20>100] trades=487 removed_losers=527 removed_winners=101 net=1176.38 pf=2.14
+[cci20<100] trades=874 removed_losers=240 removed_winners=83 net=-55.77 pf=0.97
+[cci20>50] trades=563 removed_losers=472 removed_winners=98 net=1018.94 pf=1.83
+[cci20<50] trades=798 removed_losers=295 removed_winners=86 net=101.68 pf=1.05
+[cci20>-50] trades=705 removed_losers=375 removed_winners=80 net=1181.07 pf=1.73
+[cci20<-50] trades=656 removed_losers=392 removed_winners=104 net=-60.46 pf=0.96
+[cci20>-100] trades=804 removed_losers=307 removed_winners=69 net=993.53 pf=1.52
+[cci20<-100] trades=557 removed_losers=460 removed_winners=115 net=127.09 pf=1.10
+[cci20 aligned with side] trades=1262 removed_losers=79 removed_winners=13 net=1243.93 pf=1.42
+
+===== 4. Williams %R =====
+[willr14>-20] trades=325 removed_losers=641 removed_winners=118 net=1380.72 pf=3.61
+[willr14>-50] trades=650 removed_losers=412 removed_winners=85 net=1198.40 pf=1.79
+[willr14>-80] trades=1041 removed_losers=134 removed_winners=54 net=742.70 pf=1.28
+[willr14<-20] trades=1036 removed_losers=126 removed_winners=66 net=-260.10 pf=0.90
+[willr14<-50] trades=710 removed_losers=355 removed_winners=99 net=-77.79 pf=0.95
+[willr14<-80] trades=318 removed_losers=635 removed_winners=130 net=378.90 pf=1.67
+
+===== 5. ADX slope =====
+[adx_slope3>0 (rising)] trades=750 removed_losers=355 removed_winners=78 net=571.98 pf=1.33
+[adx_slope3<0 (falling)] trades=611 removed_losers=412 removed_winners=106 net=548.64 pf=1.38
+[adx_slope3>1] trades=626 removed_losers=432 removed_winners=90 net=466.89 pf=1.32
+[adx_slope3>2] trades=495 removed_losers=511 removed_winners=110 net=435.24 pf=1.40
+[adx_slope4>0 (rising)] trades=703 removed_losers=386 removed_winners=80 net=594.31 pf=1.36
+[adx_slope4<0 (falling)] trades=658 removed_losers=381 removed_winners=104 net=526.31 pf=1.34
+[adx_slope4>1] trades=587 removed_losers=457 removed_winners=98 net=358.44 pf=1.26
+[adx_slope4>2] trades=468 removed_losers=525 removed_winners=118 net=366.01 pf=1.37
+
+===== 6. Distance from SMA200 % =====
+[|dist_sma200_pct|<0.5] trades=380 removed_losers=555 removed_winners=138 net=-184.71 pf=0.77
+[|dist_sma200_pct|>0.5] trades=978 removed_losers=214 removed_winners=46 net=1307.93 pf=1.55
+[|dist_sma200_pct|<1] trades=707 removed_losers=368 removed_winners=93 net=-146.72 pf=0.90
+[|dist_sma200_pct|>1] trades=651 removed_losers=401 removed_winners=91 net=1269.95 pf=1.76
+[|dist_sma200_pct|<2] trades=1124 removed_losers=117 removed_winners=49 net=104.63 pf=1.04
+[|dist_sma200_pct|>2] trades=234 removed_losers=652 removed_winners=135 net=1018.60 pf=2.47
+[|dist_sma200_pct|<3] trades=1264 removed_losers=52 removed_winners=22 net=609.52 pf=1.22
+[|dist_sma200_pct|>3] trades=94 removed_losers=717 removed_winners=162 net=513.70 pf=2.33
+[dist_sma200 aligned with side (trend-following)] trades=757 removed_losers=378 removed_winners=71 net=1289.21 pf=1.79
+
+===== 7. ATR trend =====
+[atr_chg5_pct>0 (expanding)] trades=1272 removed_losers=44 removed_winners=10 net=1109.47 pf=1.37
+[atr_chg5_pct<0 (contracting)] trades=89 removed_losers=723 removed_winners=174 net=11.14 pf=1.06
+[atr_chg5_pct>10] trades=987 removed_losers=210 removed_winners=46 net=584.80 pf=1.25
+[atr_chg5_pct>20] trades=659 removed_losers=399 removed_winners=84 net=367.67 pf=1.24
+[atr_chg10_pct>0 (expanding)] trades=1127 removed_losers=129 removed_winners=31 net=413.51 pf=1.15
+[atr_chg10_pct<0 (contracting)] trades=234 removed_losers=638 removed_winners=153 net=707.10 pf=2.32
+[atr_chg10_pct>10] trades=923 removed_losers=236 removed_winners=54 net=167.56 pf=1.08
+[atr_chg10_pct>20] trades=657 removed_losers=392 removed_winners=86 net=324.87 pf=1.20
+
+===== 8. Body/range ratio =====
+[brr0>0.3] trades=901 removed_losers=275 removed_winners=40 net=1446.52 pf=1.71
+[brr0<0.3] trades=458 removed_losers=492 removed_winners=145 net=-327.90 pf=0.72
+[brr0>0.5] trades=557 removed_losers=465 removed_winners=87 net=705.86 pf=1.57
+[brr0<0.5] trades=795 removed_losers=306 removed_winners=98 net=420.74 pf=1.22
+[brr0>0.7] trades=243 removed_losers=636 removed_winners=139 net=461.88 pf=1.83
+[brr0<0.7] trades=1116 removed_losers=131 removed_winners=46 net=656.74 pf=1.25
+[brr_avg3>0.3] trades=1186 removed_losers=109 removed_winners=16 net=1262.47 pf=1.45
+[brr_avg3<0.3] trades=173 removed_losers=658 removed_winners=169 net=-143.85 pf=0.64
+[brr_avg3>0.5] trades=639 removed_losers=415 removed_winners=84 net=994.84 pf=1.63
+[brr_avg3<0.5] trades=720 removed_losers=352 removed_winners=101 net=123.77 pf=1.08
+[brr_avg3>0.7] trades=100 removed_losers=713 removed_winners=168 net=165.20 pf=1.68
+[brr_avg3<0.7] trades=1259 removed_losers=54 removed_winners=17 net=953.41 pf=1.32
+[brr_avg_prev3>0.3] trades=1215 removed_losers=92 removed_winners=17 net=1157.49 pf=1.40
+[brr_avg_prev3<0.3] trades=146 removed_losers=675 removed_winners=167 net=-36.88 pf=0.87
+[brr_avg_prev3>0.5] trades=681 removed_losers=375 removed_winners=97 net=195.85 pf=1.12
+[brr_avg_prev3<0.5] trades=679 removed_losers=393 removed_winners=87 net=925.75 pf=1.61
+[brr_avg_prev3>0.7] trades=107 removed_losers=701 removed_winners=169 net=-40.64 pf=0.87
+[brr_avg_prev3<0.7] trades=1254 removed_losers=66 removed_winners=15 net=1161.25 pf=1.40
+
+===== HOUR EXCLUSION baseline (from prior report) =====
+[hour_exclusion] trades=1117 removed_losers=144 removed_winners=17 net=1412.92 pf=1.53
+
+===== STACK CANDIDATES (best from each family) x hour exclusion =====
+[STACK: macd_hist aligned with side + hour_exclusion] trades=1069 removed_losers=180 removed_winners=22 net=1511.69 pf=1.60
+[STACK: stoch_k vs d aligned with side + hour_exclusion] trades=487 removed_losers=611 removed_winners=62 net=2033.85 pf=4.22
+[STACK: cci20 aligned with side + hour_exclusion] trades=1033 removed_losers=211 removed_winners=29 net=1502.16 pf=1.62
+[STACK: adx_slope3>0 + hour_exclusion] trades=610 removed_losers=432 removed_winners=88 net=669.64 pf=1.46
+[STACK: dist_sma200 aligned with side + hour_exclusion] trades=612 removed_losers=459 removed_winners=83 net=1394.16 pf=2.06
+[STACK: atr_chg5_pct>0 + hour_exclusion] trades=1061 removed_losers=171 removed_winners=25 net=1362.83 pf=1.54
+[STACK: brr0>0.5 + hour_exclusion] trades=450 removed_losers=531 removed_winners=96 net=825.14 pf=1.82

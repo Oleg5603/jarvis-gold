@@ -1,0 +1,52 @@
+Precomputing shared ATR(14)/ADX(14) caches...
+[baseline] 270 combos in 1333.4s
+
+=== baseline: TOP-5 by net_profit ===
+ fast  slow  mid  trades  win_rate  net_profit  profit_factor     max_dd  reliable
+   14    25   20    4690 20.021322  922.844222       1.080887 432.104687      True
+   14    25   15    4547 19.947218  910.116987       1.082479 494.432170      True
+   15    25   20    4666 19.931419  503.193780       1.044320 585.501092      True
+    5    35   25    5109 18.418477  464.473623       1.036851 694.627257      True
+    8    30   25    4731 19.403932  443.947539       1.037233 383.216254      True
+
+=== baseline: TOP-5 by profit_factor ===
+ fast  slow  mid  trades  win_rate  net_profit  profit_factor     max_dd  reliable
+   14    25   15    4547 19.947218  910.116987       1.082479 494.432170      True
+   14    25   20    4690 20.021322  922.844222       1.080887 432.104687      True
+   15    25   20    4666 19.931419  503.193780       1.044320 585.501092      True
+    8    30   10    4671 19.289231  437.379881       1.037345 405.791152      True
+    8    30   25    4731 19.403932  443.947539       1.037233 383.216254      True
+[adx] 270 combos in 835.4s
+
+=== adx: TOP-5 by net_profit ===
+ fast  slow  mid  trades  win_rate  net_profit  profit_factor    max_dd  reliable
+    4    35   30     492 20.731707  620.577705       1.545962 69.446969      True
+    4    35   10     497 20.523139  579.216236       1.512924 74.429629      True
+    4    35   15     495 20.404040  555.671581       1.493176 74.217343      True
+    4    35   25     491 20.977597  554.641947       1.499132 64.333555      True
+    4    35   20     492 20.934959  548.713595       1.491177 68.263095      True
+
+=== adx: TOP-5 by profit_factor ===
+ fast  slow  mid  trades  win_rate  net_profit  profit_factor    max_dd  reliable
+    4    35   30     492 20.731707  620.577705       1.545962 69.446969      True
+    4    35   10     497 20.523139  579.216236       1.512924 74.429629      True
+    4    35   25     491 20.977597  554.641947       1.499132 64.333555      True
+    4    35   15     495 20.404040  555.671581       1.493176 74.217343      True
+    4    35   20     492 20.934959  548.713595       1.491177 68.263095      True
+[no_atr] 270 combos in 792.5s
+
+=== no_atr: TOP-5 by net_profit ===
+ fast  slow  mid  trades  win_rate  net_profit  profit_factor  max_dd  reliable
+   11    25   20    4976 38.645498     7794.10       1.335982  513.86      True
+    8    25   20    5428 37.251290     7614.14       1.308000  450.91      True
+   11    25   15    4951 38.416482     7611.05       1.329989  474.52      True
+   13    20   15    5964 40.492958     7479.75       1.296588  619.81      True
+    4    25   10    6902 33.613445     7427.77       1.267154  565.55      True
+
+=== no_atr: TOP-5 by profit_factor ===
+ fast  slow  mid  trades  win_rate  net_profit  profit_factor  max_dd  reliable
+   11    25   20    4976 38.645498     7794.10       1.335982  513.86      True
+   11    25   15    4951 38.416482     7611.05       1.329989  474.52      True
+   13    25   15    4689 38.942205     7147.28       1.324780  539.88      True
+   14    25   20    4691 40.183330     7201.34       1.320587  594.57      True
+   12    25   15    4828 38.400994     7253.21       1.317967  463.75      True

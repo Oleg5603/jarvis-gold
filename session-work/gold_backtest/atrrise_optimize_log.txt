@@ -1,0 +1,18 @@
+Precomputing shared ATR(14) cache...
+[atrrise] 406 combos in 2008.0s
+
+=== atrrise: TOP-5 by net_profit ===
+ fast  mid  atr_rise_bars  trades  win_rate  net_profit  profit_factor     max_dd  reliable
+    9   30              2    1361 13.519471 1120.613869       1.349314 258.435288      True
+    8   30              2    1434 13.458856 1034.678508       1.302403 236.409972      True
+    3   10              2    3602 25.124931 1028.521861       1.123442 391.067589      True
+   14   25              2    1500 16.800000 1002.940491       1.288529 189.262116      True
+   15   25              2    1513 16.787839  910.947524       1.263538 223.176743      True
+
+=== atrrise: TOP-5 by profit_factor ===
+ fast  mid  atr_rise_bars  trades  win_rate  net_profit  profit_factor    max_dd  reliable
+   13   25              8      34 20.588235  210.354860       3.938116 20.229665      True
+   15   25              8      34 17.647059  213.577193       3.745109 39.352071      True
+   14   25              8      36 19.444444  220.226400       3.358298 27.082548      True
+   11   30              8      41 19.512195  146.786210       2.631614 33.762854      True
+   10   30              7      75 14.666667  247.211737       2.262842 55.463457      True
