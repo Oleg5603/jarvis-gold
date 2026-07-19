@@ -40,6 +40,20 @@ FAIL_CONFIRM_COUNT = 3  # сколько подряд неудачных опр�
 FAIL_CONFIRM_COUNT_CLAUDE_API = 1
 CLAUDE_API_STEP_NAME = "Claude API (api.anthropic.com)"
 
+# Эти два этапа — единственные, что означают проблему СТРОГО на своей стороне
+# (домашний роутер / провайдер), а не VPN/DNS/Anthropic. Помечаем их явно,
+# чтобы при чтении лога не приходилось гадать, где искать причину.
+ROUTER_STEP_NAME = "Роутер (шлюз)"
+ISP_STEP_NAME = "Провайдер (интернет по IP)"
+_EXPLICIT_ALERT_TAG = {
+    ROUTER_STEP_NAME: "\U0001F534 ОБРЫВ НА РОУТЕРЕ (не провайдер, не VPN, не Anthropic) \U0001F534 ",
+    ISP_STEP_NAME: "\U0001F534 ОБРЫВ У ПРОВАЙДЕРА (не роутер, не VPN, не Anthropic) \U0001F534 ",
+}
+
+
+def _explicit_alert_tag(step_name: str) -> str:
+    return _EXPLICIT_ALERT_TAG.get(step_name, "")
+
 OK_COLOR = "#1e7e34"
 FAIL_COLOR = "#c0392b"
 SKIP_COLOR = "#888888"
@@ -181,16 +195,17 @@ class NetMonitorApp:
                 self.pending_break_name = brk.name
                 self.pending_fail_count = 1
                 self.first_fail_at_time = now
-                self._log_line(f"[{now:%Y-%m-%d %H:%M:%S}] сбой (1 опрос) — этап: {brk.name} — {brk.detail}{self._vpn_suffix()}")
+                self._log_line(f"[{now:%Y-%m-%d %H:%M:%S}] {_explicit_alert_tag(brk.name)}сбой (1 опрос) — этап: {brk.name} — {brk.detail}{self._vpn_suffix()}")
 
             confirm_threshold = (FAIL_CONFIRM_COUNT_CLAUDE_API if brk.name == CLAUDE_API_STEP_NAME
                                   else FAIL_CONFIRM_COUNT)
             if self.pending_fail_count >= confirm_threshold:
-                self.status_line.config(text=f"⛔ ОБРЫВ СВЯЗИ — этап: {brk.name} — {brk.detail}", fg=FAIL_COLOR)
+                alert_tag = _explicit_alert_tag(brk.name)
+                self.status_line.config(text=f"⛔ {alert_tag}ОБРЫВ СВЯЗИ — этап: {brk.name} — {brk.detail}", fg=FAIL_COLOR)
                 if self.consecutive_fail_at is None:
                     self.consecutive_fail_at = brk.name
                     self.last_break_started = self.first_fail_at_time
-                    self._log_line(f"[{self.last_break_started:%Y-%m-%d %H:%M:%S}] НАЧАЛО ОБРЫВА — этап: {brk.name} — {brk.detail}{self._vpn_suffix()}")
+                    self._log_line(f"[{self.last_break_started:%Y-%m-%d %H:%M:%S}] {alert_tag}НАЧАЛО ОБРЫВА — этап: {brk.name} — {brk.detail}{self._vpn_suffix()}")
                     self.tree.insert("", 0, values=(self.last_break_started.strftime("%Y-%m-%d %H:%M:%S"), brk.name, brk.detail, "…"))
             else:
                 self.status_line.config(
@@ -201,7 +216,8 @@ class NetMonitorApp:
             self.status_line.config(text="✅ Связь в норме, вся цепочка пройдена", fg=OK_COLOR)
             if self.consecutive_fail_at is not None:
                 dur = now - self.last_break_started
-                self._log_line(f"[{now:%Y-%m-%d %H:%M:%S}] СВЯЗЬ ВОССТАНОВЛЕНА "
+                alert_tag = _explicit_alert_tag(self.consecutive_fail_at)
+                self._log_line(f"[{now:%Y-%m-%d %H:%M:%S}] {alert_tag}СВЯЗЬ ВОССТАНОВЛЕНА "
                                 f"(этап был: {self.consecutive_fail_at}, длительность {dur}){self._vpn_suffix()}")
                 # обновить длительность в первой строке журнала
                 first = self.tree.get_children()
