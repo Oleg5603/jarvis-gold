@@ -1,0 +1,14 @@
+Триггер: [2026-07-18 13:14:59] НАЧАЛО ОБРЫВА — этап: Claude API (api.anthropic.com) — <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение> [VPN: нет]
+Время захвата: 2026-07-18 13:15:00.520612
+
+=== tracert -4 api.anthropic.com ===
+
+Трассировка маршрута к api.anthropic.com [160.79.104.10]
+с максимальным числом прыжков 20:
+
+  1     1 ms     1 ms     1 ms  192.168.100.1 
+  2    <1 мс     2 ms     8 ms  160.79.104.10 
+
+Трассировка завершена.
+
+=== curl -4 -v (timing) ===cucurl failed: unsupported operand type(s) for +: 'NoneType' and 'str'
