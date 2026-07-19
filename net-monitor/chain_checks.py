@@ -137,6 +137,40 @@ def check_vpn() -> CheckResult:
     return CheckResult("VPN", True, f"активен: {', '.join(active_vpn)}")
 
 
+IPLEAK_URL = "https://ipleak.net/json/"
+IPLEAK_TIMEOUT_SEC = 6
+
+
+def check_ip_leak() -> CheckResult:
+    """Сверяет видимый снаружи IP с реальным ISP-адресом провайдера — если
+    ipleak.net видит IP провайдера вместо VPN-exit-узла, значит трафик снова
+    утекает мимо туннеля (см. project_vpn_route_leak в памяти)."""
+    import json
+    import urllib.request
+
+    active_vpn = get_active_vpn_names()
+    if not active_vpn:
+        return CheckResult("IP-утечка (ipleak.net)", True, "VPN не используется — проверка неприменима")
+
+    try:
+        with urllib.request.urlopen(IPLEAK_URL, timeout=IPLEAK_TIMEOUT_SEC) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except Exception as e:
+        return CheckResult("IP-утечка (ipleak.net)", False, f"не удалось проверить: {e}")
+
+    ip = data.get("ip", "?")
+    isp = data.get("isp", "?")
+    country = data.get("country_name", "?")
+    reverse = (data.get("reverse_hostname") or "").lower()
+    isp_hint = any(h in isp.lower() for h in ("ростелеком", "rostelecom", "ттк", "ttk", "мтс", "mts",
+                                               "билайн", "beeline", "ер-телеком", "er-telecom")) or \
+               any(h in reverse for h in ("dynamic", "pppoe", "static."))
+    if isp_hint:
+        return CheckResult("IP-утечка (ipleak.net)", False,
+                            f"виден IP реального провайдера, а не VPN: {ip} ({isp}, {country}) — утечка маршрута")
+    return CheckResult("IP-утечка (ipleak.net)", True, f"{ip} ({isp}, {country})")
+
+
 DNS_RETRIES = 1
 
 
@@ -223,7 +257,7 @@ def check_claude_code_auth() -> CheckResult:
         return CheckResult("Claude Code (авторизация)", False, f"ошибка проверки: {e}")
 
 
-CHAIN = [check_os_adapter, check_router, check_isp, check_vpn, check_dns, check_target, check_claude_api, check_claude_code_auth]
+CHAIN = [check_os_adapter, check_router, check_isp, check_vpn, check_ip_leak, check_dns, check_target, check_claude_api, check_claude_code_auth]
 
 
 def run_chain() -> list[CheckResult]:
@@ -232,7 +266,7 @@ def run_chain() -> list[CheckResult]:
     for fn in CHAIN:
         r = fn()
         results.append(r)
-        if not r.ok and r.name != "VPN":
+        if not r.ok and r.name not in ("VPN", "IP-утечка (ipleak.net)"):
             break
     return results
 
