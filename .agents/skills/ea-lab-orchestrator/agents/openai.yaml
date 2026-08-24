@@ -1,0 +1,4 @@
+interface:
+  display_name: "Оркестратор EA Optimizer Lab"
+  short_description: "Управляет очередью тестов и лучшими SET-файлами"
+  default_prompt: "Организуй последовательную оптимизацию советников, валидацию и экспорт лучших SET-файлов."

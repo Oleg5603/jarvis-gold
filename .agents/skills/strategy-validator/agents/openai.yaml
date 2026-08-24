@@ -1,0 +1,4 @@
+interface:
+  display_name: "Валидатор торговой стратегии"
+  short_description: "Проверяет Forward, Walk Forward и устойчивость"
+  default_prompt: "Проверь торговую стратегию на переоптимизацию и устойчивость результатов."
