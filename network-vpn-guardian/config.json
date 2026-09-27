@@ -1,0 +1,53 @@
+{
+  "checkIntervalSeconds": 10,
+  "targetHost": "1.1.1.1",
+  "expectedVpnPublicIp": "",
+  "failClosed": false,
+  "profile": "Monitor",
+  "failClosedMode": "Shadow",
+  "recoveryPolicy": "Balanced",
+  "maxReconnectAttempts": 3,
+  "maxServiceRestarts": 2,
+  "maxApplicationRestarts": 2,
+  "maxAdapterRestarts": 1,
+  "maxServerSwitches": 3,
+  "recoveryTimeoutSeconds": 120,
+  "cooldownSeconds": [
+    5,
+    15,
+    30,
+    60
+  ],
+  "probeTargets": [
+    "1.1.1.1",
+    "8.8.8.8"
+  ],
+  "vpnConnectionName": "",
+  "vpnReconnectCommand": "",
+  "happExecutablePath": "C:\\Program Files\\FlyFrogLLC\\Happ\\Happ.exe",
+  "happAdapterPatterns": [
+    "happ-tun"
+  ],
+  "happLostConfirmationCount": 2,
+  "happRestoreConfirmationCount": 2,
+  "happLaunchCooldownSeconds": 30,
+  "blockChatGptOnHappLoss": true,
+  "chatGptExecutablePaths": [],
+  "claudeExecutablePaths": [
+    "C:\\Users\\HP\\AppData\\Local\\AnthropicClaude\\Claude.exe"
+  ],
+  "chatGptFirewallGroup": "Network VPN Guardian - ChatGPT",
+  "vpnServerIps": [],
+  "expectedVpnDns": [],
+  "lostConfirmationCount": 2,
+  "hungConfirmationCount": 3,
+  "vpnInterfacePatterns": [
+    "VPN",
+    "TAP",
+    "TUN",
+    "WireGuard",
+    "Wintun",
+    "OpenVPN",
+    "NordLynx"
+  ]
+}
