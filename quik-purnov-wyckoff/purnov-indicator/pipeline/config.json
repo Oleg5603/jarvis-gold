@@ -1,0 +1,41 @@
+{
+  "archive_root": "D:\\Олег_Диск\\Пурнов",
+  "transcription": {
+    "engine": "faster-whisper",
+    "model": "base",
+    "device": "cpu",
+    "compute_type": "int8",
+    "language": "ru",
+    "vad_filter": true,
+    "local_only": true,
+    "resume": true,
+    "force": false
+  },
+  "selection": {
+    "mode": "priority_first",
+    "initial_target_hours": 25,
+    "topics": [
+      "контекст рынка",
+      "уровни",
+      "уровень неправоты",
+      "spring",
+      "upthrust",
+      "JOC",
+      "BTC",
+      "SOW",
+      "LPS",
+      "LPSY",
+      "объем",
+      "дельта",
+      "ликвидность",
+      "сопровождение"
+    ]
+  },
+  "llm_budget": {
+    "send_full_transcripts": false,
+    "max_retrieved_fragments": 8,
+    "max_input_tokens_per_request": 10000,
+    "require_source_timecodes": true,
+    "cache_results": true
+  }
+}

@@ -1,0 +1,164 @@
+-- Wyckoff Phases TrendUp v1.5
+-- Визуальная разметка диапазона и ключевых событий. Не является торговым советом.
+Settings = {
+    Name = "Wyckoff Phases TrendUp v1.5 — визуальная разметка",
+    range_bars = 30,
+    volume_bars = 20,
+    volume_factor = 1.30,
+    retest_bars = 16,
+    retest_volume_ratio = 0.85,
+    close_inside_ratio = 0.60,
+    line = {
+        {Name="Фаза B: поддержка диапазона", Color=RGB(70,130,210), Type=TYPE_LINE, Width=2},
+        {Name="Фаза B: сопротивление диапазона", Color=RGB(70,130,210), Type=TYPE_LINE, Width=2},
+        {Name="Накопление: опора Spring/SC", Color=RGB(20,185,155), Type=TYPE_DASH, Width=2},
+        {Name="Распределение: потолок UT", Color=RGB(235,125,55), Type=TYPE_DASH, Width=2},
+        {Name="Подтверждение силы: SOS", Color=RGB(15,160,80), Type=TYPE_DASH, Width=2},
+        {Name="Подтверждение слабости: SOW", Color=RGB(210,55,55), Type=TYPE_DASH, Width=2},
+        {Name="SC / Spring: спрос у поддержки", Color=RGB(20,175,105), Type=TYPE_TRIANGLE_UP, Width=5},
+        {Name="AR / SOS: сила вверх", Color=RGB(15,135,70), Type=TYPE_TRIANGLE_UP, Width=5},
+        {Name="ST / LPS: тихий тест", Color=RGB(30,155,205), Type=TYPE_POINT, Width=5},
+        {Name="UT / Upthrust: предложение сверху", Color=RGB(235,115,55), Type=TYPE_TRIANGLE_DOWN, Width=5},
+        {Name="SOW / LPSY: слабость вниз", Color=RGB(205,45,55), Type=TYPE_TRIANGLE_DOWN, Width=5}
+    }
+}
+
+local state = {}
+
+local function valid(i)
+    return i and i > 0 and CandleExist(i) and O(i) and H(i) and L(i) and C(i) and V(i)
+end
+
+local function mean_volume(first, last)
+    local sum, count = 0, 0
+    for j = math.max(1, first), last do
+        if valid(j) then sum = sum + V(j); count = count + 1 end
+    end
+    return count > 0 and sum / count or nil
+end
+
+local function range_bounds(i, bars)
+    local low, high = nil, nil
+    for j = math.max(1, i - bars), i - 1 do
+        if valid(j) then
+            low = low and math.min(low, L(j)) or L(j)
+            high = high and math.max(high, H(j)) or H(j)
+        end
+    end
+    return low, high
+end
+
+local function atr(i, bars)
+    local sum, count = 0, 0
+    for j = math.max(2, i - bars + 1), i do
+        if valid(j) and C(j - 1) then
+            local tr = math.max(H(j) - L(j), math.abs(H(j) - C(j - 1)), math.abs(L(j) - C(j - 1)))
+            sum = sum + tr; count = count + 1
+        end
+    end
+    return count > 0 and sum / count or nil
+end
+
+local function close_position(i)
+    local size = math.max(H(i) - L(i), 0.00000001)
+    return (C(i) - L(i)) / size
+end
+
+local function latest_event(i, event_name)
+    for j = i - 1, math.max(1, i - Settings.retest_bars), -1 do
+        local s = state[j]
+        if s and s[event_name] then return s end
+    end
+    return nil
+end
+
+local function active_level(i, event_name, field)
+    local e = latest_event(i, event_name)
+    return e and e[field] or nil
+end
+
+local function calculate(i)
+    local low, high = range_bounds(i, math.max(12, Settings.range_bars))
+    local avg_volume = mean_volume(i - Settings.volume_bars, i - 1)
+    local a = atr(i, 14)
+    if not low or not high or not avg_volume or not a then return nil end
+
+    local pos = close_position(i)
+    local high_volume = V(i) >= avg_volume * Settings.volume_factor
+    local quiet = V(i) <= avg_volume * Settings.retest_volume_ratio
+    local buffer = math.max(a * 0.08, (high - low) * 0.01)
+
+    local spring = L(i) < low - buffer and C(i) > low and pos >= Settings.close_inside_ratio and high_volume
+    local upthrust = H(i) > high + buffer and C(i) < high and pos <= 1 - Settings.close_inside_ratio and high_volume
+    local sc = not spring and high_volume and C(i) < O(i) and pos <= 0.35 and L(i) <= low + buffer
+    local ut = not upthrust and high_volume and C(i) > O(i) and pos >= 0.65 and H(i) >= high - buffer
+
+    local previous_sc = latest_event(i, "sc") or latest_event(i, "spring")
+    local ar = previous_sc and C(i) > O(i) and C(i) >= previous_sc.event_close + a * 0.75
+    local st = previous_sc and quiet and math.abs(L(i) - previous_sc.event_low) <= a * 0.35
+
+    local sos = C(i) > high + buffer and C(i) > O(i) and high_volume
+    local sow = C(i) < low - buffer and C(i) < O(i) and high_volume
+    local prior_sos = latest_event(i, "sos")
+    local prior_sow = latest_event(i, "sow")
+    local lps = prior_sos and quiet and L(i) <= prior_sos.range_high + buffer and C(i) > prior_sos.range_high
+    local lpsy = prior_sow and quiet and H(i) >= prior_sow.range_low - buffer and C(i) < prior_sow.range_low
+
+    return {
+        low = low, high = high, atr = a, range_low = low, range_high = high,
+        spring = spring, upthrust = upthrust, sc = sc, ut = ut, ar = ar, st = st,
+        sos = sos, sow = sow, lps = lps, lpsy = lpsy,
+        event_low = L(i), event_high = H(i), event_close = C(i)
+    }
+end
+
+function Init()
+    return #Settings.line
+end
+
+function OnCalculate(index)
+    if index == 1 then state = {} end
+    local warmup = math.max(Settings.range_bars, Settings.volume_bars) + 3
+    if index <= warmup or not valid(index - 1) then
+        return nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil
+    end
+
+    local bar = index - 1
+    local s = calculate(bar)
+    if not s then return nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil end
+    state[bar] = s
+
+    -- Постоянные границы фазы B и активные уровни подтверждения.
+    local spring_floor = active_level(bar, "spring", "event_low") or active_level(bar, "sc", "event_low")
+    local ut_ceiling = active_level(bar, "upthrust", "event_high") or active_level(bar, "ut", "event_high")
+    local sos_level = active_level(bar, "sos", "range_high")
+    local sow_level = active_level(bar, "sow", "range_low")
+
+    -- Точки вынесены от свечей, чтобы не перекрывать цену.
+    local demand = (s.spring or s.sc) and L(bar) - s.atr * 0.22 or nil
+    local strength = (s.ar or s.sos) and L(bar) - s.atr * 0.12 or nil
+    local test = (s.st or s.lps) and L(bar) - s.atr * 0.07 or nil
+    local supply = (s.upthrust or s.ut) and H(bar) + s.atr * 0.22 or nil
+    local weakness = (s.sow or s.lpsy) and H(bar) + s.atr * 0.12 or nil
+
+    return s.low, s.high, spring_floor, ut_ceiling, sos_level, sow_level,
+           demand, strength, test, supply, weakness
+end
+
+function ExplainSignal(index)
+    local s = state[index - 1] or state[index]
+    if not s then return "Недостаточно данных для разметки" end
+    local items = {}
+    if s.sc then items[#items + 1] = "SC: кульминация продаж у поддержки" end
+    if s.ar then items[#items + 1] = "AR: автоматическое ралли после SC" end
+    if s.st then items[#items + 1] = "ST: вторичный тест спроса" end
+    if s.spring then items[#items + 1] = "Spring: прокол поддержки и возврат" end
+    if s.sos then items[#items + 1] = "SOS: подтверждение силы выше диапазона" end
+    if s.lps then items[#items + 1] = "LPS: спокойный тест после SOS" end
+    if s.ut then items[#items + 1] = "UT: кульминация спроса у сопротивления" end
+    if s.upthrust then items[#items + 1] = "Upthrust: прокол сопротивления и возврат" end
+    if s.sow then items[#items + 1] = "SOW: подтверждение слабости ниже диапазона" end
+    if s.lpsy then items[#items + 1] = "LPSY: тихий тест после SOW" end
+    if #items == 0 then return "Фаза B: диапазон, ключевого события пока нет" end
+    return table.concat(items, "; ")
+end

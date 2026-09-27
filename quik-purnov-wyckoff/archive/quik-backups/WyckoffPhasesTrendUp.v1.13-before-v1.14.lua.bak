@@ -1,0 +1,269 @@
+-- Wyckoff Phases TrendUp v1.6
+-- Оптимизировано: последние события кэшируются, история повторно не сканируется.
+Settings = {
+    Name = "Wyckoff v1.13 — фазы крупно",
+    range_bars = 30,
+    range_min_bars = 18,
+    max_calculation_bars = 8000,
+    volume_bars = 20,
+    volume_factor = 1.30,
+    retest_bars = 16,
+    retest_volume_ratio = 0.85,
+    close_inside_ratio = 0.60,
+    event_cooldown_bars = 8,
+    phase_cooldown_bars = 7,
+    line = {
+        {Name="ICE: нижняя граница диапазона", Color=RGB(70,130,210), Type=TYPE_LINE, Width=2},
+        {Name="Creek: верхняя граница диапазона", Color=RGB(70,130,210), Type=TYPE_LINE, Width=2},
+        {Name="SC / Spring: уровень теста", Color=RGB(20,185,155), Type=TYPE_DASH, Width=2},
+        {Name="UTAD: уровень теста", Color=RGB(235,125,55), Type=TYPE_DASH, Width=2},
+        {Name="SOS: выход выше Creek", Color=RGB(15,160,80), Type=TYPE_DASH, Width=2},
+        {Name="SOW: выход ниже ICE", Color=RGB(210,55,55), Type=TYPE_DASH, Width=2},
+        {Name="SC: кульминация продаж", Color=RGB(20,175,105), Type=TYPE_TRIANGLE_UP, Width=6},
+        {Name="AR: автоматическое ралли", Color=RGB(15,135,70), Type=TYPE_TRIANGLE_UP, Width=6},
+        {Name="ST: вторичный тест", Color=RGB(30,155,205), Type=TYPE_POINT, Width=6},
+        {Name="Spring: прокол ICE и возврат", Color=RGB(20,185,155), Type=TYPE_TRIANGLE_UP, Width=7},
+        {Name="LPS: тест после SOS", Color=RGB(10,150,100), Type=TYPE_POINT, Width=6},
+        {Name="UTAD / Upthrust: прокол Creek", Color=RGB(235,115,55), Type=TYPE_TRIANGLE_DOWN, Width=7},
+        {Name="LPSY: тест после SOW", Color=RGB(205,45,55), Type=TYPE_POINT, Width=6},
+        {Name="SOS: сила вверх", Color=RGB(15,135,70), Type=TYPE_TRIANGLE_UP, Width=7},
+        {Name="SOW: слабость вниз", Color=RGB(205,45,55), Type=TYPE_TRIANGLE_DOWN, Width=7},
+        {Name="Фаза A: остановка движения", Color=RGB(235,180,30), Type=TYPE_POINT, Width=14},
+        {Name="Фаза B: диапазон подтверждён", Color=RGB(70,130,210), Type=TYPE_POINT, Width=12},
+        {Name="Фаза C: Spring / UT", Color=RGB(145,85,205), Type=TYPE_POINT, Width=12},
+        {Name="Фаза D: сила после SOS", Color=RGB(10,170,85), Type=TYPE_TRIANGLE_UP, Width=12},
+        {Name="Фаза D: слабость после SOW", Color=RGB(215,55,60), Type=TYPE_TRIANGLE_DOWN, Width=12},
+        {Name="Фаза E: рост", Color=RGB(0,105,45), Type=TYPE_TRIANGLE_UP, Width=15},
+        {Name="Фаза E: снижение", Color=RGB(145,20,30), Type=TYPE_TRIANGLE_DOWN, Width=15}
+    }
+}
+
+local state, last_event = {}, {}
+local phase_state = {code="B", direction="", index=0, range_low=nil, range_high=nil, range_started=0, c_used=false}
+local calculation_from = 1
+
+local function new_phase_state()
+    return {code="B", direction="", index=0, range_low=nil, range_high=nil, range_started=0, c_used=false}
+end
+
+local function empty_values()
+    return nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil
+end
+
+local function valid(i)
+    return i and i > 0 and CandleExist(i) and O(i) and H(i) and L(i) and C(i) and V(i)
+end
+
+local function mean_volume(first, last)
+    local sum, count = 0, 0
+    for j = math.max(1, first), last do
+        if valid(j) then sum = sum + V(j); count = count + 1 end
+    end
+    return count > 0 and sum / count or nil
+end
+
+local function range_bounds(i, bars)
+    local low, high = nil, nil
+    for j = math.max(1, i - bars), i - 1 do
+        if valid(j) then
+            low = low and math.min(low, L(j)) or L(j)
+            high = high and math.max(high, H(j)) or H(j)
+        end
+    end
+    return low, high
+end
+
+local function atr(i, bars)
+    local sum, count = 0, 0
+    for j = math.max(2, i - bars + 1), i do
+        if valid(j) and C(j - 1) then
+            local tr = math.max(H(j) - L(j), math.abs(H(j) - C(j - 1)), math.abs(L(j) - C(j - 1)))
+            sum = sum + tr; count = count + 1
+        end
+    end
+    return count > 0 and sum / count or nil
+end
+
+local function close_position(i)
+    local size = math.max(H(i) - L(i), 0.00000001)
+    return (C(i) - L(i)) / size
+end
+
+local function latest_event(i, name)
+    local event = last_event[name]
+    if event and i - event.index <= Settings.retest_bars then return event end
+    if event then last_event[name] = nil end
+    return nil
+end
+
+local function remember_events(i, s)
+    for name, enabled in pairs({sc=s.sc, spring=s.spring, ar=s.ar, st=s.st, sos=s.sos, sow=s.sow, lps=s.lps, lpsy=s.lpsy, upthrust=s.upthrust, ut=s.ut}) do
+        if enabled then s.index = i; last_event[name] = s end
+    end
+end
+
+local function active_level(i, name, field)
+    local event = latest_event(i, name)
+    return event and event[field] or nil
+end
+
+-- Оставляем первую точку события и не повторяем одинаковую метку рядом.
+local function keep_new_events(i, s)
+    for name, enabled in pairs({sc=s.sc, spring=s.spring, sos=s.sos, sow=s.sow, upthrust=s.upthrust, ut=s.ut, ar=s.ar, st=s.st, lps=s.lps, lpsy=s.lpsy}) do
+        local previous = last_event[name]
+        if enabled and previous and i - previous.index < Settings.event_cooldown_bars then s[name] = false end
+    end
+end
+
+local function calculate(i)
+    local rolling_low, rolling_high = range_bounds(i, math.max(12, Settings.range_bars))
+    local low, high = rolling_low, rolling_high
+    if phase_state.range_low and phase_state.range_high then
+        low, high = phase_state.range_low, phase_state.range_high
+    end
+    local avg_volume, a = mean_volume(i - Settings.volume_bars, i - 1), atr(i, 14)
+    if not low or not high or not avg_volume or not a then return nil end
+    local pos = close_position(i)
+    local high_volume = V(i) >= avg_volume * Settings.volume_factor
+    local quiet = V(i) <= avg_volume * Settings.retest_volume_ratio
+    local buffer = math.max(a * 0.08, (high - low) * 0.01)
+    local spring = L(i) < low - buffer and C(i) > low and pos >= Settings.close_inside_ratio and high_volume
+    local upthrust = H(i) > high + buffer and C(i) < high and pos <= 1 - Settings.close_inside_ratio and high_volume
+    local sc = not spring and high_volume and C(i) < O(i) and pos <= 0.35 and L(i) <= rolling_low + buffer
+    local ut = not upthrust and high_volume and C(i) > O(i) and pos >= 0.65 and H(i) >= rolling_high - buffer
+    local previous_sc = latest_event(i, "sc") or latest_event(i, "spring")
+    local ar = previous_sc and C(i) > O(i) and C(i) >= previous_sc.event_close + a * 0.75
+    local st = previous_sc and quiet and math.abs(L(i) - previous_sc.event_low) <= a * 0.35
+    local sos, sow = C(i) > high + buffer and C(i) > O(i) and high_volume, C(i) < low - buffer and C(i) < O(i) and high_volume
+    local prior_sos, prior_sow = latest_event(i, "sos"), latest_event(i, "sow")
+    local lps = prior_sos and quiet and L(i) <= prior_sos.range_high + buffer and C(i) > prior_sos.range_high
+    local lpsy = prior_sow and quiet and H(i) >= prior_sow.range_low - buffer and C(i) < prior_sow.range_low
+    return {low=low, high=high, rolling_low=rolling_low, rolling_high=rolling_high, atr=a, range_low=low, range_high=high, spring=spring, upthrust=upthrust,
+        sc=sc, ut=ut, ar=ar, st=st, sos=sos, sow=sow, lps=lps, lpsy=lpsy,
+        event_low=L(i), event_high=H(i), event_close=C(i)}
+end
+
+-- Фаза определяется только по уже закрытым свечам. Это разметка контекста,
+-- а не прогноз и не команда совершать сделку.
+local function update_phase(i, s)
+    local before_code, before_direction = phase_state.code, phase_state.direction
+    local function set_phase(code, direction)
+        if phase_state.code == code and phase_state.direction == (direction or "") then return end
+        if i - phase_state.index < Settings.phase_cooldown_bars then return end
+        phase_state.code, phase_state.direction, phase_state.index = code, direction or "", i
+    end
+    local function start_a(direction)
+        if i - phase_state.index < Settings.phase_cooldown_bars then return end
+        phase_state.code, phase_state.direction, phase_state.index = "A", direction, i
+        phase_state.range_low, phase_state.range_high, phase_state.range_started = nil, nil, 0
+        phase_state.c_used = false
+    end
+    local function start_b()
+        if not s.rolling_low or not s.rolling_high then return end
+        phase_state.code, phase_state.index = "B", i
+        phase_state.range_low, phase_state.range_high = s.rolling_low, s.rolling_high
+        phase_state.range_started, phase_state.c_used = i, false
+    end
+
+    -- Один диапазон проходит только A -> B -> C -> D -> E.
+    -- После C возврат в B возможен, но повторная C запрещена до новой A.
+    if phase_state.code == "A" and ((s.ar or s.st) or i - phase_state.index >= Settings.retest_bars) then
+        start_b()
+    elseif phase_state.code == "B" and phase_state.range_low and not phase_state.c_used
+        and i - phase_state.range_started >= Settings.range_min_bars and s.spring then
+        set_phase("C", "up")
+        phase_state.c_used = true
+    elseif phase_state.code == "B" and phase_state.range_low and not phase_state.c_used
+        and i - phase_state.range_started >= Settings.range_min_bars and s.upthrust then
+        set_phase("C", "down")
+        phase_state.c_used = true
+    elseif (s.sos or s.lps) and phase_state.code == "C" and phase_state.direction == "up" then
+        set_phase("D", "up")
+    elseif (s.sow or s.lpsy) and phase_state.code == "C" and phase_state.direction == "down" then
+        set_phase("D", "down")
+    elseif phase_state.code == "D" and phase_state.direction == "up" and C(i) > s.high then
+        set_phase("E", "up")
+    elseif phase_state.code == "D" and phase_state.direction == "down" and C(i) < s.low then
+        set_phase("E", "down")
+    elseif phase_state.code == "C" and i - phase_state.index >= Settings.retest_bars then
+        set_phase("B", phase_state.direction)
+    elseif (phase_state.code == "D" or phase_state.code == "E") and phase_state.direction == "down" and s.spring then
+        start_a("up")
+    elseif (phase_state.code == "D" or phase_state.code == "E") and phase_state.direction == "up" and s.upthrust then
+        start_a("down")
+    elseif not phase_state.range_low and phase_state.code == "B" and s.sc then
+        start_a("up")
+    elseif not phase_state.range_low and phase_state.code == "B" and s.ut then
+        start_a("down")
+    end
+    return phase_state.code, phase_state.direction, before_code ~= phase_state.code or before_direction ~= phase_state.direction
+end
+
+function Init() return #Settings.line end
+
+function OnCalculate(index)
+    if index == 1 then
+        state, last_event, phase_state = {}, {}, new_phase_state()
+        local total = type(Size) == "function" and Size() or 1
+        calculation_from = math.max(1, total - Settings.max_calculation_bars + 1)
+    end
+    local warmup = math.max(Settings.range_bars, Settings.volume_bars) + 3
+    if index < calculation_from or index <= warmup or not valid(index - 1) then return empty_values() end
+    local bar, s = index - 1, calculate(index - 1)
+    if not s then return empty_values() end
+    keep_new_events(bar, s)
+    state[bar] = s
+    local spring_floor = active_level(bar, "spring", "event_low") or active_level(bar, "sc", "event_low")
+    local ut_ceiling = active_level(bar, "upthrust", "event_high") or active_level(bar, "ut", "event_high")
+    local sos_level, sow_level = active_level(bar, "sos", "range_high"), active_level(bar, "sow", "range_low")
+    remember_events(bar, s)
+    local sc_mark = s.sc and L(bar) - s.atr * 0.22 or nil
+    local ar_mark = s.ar and L(bar) - s.atr * 0.12 or nil
+    local st_mark = s.st and L(bar) - s.atr * 0.07 or nil
+    local spring_mark = s.spring and L(bar) - s.atr * 0.25 or nil
+    local lps_mark = s.lps and L(bar) - s.atr * 0.10 or nil
+    local utad_mark = (s.upthrust or s.ut) and H(bar) + s.atr * 0.25 or nil
+    local lpsy_mark = s.lpsy and H(bar) + s.atr * 0.10 or nil
+    local sos_mark = s.sos and L(bar) - s.atr * 0.15 or nil
+    local sow_mark = s.sow and H(bar) + s.atr * 0.15 or nil
+    local phase, direction, changed = update_phase(bar, s)
+    s.phase, s.direction = phase, direction
+    local marker = changed and (direction == "down" and H(bar) + s.atr * 0.58 or L(bar) - s.atr * 0.58) or nil
+    local phase_a = changed and phase == "A" and marker or nil
+    local phase_b = changed and phase == "B" and marker or nil
+    local phase_c = changed and phase == "C" and marker or nil
+    local phase_d_up = changed and phase == "D" and direction == "up" and marker or nil
+    local phase_d_down = changed and phase == "D" and direction == "down" and marker or nil
+    local phase_e_up = changed and phase == "E" and direction == "up" and marker or nil
+    local phase_e_down = changed and phase == "E" and direction == "down" and marker or nil
+    return s.low, s.high, spring_floor, ut_ceiling, sos_level, sow_level,
+        sc_mark, ar_mark, st_mark, spring_mark, lps_mark, utad_mark, lpsy_mark, sos_mark, sow_mark,
+        phase_a, phase_b, phase_c, phase_d_up, phase_d_down, phase_e_up, phase_e_down
+end
+
+function ExplainSignal(index)
+    local s = state[index - 1] or state[index]
+    if not s then return "Недостаточно данных" end
+    local items = {}
+    local phase_names = {
+        A="Фаза A: остановка предыдущего движения",
+        B="Фаза B: диапазон — сделку не ищем",
+        C="Фаза C: проверка границы (Spring / Upthrust)",
+        D=s.direction == "up" and "Фаза D: подтверждение силы после SOS" or "Фаза D: подтверждение слабости после SOW",
+        E=s.direction == "up" and "Фаза E: рост после SOS" or "Фаза E: снижение после SOW"
+    }
+    items[#items + 1] = phase_names[s.phase or "B"]
+    if s.sc then items[#items + 1] = "SC: остановка падения" end
+    if s.ar then items[#items + 1] = "AR: автоматическое ралли" end
+    if s.st then items[#items + 1] = "ST: вторичный тест" end
+    if s.spring then items[#items + 1] = "Spring: прокол вниз и возврат" end
+    if s.sos then items[#items + 1] = "SOS: сила вверх" end
+    if s.lps then items[#items + 1] = "LPS: тест после SOS" end
+    if s.ut then items[#items + 1] = "UT: остановка роста" end
+    if s.upthrust then items[#items + 1] = "Upthrust: прокол вверх и возврат" end
+    if s.sow then items[#items + 1] = "SOW: слабость вниз" end
+    if s.lpsy then items[#items + 1] = "LPSY: тест после SOW" end
+    return table.concat(items, "; ")
+end
+
+function OnChangeSettings() state, last_event, phase_state, calculation_from = {}, {}, new_phase_state(), 1; return #Settings.line end

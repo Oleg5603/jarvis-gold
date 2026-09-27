@@ -1,0 +1,512 @@
+[
+  {
+    "path": "installed/PurnovContextV2.lua",
+    "bytes": 9312,
+    "sha256": "a211af6e5bf3f762e9fcc7e250068f478e0dbe0a4bbb1e6a8a0344babdb9c7fc",
+    "git_blob_sha": "78d81ab4bd4c5d4f0d52b7753ad671d4304b114a"
+  },
+  {
+    "path": "installed/PurnovContextV3.lua",
+    "bytes": 10301,
+    "sha256": "6bc4fbb8483f46c165e49ee8b330e2c0112cd11eb7f42567e8034fdb89372d79",
+    "git_blob_sha": "c070679f9c2ae0cdbd884d7d46509996ca9dc14b"
+  },
+  {
+    "path": "installed/PurnovEffortResult_v2.lua",
+    "bytes": 7234,
+    "sha256": "dcfb6a2de519bb3efc4f2361566067b406572225923e6ea7b56f78b115b38c8f",
+    "git_blob_sha": "e9d23393f3df6438575ca1284f02e8fd5efd1b60"
+  },
+  {
+    "path": "installed/WyckoffClearChartLabels.lua",
+    "bytes": 594,
+    "sha256": "1cbd585708e45a8bd5b19e9ed12d2d6f4e759d83d1270e9ed174dfbe8763d92e",
+    "git_blob_sha": "9c2332d196026e22b1905104e51ef727b3818efe"
+  },
+  {
+    "path": "installed/WyckoffPhasesTrendUp.lua",
+    "bytes": 32425,
+    "sha256": "63637a4e6566cd20d4db3ec13df4152bfe94e2dcd1bf3c028981c977efd5b753",
+    "git_blob_sha": "a70cf37820b0132b597b9ccf9111ee1ed8c97016"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.lua.bak",
+    "bytes": 28062,
+    "sha256": "361adbb07e88f82a32a31ca0e8f43b60c5db474198414e2a9ba091e98eb816c4",
+    "git_blob_sha": "26e7c735497a5e657f3b9fcbdd10aa9b245af6ec"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.lua.before-history-2x-20260923-183305.bak",
+    "bytes": 31641,
+    "sha256": "6c4dd4d00ee33df4e357fce06e7d7ad83067df5f4a1d969f74c42e6f0da5dea9",
+    "git_blob_sha": "24bb5dd44254c35693309d1fd2aec76dc856381d"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.10-before-v1.11.lua.bak",
+    "bytes": 12069,
+    "sha256": "194cf4d3d0aed54ece16d9579a57a0441e91b3bd5138f3a2bf10330a54f4c347",
+    "git_blob_sha": "1d05d714d4db0cac3766a5745a48664a6bf25da4"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.11-before-v1.12.lua.bak",
+    "bytes": 13868,
+    "sha256": "0bbafedb4a72a580eac35959849aad2337342215fc9e7c4ddf1098363d69facd",
+    "git_blob_sha": "14fbfa28542b655b6f34bf4c24fb4c79ce08d23d"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.12-before-v1.13.lua.bak",
+    "bytes": 14129,
+    "sha256": "e17dedb7ff71ee2ff2473220141b760f57da76bf57980e10efc1756bf6cdaa1a",
+    "git_blob_sha": "38ae34e607c61e8bf0817a2728f23c7cb08ca809"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.13-before-v1.14.lua.bak",
+    "bytes": 14465,
+    "sha256": "c80bc038d2055e8e2257845cb46261469d46f507d4933ab6348dbfddf9f8cb19",
+    "git_blob_sha": "b4352606e20f1875553066923f486698d9f3493b"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.14-before-v1.16.lua.bak",
+    "bytes": 15279,
+    "sha256": "cc5a10a279bb1e097fa9f7775132d49b3edbbc80a5aa845110900cfc28fb154e",
+    "git_blob_sha": "d9eac20ed4ce4c5977da13dc8b52ee3ff37cfd77"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.16-before-v1.17.lua.bak",
+    "bytes": 16763,
+    "sha256": "51971a60e210f4ec6ba3acdb67f0b8976e9b8a900a1f3f4b6e7b743f636782ea",
+    "git_blob_sha": "ee4d8a20a5c5da4b337e62f66e93a285ac20b164"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.17-before-v1.18-labels.lua.bak",
+    "bytes": 17664,
+    "sha256": "7fe30f0f42675063539972185e5ae23a4b564bfa2ff7eed4f37b7dde01995230",
+    "git_blob_sha": "19d3138ae3cc9b88ed2ebf5a42086ee07e2ec3a0"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.18-before-v1.19-compact-labels.lua.bak",
+    "bytes": 20917,
+    "sha256": "4f7c57a85d46dabb3bf73abd395c3053b232a58d5dd991199e7b6fdb89ae99f0",
+    "git_blob_sha": "978dbedf028d29ad1c316deae24b314797f0e832"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.19-before-v1.20-level-labels.lua.bak",
+    "bytes": 20956,
+    "sha256": "00c619275d96b3b280ef2ad5f62c99762d36b0ae862eb33522aaa7ea3c8a7b35",
+    "git_blob_sha": "170937b84c80efe99cac072a703ced19a5334c91"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.20-before-v1.21-creek-context.lua.bak",
+    "bytes": 21406,
+    "sha256": "0de18db0b2c8af43b7bf55ac9745c42ea09d8d292934925bb44cc7997c887dc4",
+    "git_blob_sha": "c210e8044c068ee0bb3237c2f91825bd8cbc66fb"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.21-before-v1.22-current-range-only.lua.bak",
+    "bytes": 21609,
+    "sha256": "17e8549a6b048171bac7dbf985d591dcfc19baddc8dc09b140b0aff14b54460c",
+    "git_blob_sha": "f1da977ddb36e7e79b73ac578dd3809d05b06cf9"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.22-before-v1.23-trader-view.lua.bak",
+    "bytes": 22231,
+    "sha256": "ffc34eec5fc0d3cec0af1a3988a1d4dbb35bd87b83f4d4ca4897b06a6d458223",
+    "git_blob_sha": "956c09a3c437c0bdd026019a18225ec033874b0d"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.23-before-phase-label-fix.lua.bak",
+    "bytes": 23565,
+    "sha256": "e78cbdc7cedf64212cabfaeae474b4f995f3007751dcab9d34d2633a83a4c8cd",
+    "git_blob_sha": "56dc05f8514cc7a80c05d5e400e67e260fd5469a"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.5-backup.lua.bak",
+    "bytes": 7306,
+    "sha256": "641213cfb2a46f4c78fabba2b0dab1133b3bc287376a4b015b963788ff239c7e",
+    "git_blob_sha": "ec257ed2511a56cfed485988a35fd2e4a6866de6"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.6-before-phase-labels.lua.bak",
+    "bytes": 7096,
+    "sha256": "e619f70d30046c8563918db6a589785e9777dcc88ecd6252e32bc5ac27231182",
+    "git_blob_sha": "ab7f1ac1c2139daea78d9b330be9ab75f4194bea"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.7-before-noise-filter.lua.bak",
+    "bytes": 10578,
+    "sha256": "e8ff9059cbdb7ad0bc2d7b48c76809d2f4f95677632ab7f465b26f3b1de9f887",
+    "git_blob_sha": "cd61d34689368d21f3261fa67b347470aed0260a"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.8-before-large-markers.lua.bak",
+    "bytes": 11231,
+    "sha256": "931c1044c8deef0cd8e46cd8318196446b7e51f66f0062ee39655d26bba1a94e",
+    "git_blob_sha": "ea3f588e4fb0f002fae29262798324d4e85056b4"
+  },
+  {
+    "path": "archive/quik-backups/WyckoffPhasesTrendUp.v1.8-before-strict-cycle.lua.bak",
+    "bytes": 11250,
+    "sha256": "7f3df19439ee4652612684b929c44b35ca6b3cd6996454c2042904571cccc362",
+    "git_blob_sha": "b4aa24ee046f83717127707762f529e34f199c6a"
+  },
+  {
+    "path": "experimental/2026-09-23/c-quikfinam-luaindicators-horizontalvolumelite-lua-setlabelparams/work/agent_lab/WyckoffPhasesTrendUp.confirmed-display.staging.lua",
+    "bytes": 33938,
+    "sha256": "83d85861efac6921d58ce875bb908e1a0210745ec2ca54484606022de79cacf6",
+    "git_blob_sha": "0a5abaf53b57d1d7d9b1fce0785a0486088f0872"
+  },
+  {
+    "path": "experimental/2026-09-23/c-quikfinam-luaindicators-horizontalvolumelite-lua-setlabelparams/work/agent_lab/backups/WyckoffPhasesTrendUp.04a7ad45.original.lua",
+    "bytes": 31641,
+    "sha256": "04a7ad45a700e641126cd0e5ee05ff29aa49d26d26198215acada9393b5983a3",
+    "git_blob_sha": "725c7ad45be6796ebc9fb834b0d1f89780d99071"
+  },
+  {
+    "path": "experimental/2026-09-23/c-quikfinam-luaindicators-horizontalvolumelite-lua-setlabelparams/outputs/quik-agent-lab/candidates/WyckoffPhasesTrendUp.original.bak",
+    "bytes": 31641,
+    "sha256": "6c4dd4d00ee33df4e357fce06e7d7ad83067df5f4a1d969f74c42e6f0da5dea9",
+    "git_blob_sha": "24bb5dd44254c35693309d1fd2aec76dc856381d"
+  },
+  {
+    "path": "experimental/2026-09-23/c-quikfinam-luaindicators-horizontalvolumelite-lua-setlabelparams/outputs/quik-agent-lab/candidates/WyckoffPhasesTrendUp.lua",
+    "bytes": 31641,
+    "sha256": "04a7ad45a700e641126cd0e5ee05ff29aa49d26d26198215acada9393b5983a3",
+    "git_blob_sha": "725c7ad45be6796ebc9fb834b0d1f89780d99071"
+  },
+  {
+    "path": "experimental/2026-09-23/c-quikfinam-luaindicators-horizontalvolumelite-lua-setlabelparams/outputs/quik-agent-lab/candidates/WyckoffPhasesTrendUp.confirmed-display.staging.lua",
+    "bytes": 33938,
+    "sha256": "83d85861efac6921d58ce875bb908e1a0210745ec2ca54484606022de79cacf6",
+    "git_blob_sha": "0a5abaf53b57d1d7d9b1fce0785a0486088f0872"
+  },
+  {
+    "path": "experimental/2026-09-21/new-chat/work/WyckoffReadOnly.lua",
+    "bytes": 8033,
+    "sha256": "b1a23409ae2d4926a2ca784f89c2fc2dd72b0dbd34a11e2c18b7a25781de9883",
+    "git_blob_sha": "961e7392becc863cc58d9bf1cc555dc1227c7e33"
+  },
+  {
+    "path": "experimental/2026-09-21/new-chat/work/installed-backup-20260921-182019/vendor/WyckoffPhasesTrendUp.lua",
+    "bytes": 31641,
+    "sha256": "6c4dd4d00ee33df4e357fce06e7d7ad83067df5f4a1d969f74c42e6f0da5dea9",
+    "git_blob_sha": "24bb5dd44254c35693309d1fd2aec76dc856381d"
+  },
+  {
+    "path": "experimental/2026-09-21/new-chat/work/installed-backup-20260921-182019/bridge/WyckoffReadOnly.lua",
+    "bytes": 9062,
+    "sha256": "34626f0c04a5d1a73159e54acafb19a9c3ff5f7d283dca9201eeb8e564530c48",
+    "git_blob_sha": "f892973021c4b003c2fdb4e0b4ecf1c76ec23770"
+  },
+  {
+    "path": "experimental/2026-09-21/new-chat/work/installed-backup-20260921-164821/vendor/WyckoffPhasesTrendUp.lua",
+    "bytes": 31641,
+    "sha256": "6c4dd4d00ee33df4e357fce06e7d7ad83067df5f4a1d969f74c42e6f0da5dea9",
+    "git_blob_sha": "24bb5dd44254c35693309d1fd2aec76dc856381d"
+  },
+  {
+    "path": "experimental/2026-09-21/new-chat/work/installed-backup-20260921-164821/bridge/WyckoffReadOnly.lua",
+    "bytes": 8033,
+    "sha256": "b1a23409ae2d4926a2ca784f89c2fc2dd72b0dbd34a11e2c18b7a25781de9883",
+    "git_blob_sha": "961e7392becc863cc58d9bf1cc555dc1227c7e33"
+  },
+  {
+    "path": "experimental/2026-09-18/function-onchangesettings-c-quikfinam-luaindicators-wyckoffphasestrendup/outputs/WyckoffPhasesTrendUp.lua",
+    "bytes": 31641,
+    "sha256": "6c4dd4d00ee33df4e357fce06e7d7ad83067df5f4a1d969f74c42e6f0da5dea9",
+    "git_blob_sha": "24bb5dd44254c35693309d1fd2aec76dc856381d"
+  },
+  {
+    "path": "experimental/2026-09-18/c-users-hp-documents-project-stock/outputs/wyckoff-agent/vendor/WyckoffPhasesTrendUp.lua",
+    "bytes": 31641,
+    "sha256": "6c4dd4d00ee33df4e357fce06e7d7ad83067df5f4a1d969f74c42e6f0da5dea9",
+    "git_blob_sha": "24bb5dd44254c35693309d1fd2aec76dc856381d"
+  },
+  {
+    "path": "experimental/2026-09-18/c-users-hp-documents-project-stock/outputs/wyckoff-agent/bridge/WyckoffReadOnly.lua",
+    "bytes": 9401,
+    "sha256": "5dc4d86a9347e8e2fa03263fdecc7a5022ccd7477374e57c679358dae12726d1",
+    "git_blob_sha": "071b6955675f3065fdb6e3267c716253e6aec15b"
+  },
+  {
+    "path": "experimental/2026-09-18/c-users-hp-documents-project-stock/outputs/quik-statistics-update/vendor/WyckoffPhasesTrendUp.lua",
+    "bytes": 31641,
+    "sha256": "6c4dd4d00ee33df4e357fce06e7d7ad83067df5f4a1d969f74c42e6f0da5dea9",
+    "git_blob_sha": "24bb5dd44254c35693309d1fd2aec76dc856381d"
+  },
+  {
+    "path": "experimental/2026-09-18/c-users-hp-documents-project-stock/outputs/quik-statistics-update/bridge/WyckoffReadOnly.lua",
+    "bytes": 8033,
+    "sha256": "b1a23409ae2d4926a2ca784f89c2fc2dd72b0dbd34a11e2c18b7a25781de9883",
+    "git_blob_sha": "961e7392becc863cc58d9bf1cc555dc1227c7e33"
+  },
+  {
+    "path": "experimental/2026-09-18/c-users-hp-documents-project-stock/outputs/quik-scanner-build/Сканер QUIK/vendor/WyckoffPhasesTrendUp.lua",
+    "bytes": 31641,
+    "sha256": "6c4dd4d00ee33df4e357fce06e7d7ad83067df5f4a1d969f74c42e6f0da5dea9",
+    "git_blob_sha": "24bb5dd44254c35693309d1fd2aec76dc856381d"
+  },
+  {
+    "path": "experimental/2026-09-18/c-users-hp-documents-project-stock/outputs/quik-scanner-build/Сканер QUIK/bridge/WyckoffReadOnly.lua",
+    "bytes": 8033,
+    "sha256": "b1a23409ae2d4926a2ca784f89c2fc2dd72b0dbd34a11e2c18b7a25781de9883",
+    "git_blob_sha": "961e7392becc863cc58d9bf1cc555dc1227c7e33"
+  },
+  {
+    "path": "experimental/2026-08-17/new-chat/work/quik-purnov-indicator/PurnovContextV3.lua",
+    "bytes": 10122,
+    "sha256": "1f0b2e9a42196e49ded55cb78cd91d758c7dd4a8f7d21f95b6aea9149c8a2a10",
+    "git_blob_sha": "42be75ac0cc1d55b7868dd824c085925148bc403"
+  },
+  {
+    "path": "experimental/2026-08-17/new-chat/work/quik-purnov-indicator/PurnovContextV2.lua",
+    "bytes": 9312,
+    "sha256": "a211af6e5bf3f762e9fcc7e250068f478e0dbe0a4bbb1e6a8a0344babdb9c7fc",
+    "git_blob_sha": "78d81ab4bd4c5d4f0d52b7753ad671d4304b114a"
+  },
+  {
+    "path": "experimental/2026-08-17/new-chat/work/quik-purnov-indicator/PurnovContext.lua",
+    "bytes": 5373,
+    "sha256": "eb9fad25668bf982a17fd876f9f338149646d5507fa64a26636f880c078a88eb",
+    "git_blob_sha": "f894c575b0f7508d64e25aaeb087f15f22843ee5"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.v1.27.staging.lua",
+    "bytes": 24656,
+    "sha256": "7eae02f66a90d4f538ed6cc19e0a17289847384bf5a408f3d8e21ce5d8f613d4",
+    "git_blob_sha": "d49ca039da1c82e0b6ce9369ce5d8f0f82b21d97"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.v1.26.staging.lua",
+    "bytes": 25516,
+    "sha256": "1d351f8933204a6fdcd538a449eec2ca481c204c9e817776d3fe3a353b49432d",
+    "git_blob_sha": "d47662181021990133ca789da3649bd013d8714d"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.v1.25.staging.lua",
+    "bytes": 24704,
+    "sha256": "d12bad5f1d5927141fcb3366300c66678874423dd8cd521e65674157d66d340c",
+    "git_blob_sha": "694f35a8cb9b487ec3dd48f833449ca3ea056afc"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.signal-clarity.staging.lua",
+    "bytes": 28062,
+    "sha256": "361adbb07e88f82a32a31ca0e8f43b60c5db474198414e2a9ba091e98eb816c4",
+    "git_blob_sha": "26e7c735497a5e657f3b9fcbdd10aa9b245af6ec"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.render-reliability.staging.lua",
+    "bytes": 31224,
+    "sha256": "20d4e9c7971aac4c9a285146fb902375495a2a44e6c7efac840156bd849a6ef3",
+    "git_blob_sha": "3f148f838a42dae9d637f42a89e8fafd5c1050a4"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.release-visual-contract.staging.lua",
+    "bytes": 31028,
+    "sha256": "3a1c07fa0e239187934b16286993aaf7e4d2d58f691a1ea10616326fa35c7fbf",
+    "git_blob_sha": "86868c1ade8d19b4a681347ae966e0a81d10c91f"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.ready.staging.lua",
+    "bytes": 28585,
+    "sha256": "e709b0d3730a580634f058d81e0ef67039d1c7a23915966ae4c1b762f34329e0",
+    "git_blob_sha": "5f0505fa1307b604ea4ce9dbf495a3e7c2ad79d5"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.manual-chart-tag.staging.lua",
+    "bytes": 31291,
+    "sha256": "88e92bdc12753f04df4cc8dc6b83d67e3f566be8371e12d5c48fd475a3761d96",
+    "git_blob_sha": "3c6c9cb2caf4700c84e690885a30eca087184fe0"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.manual-chart-tag-cleanup.staging.lua",
+    "bytes": 31416,
+    "sha256": "a5a8c837bdf5b4a9a9f84688fb52389d4f9a294d97bd838f99d3a60e098e549a",
+    "git_blob_sha": "e14ea8bea7b1c6d841a2fd0213744dafa0b39580"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.labels-runtime-tag.staging.lua",
+    "bytes": 29818,
+    "sha256": "e40dc0752f7e143f3dc9070165df20e41fc6aab8e3247a8cb829fa2187654683",
+    "git_blob_sha": "f65c92a889e70eb649292f47d012341ad3253380"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.labels-per-chart.staging.lua",
+    "bytes": 29514,
+    "sha256": "bdf71635487d9dece78173e495cbb23df24c11055ded06d82c746d7ec9c7e6cb",
+    "git_blob_sha": "5e211f94287c0fd8b2c7d8838104024661fc0dfe"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.final.staging.lua",
+    "bytes": 25259,
+    "sha256": "4144beab13f3f7b2f23c2631ddbca5d4086fb2c87f3799881d0ea7b0f2bcba10",
+    "git_blob_sha": "af84b355bdac4fa293d8e09aac687aa67fa0d23a"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.final-volume-extremes.staging.lua",
+    "bytes": 27098,
+    "sha256": "04cc07b43615735cbf3c9a5023a2b78afbf5993b36b8d56bd6e9b8bf95a902b7",
+    "git_blob_sha": "378e68b92650195ce767342b34b6297fb16ac952"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.final-filtered-arrows.staging.lua",
+    "bytes": 26859,
+    "sha256": "f0918029a0e0df85f2ec0a005a68ce880c7ed3991920f618abad4b843702104f",
+    "git_blob_sha": "1dea61a5a82438cf8b8685ff174a4fe5d451e112"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.final-complete.staging.lua",
+    "bytes": 26358,
+    "sha256": "7dd518ae4a264e345577138ee31efef971914646ab83b5dba6ee529b2c2ec141",
+    "git_blob_sha": "3b2f435e932aa7d38534d05b0c194e8faa1ea97c"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.final-arrows.staging.lua",
+    "bytes": 25273,
+    "sha256": "cd7740ad4e49cc69ca2728f2d0a8e51505f521ac0ab259134d4247803200d296",
+    "git_blob_sha": "3d131d16a0ddb037c3683a7f6cc44f0080e9f341"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.final-arrows-and-extremes.staging.lua",
+    "bytes": 25384,
+    "sha256": "825f4ba2f1fc5ade24db901513d29ce880ed174388328ea78ff39c4aa3803154",
+    "git_blob_sha": "49d320c5584325987dc9bafc247caca3388c972d"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.fast.staging.lua",
+    "bytes": 31582,
+    "sha256": "02a95b24c02deef70febc99159a6e4980633812257996fb5dc8b77dee27cedf8",
+    "git_blob_sha": "a4f8d672ef4419ed1b6755556b0d286ce0b752db"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/WyckoffPhasesTrendUp.api-index-fix.staging.lua",
+    "bytes": 31344,
+    "sha256": "8462857ca9b4b4dc79aa2e55be2fea66be301823d4d1f31f2ff7dcb91b04fa33",
+    "git_blob_sha": "0e1ac31f042e3d7d9d1ca3f8e31ebab9cec4f9b8"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/quik-optimization/original/PurnovEffortResult_v2.lua",
+    "bytes": 7234,
+    "sha256": "dcfb6a2de519bb3efc4f2361566067b406572225923e6ea7b56f78b115b38c8f",
+    "git_blob_sha": "e9d23393f3df6438575ca1284f02e8fd5efd1b60"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/quik-optimization/original/PurnovContextV2.lua",
+    "bytes": 9312,
+    "sha256": "a211af6e5bf3f762e9fcc7e250068f478e0dbe0a4bbb1e6a8a0344babdb9c7fc",
+    "git_blob_sha": "78d81ab4bd4c5d4f0d52b7753ad671d4304b114a"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/quik-optimization/optimized/PurnovEffortResult_v2.lua",
+    "bytes": 7848,
+    "sha256": "ee68c5a84762712d61fd3ddaf0f2b3be88207136a101728d152fea25c545ed7c",
+    "git_blob_sha": "9499afbd106e964a777fcf7898de3c09d7bec2c0"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/quik-optimization/optimized/PurnovContextV2.lua",
+    "bytes": 9926,
+    "sha256": "2a4d8e843b091cec844dccd9d89cbcac1bdb2312454228c18548639d2f0ef672",
+    "git_blob_sha": "97e41d7aafc40e1aeb4b14e67ca435864a28ad8e"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/TrendUp/Wyckoff/quik/WyckoffPhasesTrendUp.v1.6.lua",
+    "bytes": 18607,
+    "sha256": "27ccdb5e5a20e620887b1e012018de207e09837a296b2d3f1adcdaac7bccbce2",
+    "git_blob_sha": "223e6e5fc7e48f0408c7ebcae0af52b12d43bd00"
+  },
+  {
+    "path": "experimental/2026-08-13/cjplfq-futynfzcjplfq-zhksr-lkz-jnrhsnbz-njuj/TrendUp/Wyckoff/quik/WyckoffPhasesTrendUp.lua",
+    "bytes": 5548,
+    "sha256": "4cc55edf75bea347f32c51c80f388965febb4da85321bfd1e5359d48d3e7281e",
+    "git_blob_sha": "70f7dd6cba4fe495d65b9f4bba6212b32d93d30b"
+  },
+  {
+    "path": "purnov-indicator/TRANSCRIPTION_PROTOCOL.md",
+    "bytes": 4375,
+    "sha256": "75b454c38f6eca10297f221d617c821140681fe4ce8ce9309bc6e0ebfe795c34",
+    "git_blob_sha": "55957114fae2fbab532160754c101cf55159b27c"
+  },
+  {
+    "path": "purnov-indicator/PurnovContext.lua",
+    "bytes": 7234,
+    "sha256": "dcfb6a2de519bb3efc4f2361566067b406572225923e6ea7b56f78b115b38c8f",
+    "git_blob_sha": "e9d23393f3df6438575ca1284f02e8fd5efd1b60"
+  },
+  {
+    "path": "purnov-indicator/pipeline/config.json",
+    "bytes": 914,
+    "sha256": "a828dc8672f625c290660358e1b5f3eb86d95a875d216085ddf7b792281380ca",
+    "git_blob_sha": "bd67564a991f43142580937ba9d4a069704d1b9a"
+  },
+  {
+    "path": "purnov-indicator/trading_lab/web/style.css",
+    "bytes": 4018,
+    "sha256": "2ba165debd581f346f309be2106faf96b1bc13ce299cdcdd64d9e6ca4a54f6d2",
+    "git_blob_sha": "2ec271220b09a9a4e0d15dbb1cc18c9ba58d44a2"
+  },
+  {
+    "path": "purnov-indicator/trading_lab/web/index.html",
+    "bytes": 5866,
+    "sha256": "dd303a699d2380dfbfe9ae1a0e9d7c2a0717c4bcdb8062eef96b5ca7e46ec559",
+    "git_blob_sha": "f0c59c10a172e50145f878ff699dec235717eefc"
+  },
+  {
+    "path": "purnov-indicator/trading_lab/web/app.js",
+    "bytes": 15216,
+    "sha256": "0b6d5043618f810b49832f10c2737218c978c9ea172c42ecd8a7ccd9ff4390fd",
+    "git_blob_sha": "3d3da32e0499f7b5a5d0372bb638e8b48bfa6a98"
+  },
+  {
+    "path": "purnov-indicator/backtest_sber_2025.py",
+    "bytes": 5164,
+    "sha256": "0ea8532e59b4586ce27a9e57c94b030b11f5d80387a1c8d70caa69393fa50964",
+    "git_blob_sha": "0fdef570988357f856e457358d0d3e376afbce56"
+  },
+  {
+    "path": "purnov-indicator/trading_lab/app.py",
+    "bytes": 10367,
+    "sha256": "be2de82f8038e1ab86f1b04f6be65a355525509ecbed020becd721ff9c348cce",
+    "git_blob_sha": "5db80b1d85afde01028ff04d37627ce3339b17c5"
+  },
+  {
+    "path": "purnov-indicator/trading_lab/tests/test_app.py",
+    "bytes": 1935,
+    "sha256": "92f4c9cc78e7a897eae645ce74c121ed97972a30c6d58be9f944f8dd4b2f7e2f",
+    "git_blob_sha": "5834536b4eb7c1fd8f24ccc9631ab888e8a4c723"
+  },
+  {
+    "path": "purnov-indicator/trading_lab/README.md",
+    "bytes": 2384,
+    "sha256": "b17e3d992c4e0d210ca36a5850d74998766d209c5c1e149581d37d3aea467fae",
+    "git_blob_sha": "2d451b257ff46e22bbbcaee9279a69b769747529"
+  },
+  {
+    "path": "purnov-indicator/README.md",
+    "bytes": 3466,
+    "sha256": "c5382d689ad66026dc1d8fe48c8b341515723ab16166367299c218a717ae5bab",
+    "git_blob_sha": "9f7f0534f04d04d25f13c352c86b6cb4f9edfb11"
+  },
+  {
+    "path": "purnov-indicator/trading_lab/data/moex_fragments.json",
+    "bytes": 82403,
+    "sha256": "d8a77a21996995b4e11a6a0c394e5229643e8e420072e63cfec5eeeabc198e24",
+    "git_blob_sha": "807eaa95a247077fc7603fb873c457b4567b60e4"
+  },
+  {
+    "path": "purnov-indicator/tests/test_indicator_contract.py",
+    "bytes": 1810,
+    "sha256": "fd7a786b1075d672fa66869dcab22365c8519a116ddd8b25b455cb7614be5fa8",
+    "git_blob_sha": "d1624275116e2a9f5931742b2e3ed7d80e705b5f"
+  },
+  {
+    "path": "experimental/purnov-notes/README.md",
+    "bytes": 4356,
+    "sha256": "bea488270fad8f6d779b25be7555461499a5238d7e144eccd9fb30579cd0d474",
+    "git_blob_sha": "997ee6ba4b6ae8173698ab8c1056a26fc2a286e0"
+  },
+  {
+    "path": "experimental/purnov-notes/knowledge-notes.md",
+    "bytes": 1213,
+    "sha256": "be9a335e7b084c1703b526d1c3cb2c82b4f43e4cf6dadbca29a10305cca348d9",
+    "git_blob_sha": "f6df241a15a4527991bc9ec901457b0ff4fdb5d9"
+  }
+]
