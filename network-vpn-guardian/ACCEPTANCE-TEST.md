@@ -1,4 +1,4 @@
-# MVP 0.3 acceptance test
+﻿# MVP 0.3 acceptance test
 
 Основной тест выполняется только на отдельном тестовом Windows-ПК или VM. До начала
 нужно проверить `Emergency-Recovery.cmd` и иметь доступ к локальной консоли, не

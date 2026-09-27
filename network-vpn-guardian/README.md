@@ -1,4 +1,4 @@
-# Network & VPN Guardian — MVP 0.3.2
+﻿# Network & VPN Guardian — MVP 0.3.2
 
 Рабочая локальная версия 0.3.2 панели мониторинга и Guardian Core для Windows 10/11. Не требует установки
 .NET SDK: используется встроенный Windows PowerShell 5.1 и WPF.

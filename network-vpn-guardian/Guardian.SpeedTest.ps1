@@ -1,4 +1,4 @@
-#requires -Version 5.1
+﻿#requires -Version 5.1
 [CmdletBinding()]
 param([switch]$Probe, [switch]$UiTest)
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase, System.Net.Http
